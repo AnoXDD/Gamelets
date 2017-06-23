@@ -18,9 +18,12 @@ export default class Grid extends Component {
     state = {
         // The elements are from bottom to top, left to right
         letters: [],
+        selectedLetters: [],
     };
 
     idVersion = 0;
+
+    isMouseDown = false;
 
     constructor(props) {
         super(props);
@@ -28,6 +31,12 @@ export default class Grid extends Component {
         this.generateRandomLetterBlock = this.generateRandomLetterBlock.bind(
             this);
         this.fillLetters = this.fillLetters.bind(this);
+        this.findPositionById = this.findPositionById.bind(this);
+        this.isAdjacent = this.isAdjacent.bind(this);
+
+        this.handleMouseDown = this.handleMouseDown.bind(this);
+        this.handleMouseUp = this.handleMouseUp.bind(this);
+        this.handleMouseOver = this.handleMouseOver.bind(this);
     }
 
     componentDidMount() {
@@ -46,12 +55,35 @@ export default class Grid extends Component {
             letter = String.fromCharCode(CHARCODE_A +
                 LETTER_FREQUENCY.findIndex(i => i > random));
 
-        console.log(random, letter);
-
         return {
-            id: this.idVersion++,
+            id: '' + this.idVersion++,
             letter: letter,
         };
+    }
+
+    /**
+     * Returns the position given an id
+     * @param id
+     * @returns {{col: number, row: number}}
+     */
+    findPositionById(id) {
+        let col = -1, row = -1;
+
+        col = this.state.letters.findIndex(
+            letterRow => (row = letterRow.findIndex(
+                letter => letter.id === id)) !== -1);
+
+        return {
+            col: col,
+            row: row,
+        };
+    }
+
+    isAdjacent(id1, id2) {
+        let pos1 = this.findPositionById(id1),
+            pos2 = this.findPositionById(id2);
+
+        return Math.abs(pos1.col - pos2.col) <= 1 && Math.abs(pos1.row - pos2.row) <= 1;
     }
 
     // Fill this.state.letters
@@ -73,18 +105,63 @@ export default class Grid extends Component {
         });
     }
 
+    handleMouseDown(e) {
+        if (e.target.dataset.tag) {
+            this.isMouseDown = true;
+            this.handleMouseOver(e);
+        }
+    }
+
+    handleMouseUp() {
+        this.isMouseDown = false;
+
+        this.setState({
+            selectedLetters: [],
+        });
+    }
+
+    handleMouseOver(e) {
+        if (this.isMouseDown) {
+            let id = e.target.dataset.tag;
+
+            // Removing
+            let letters = this.state.selectedLetters;
+            if (letters[letters.length - 2] === id) {
+                letters.pop();
+                this.setState({
+                    selectedLetters: letters,
+                });
+            } else if (letters.indexOf(id) === -1) {
+                // Check if they are adjacent
+                let lastLetter = letters[letters.length - 1];
+                if (!lastLetter || this.isAdjacent(lastLetter, id)) {
+                    // Add this
+                    this.setState({
+                        selectedLetters: [...letters, id],
+                    });
+                }
+            }
+        }
+    }
+
     render() {
         return (
             <div className="grid flex-center">
-                <div className="grid-wrapper">
+                <div className="grid-wrapper"
+                     onMouseDown={this.handleMouseDown}
+                     onMouseUp={this.handleMouseUp}
+                >
                     {this.state.letters.map((letters, row) =>
                         letters.map((letter, col) =>
                             <div
                                 key={letter.id}
-                                className={`letter-grid letter-${letter.letter}`}
+                                className={`letter-grid letter-${letter.letter} ${this.state.selectedLetters.indexOf(
+                                    letter.id) === -1 ? "" : "selected" }`}
                                 style={this.generateLetterStyle(row, col)}
                             >
                                 <div
+                                    onMouseOver={this.handleMouseOver}
+                                    data-tag={letter.id}
                                     className="letter-inner flex-center">
                                     <span>{letter.letter}</span></div>
                             </div>

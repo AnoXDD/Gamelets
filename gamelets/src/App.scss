@@ -10,6 +10,7 @@
     width: $grid-size;
     height: $grid-size;
     padding: 20px;
+    user-select: none;
 
     :before {
       content: "";
@@ -21,6 +22,12 @@
       top: 2.5px;
       z-index: -1;
     }
+
+    &.selected {
+      :before {
+        background-color: $css;
+      }
+    }
   }
 
   .letter-inner {
@@ -29,5 +36,9 @@
     font-size: 40px;
     text-transform: uppercase;
     color: white;
+
+    span {
+      pointer-events: none;
+    }
   }
 }
