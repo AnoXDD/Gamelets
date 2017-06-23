@@ -10,18 +10,46 @@
     box-sizing: border-box;
     width: $grid-size;
     height: $grid-size;
-    padding: 20px;
+    padding: 10px;
 
-    :before {
+    .arrow {
+      display: block;
       content: "";
-      background-color: $lightgrey;
-      width: $grid-size - 5px;
-      height: $grid-size - 5px;
-      position: absolute;
-      left: 2.5px;
-      top: 2.5px;
+      background-color: transparent;
       z-index: -1;
-      transition: .2s ease;
+      width: 100%;
+      height: 8%;
+      position: absolute;
+      right: 50%;
+      top: 46%;
+      transform-origin: 100% 50%;
+
+      &.l, &.lu, &.u, &.ru, &.r, &.rd, &.d, &.ld {
+        background-color: $css;
+        transition: background .2s ease;
+      }
+
+      &.lu {
+        transform: rotate(45deg);
+      }
+      &.u {
+        transform: rotate(90deg);
+      }
+      &.ru {
+        transform: rotate(135deg);
+      }
+      &.r {
+        transform: rotate(180deg);
+      }
+      &.rd {
+        transform: rotate(225deg);
+      }
+      &.d {
+        transform: rotate(-90deg);
+      }
+      &.ld {
+        transform: rotate(-45deg);
+      }
     }
 
     &:hover {
@@ -45,8 +73,22 @@
     text-transform: uppercase;
     color: white;
 
-    span {
+    &:before {
+      content: "";
+      background-color: $lightgrey;
+      width: $grid-size - 5px;
+      height: $grid-size - 5px;
+      position: absolute;
+      left: 2.5px;
+      top: 2.5px;
+      transition: .2s ease;
       pointer-events: none;
+    }
+
+    span {
+      position: relative;
+      pointer-events: none;
+      z-index: 1;
     }
   }
 }

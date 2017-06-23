@@ -25,6 +25,12 @@ export default class Grid extends Component {
 
     isMouseDown = false;
 
+    /**
+     * A map to map from any id TO another id block
+     * @type {{}}
+     */
+    relativePositions = {};
+
     constructor(props) {
         super(props);
 
@@ -66,7 +72,7 @@ export default class Grid extends Component {
     findLetterById(id) {
         let pos = this.findPositionById(id);
 
-        return this.state.letters[pos.col][pos.row].letter;
+        return this.state.letters[pos.row][pos.col].letter;
     }
 
     /**
@@ -77,8 +83,8 @@ export default class Grid extends Component {
     findPositionById(id) {
         let col = -1, row = -1;
 
-        col = this.state.letters.findIndex(
-            letterRow => (row = letterRow.findIndex(
+        row = this.state.letters.findIndex(
+            letterRow => (col = letterRow.findIndex(
                 letter => letter.id === id)) !== -1);
 
         return {
@@ -92,6 +98,23 @@ export default class Grid extends Component {
             pos2 = this.findPositionById(id2);
 
         return Math.abs(pos1.col - pos2.col) <= 1 && Math.abs(pos1.row - pos2.row) <= 1;
+    }
+
+    /**
+     * Finds the position of id2 relatively to id1 if they are adjacent,
+     * otherwise returns an empty string
+     * @param id1
+     * @param id2
+     */
+    findRelativePositionOf(id1, id2) {
+        let pos1 = this.findPositionById(id1),
+            pos2 = this.findPositionById(id2);
+
+        if (Math.abs(pos1.col - pos2.col) > 1 || Math.abs(pos1.row - pos2.row) > 1) {
+            return "";
+        }
+
+        return `${pos1.col - pos2.col === 1 ? "l" : (pos1.col - pos2.col === -1 ? "r" : "")}${pos1.row - pos2.row === 1 ? "d" : (pos1.row - pos2.row === -1 ? "u" : "")}`;
     }
 
     // Fill this.state.letters
@@ -123,6 +146,7 @@ export default class Grid extends Component {
     handleMouseUp() {
         this.isMouseDown = false;
 
+        this.relativePositions = {};
         this.handleNewSelectedLetters([]);
     }
 
@@ -131,14 +155,21 @@ export default class Grid extends Component {
             let id = e.target.dataset.tag;
 
             // Removing
-            let letters = this.state.selectedLetters;
+            let letters = this.state.selectedLetters,
+                lastLetter = letters[letters.length - 1];
+
             if (letters[letters.length - 2] === id) {
+                delete this.relativePositions[id];
+
                 letters.pop();
                 this.handleNewSelectedLetters(letters);
             } else if (letters.indexOf(id) === -1) {
                 // Check if they are adjacent
-                let lastLetter = letters[letters.length - 1];
-                if (!lastLetter || this.isAdjacent(lastLetter, id)) {
+                let position = lastLetter ? this.findRelativePositionOf(
+                    lastLetter, id) : lastLetter;
+                if (!lastLetter || position) {
+                    this.relativePositions[lastLetter] = position;
+
                     // Add this
                     this.handleNewSelectedLetters([...letters, id]);
                 }
@@ -169,9 +200,11 @@ export default class Grid extends Component {
                             <div
                                 key={letter.id}
                                 className={`letter-grid letter-${letter.letter} ${this.state.selectedLetters.indexOf(
-                                    letter.id) === -1 ? "" : "selected" }`}
+                                    letter.id) === -1 ? "" : "selected"}`}
                                 style={this.generateLetterStyle(row, col)}
                             >
+                                <span
+                                    className={`arrow ${this.relativePositions[letter.id] || ""}`}/>
                                 <div
                                     onMouseOver={this.handleMouseOver}
                                     data-tag={letter.id}

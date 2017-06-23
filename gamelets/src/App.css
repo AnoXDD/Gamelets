@@ -335,17 +335,35 @@ img.center {
     box-sizing: border-box;
     width: 100px;
     height: 100px;
-    padding: 20px; }
-    .grid .letter-grid :before {
+    padding: 10px; }
+    .grid .letter-grid .arrow {
+      display: block;
       content: "";
-      background-color: #e8e8e8;
-      width: 95px;
-      height: 95px;
-      position: absolute;
-      left: 2.5px;
-      top: 2.5px;
+      background-color: transparent;
       z-index: -1;
-      transition: .2s ease; }
+      width: 100%;
+      height: 8%;
+      position: absolute;
+      right: 50%;
+      top: 46%;
+      transform-origin: 100% 50%; }
+      .grid .letter-grid .arrow.l, .grid .letter-grid .arrow.lu, .grid .letter-grid .arrow.u, .grid .letter-grid .arrow.ru, .grid .letter-grid .arrow.r, .grid .letter-grid .arrow.rd, .grid .letter-grid .arrow.d, .grid .letter-grid .arrow.ld {
+        background-color: #00BCD4;
+        transition: background .2s ease; }
+      .grid .letter-grid .arrow.lu {
+        transform: rotate(45deg); }
+      .grid .letter-grid .arrow.u {
+        transform: rotate(90deg); }
+      .grid .letter-grid .arrow.ru {
+        transform: rotate(135deg); }
+      .grid .letter-grid .arrow.r {
+        transform: rotate(180deg); }
+      .grid .letter-grid .arrow.rd {
+        transform: rotate(225deg); }
+      .grid .letter-grid .arrow.d {
+        transform: rotate(-90deg); }
+      .grid .letter-grid .arrow.ld {
+        transform: rotate(-45deg); }
     .grid .letter-grid:hover :before {
       background-color: #80DEEA; }
     .grid .letter-grid.selected :before {
@@ -357,7 +375,19 @@ img.center {
     font-weight: bold;
     text-transform: uppercase;
     color: white; }
-    .grid .letter-inner span {
+    .grid .letter-inner:before {
+      content: "";
+      background-color: #e8e8e8;
+      width: 95px;
+      height: 95px;
+      position: absolute;
+      left: 2.5px;
+      top: 2.5px;
+      transition: .2s ease;
       pointer-events: none; }
+    .grid .letter-inner span {
+      position: relative;
+      pointer-events: none;
+      z-index: 1; }
 
 /*# sourceMappingURL=App.css.map */
