@@ -53,6 +53,28 @@ body, html {
     font-size: 40px;
     font-weight: bolder;
     margin-bottom: 10px;
+    transition: .2s ease;
+  }
+
+  &.not-valid {
+    .letter-selected {
+      background-color: $red;
+    }
+    .grid .selected {
+      .letter-inner:before, .l, .lu, .u, .ru, .r, .rd, .d, .ld {
+        background-color: $red;
+      }
+    }
+  }
+  &.valid {
+    .letter-selected {
+      background-color: $green;
+    }
+    .grid .selected {
+      .letter-inner:before, .l, .lu, .u, .ru, .r, .rd, .d, .ld {
+        background-color: $green;
+      }
+    }
   }
 }
 

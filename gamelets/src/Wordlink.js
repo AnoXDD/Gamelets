@@ -11,6 +11,7 @@ export default class Wordlink extends Component {
     state = {
         word: "",
         score: 0,
+        isSelectedWordValid: "",
     };
 
     constructor(props) {
@@ -34,16 +35,18 @@ export default class Wordlink extends Component {
 
     render() {
         return (
-            <div className="wordlink">
+            <div className={`wordlink ${this.state.isSelectedWordValid}`}>
                 <header className="flex-center">
                     <div className="score">{this.state.score}</div>
                 </header>
                 <div className="game-area">
-                    <div className="flex-inner-extend flex-center game-area-inner">
+                    <div
+                        className="flex-inner-extend flex-center game-area-inner">
                         <div
                             className="letter-selected flex-center">{this.state.word}</div>
                         <Grid onWordChange={this.handleNewWord}
                               onScoreChange={this.handleNewScore}
+                              onWordValidChange={v => this.setState({isSelectedWordValid: v})}
                         />
                     </div>
                 </div>

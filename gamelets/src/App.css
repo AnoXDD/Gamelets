@@ -366,7 +366,16 @@ body, html {
     text-transform: uppercase;
     font-size: 40px;
     font-weight: bolder;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    transition: .2s ease; }
+  .wordlink.not-valid .letter-selected {
+    background-color: #F44336; }
+  .wordlink.not-valid .grid .selected .letter-inner:before, .wordlink.not-valid .grid .selected .l, .wordlink.not-valid .grid .selected .lu, .wordlink.not-valid .grid .selected .u, .wordlink.not-valid .grid .selected .ru, .wordlink.not-valid .grid .selected .r, .wordlink.not-valid .grid .selected .rd, .wordlink.not-valid .grid .selected .d, .wordlink.not-valid .grid .selected .ld {
+    background-color: #F44336; }
+  .wordlink.valid .letter-selected {
+    background-color: #4CAF50; }
+  .wordlink.valid .grid .selected .letter-inner:before, .wordlink.valid .grid .selected .l, .wordlink.valid .grid .selected .lu, .wordlink.valid .grid .selected .u, .wordlink.valid .grid .selected .ru, .wordlink.valid .grid .selected .r, .wordlink.valid .grid .selected .rd, .wordlink.valid .grid .selected .d, .wordlink.valid .grid .selected .ld {
+    background-color: #4CAF50; }
 
 .grid {
   width: 100%;

@@ -40,6 +40,8 @@ const LETTER_SCORE = {
     z: 10,
 };
 
+const SELECT_WORD_COOLDOWN = 500;
+
 export default class Grid extends Component {
 
     style = {};
@@ -53,6 +55,7 @@ export default class Grid extends Component {
     idVersion = 0;
 
     isMouseDown = false;
+    isCoolingDown = false;
 
     /**
      * A map to map from any id TO another id block
@@ -105,6 +108,10 @@ export default class Grid extends Component {
 
     findLetterById(id) {
         let pos = this.findPositionById(id);
+
+        if (pos.col === -1 || pos.row === -1) {
+            return null;
+        }
 
         return this.state.letters[pos.col][pos.row].letter;
     }
@@ -238,30 +245,49 @@ export default class Grid extends Component {
     }
 
     handleMouseDown(e) {
-        if (e.target.dataset.tag) {
+        if (e.target.dataset.tag && !this.isCoolingDown) {
             this.isMouseDown = true;
             this.handleMouseOver(e);
         }
     }
 
     handleMouseUp(e) {
+        let onFinish = () => {
+            this.isCoolingDown = false;
+            this.relativePositions = {};
+            this.handleNewSelectedLetters([]);
+            this.props.onWordValidChange("");
+        };
+
         this.isMouseDown = false;
+        this.isCoolingDown = true;
 
         let word = this.getSelectedWord();
 
+        if (word.length <= 1) {
+            onFinish();
+            return;
+        }
+
         this.isSelectedWordValid(word)
             .then(() => {
+                this.props.onWordValidChange("valid");
+
                 let score = this.calculateSelectedWordScore(word);
                 this.props.onScoreChange(score);
 
-                this.removeSelectedWord();
-                this.fillLetters();
+                setTimeout(() => {
+                    this.removeSelectedWord();
+                    this.fillLetters();
+                    onFinish();
+                }, SELECT_WORD_COOLDOWN);
             })
             .catch(err => {
-            })
-            .then(() => {
-                this.relativePositions = {};
-                this.handleNewSelectedLetters([]);
+                this.props.onWordValidChange("not-valid");
+
+                setTimeout(() => {
+                    onFinish();
+                }, SELECT_WORD_COOLDOWN);
             });
     }
 
@@ -304,7 +330,8 @@ export default class Grid extends Component {
 
     render() {
         return (
-            <div className="grid flex-center">
+            <div
+                className={`grid flex-center ${this.state.isSelectedWordValid}`}>
                 <div className="grid-wrapper"
                      onMouseDown={this.handleMouseDown}
                      onMouseUp={this.handleMouseUp}
@@ -321,7 +348,7 @@ export default class Grid extends Component {
                                 <span
                                     className={`arrow ${this.relativePositions[letter.id] || ""}`}/>
                                 <div
-                                    onMouseOver={this.handleMouseOver}
+                                    onMouseEnter={this.handleMouseOver}
                                     data-tag={letter.id}
                                     className="letter-inner flex-center">
                                     <span>{letter.letter}</span></div>
