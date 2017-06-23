@@ -351,8 +351,6 @@ body, html {
     height: 80px;
     color: white;
     font-size: 30px; }
-    .wordlink header .score:before {
-      content: "SCORE: "; }
   .wordlink .game-area {
     flex: 1 1 auto;
     position: relative; }
@@ -498,5 +496,36 @@ body, html {
       position: relative;
       pointer-events: none;
       z-index: 1; }
+
+.score {
+  position: relative; }
+@keyframes score-fade-in-1 {
+  from {
+    bottom: -20px;
+    opacity: 1; }
+  to {
+    bottom: 0px;
+    opacity: 0; } }
+@keyframes score-fade-in-2 {
+  from {
+    bottom: -30px;
+    opacity: 1; }
+  to {
+    bottom: 0px;
+    opacity: 0; } }
+  .score:before {
+    content: "SCORE: "; }
+  .score .difference-1 {
+    animation: score-fade-in-1 1.5s ease; }
+  .score .difference-2 {
+    animation: score-fade-in-2 1.5s ease; }
+  .score .difference {
+    position: absolute;
+    color: #FFC107;
+    right: 0;
+    bottom: 0;
+    opacity: 0; }
+    .score .difference:before {
+      content: "+"; }
 
 /*# sourceMappingURL=App.css.map */

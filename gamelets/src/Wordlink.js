@@ -6,6 +6,7 @@
 import React, {Component} from "react";
 
 import Grid from "./Grid";
+import Scoreboard from "./Scoreboard";
 
 export default class Wordlink extends Component {
     state = {
@@ -37,7 +38,7 @@ export default class Wordlink extends Component {
         return (
             <div className={`wordlink ${this.state.isSelectedWordValid}`}>
                 <header className="flex-center">
-                    <div className="score">{this.state.score}</div>
+                    <Scoreboard score={this.state.score}/>
                 </header>
                 <div className="game-area">
                     <div
@@ -46,7 +47,8 @@ export default class Wordlink extends Component {
                             className="letter-selected flex-center">{this.state.word}</div>
                         <Grid onWordChange={this.handleNewWord}
                               onScoreChange={this.handleNewScore}
-                              onWordValidChange={v => this.setState({isSelectedWordValid: v})}
+                              onWordValidChange={
+                                  v => this.setState({isSelectedWordValid: v})}
                         />
                     </div>
                 </div>
