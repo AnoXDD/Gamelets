@@ -244,7 +244,7 @@ export default class Grid extends Component {
         }
     }
 
-    handleMouseUp() {
+    handleMouseUp(e) {
         this.isMouseDown = false;
 
         let word = this.getSelectedWord();
@@ -263,8 +263,6 @@ export default class Grid extends Component {
                 this.relativePositions = {};
                 this.handleNewSelectedLetters([]);
             });
-
-
     }
 
     handleMouseOver(e) {
@@ -310,6 +308,7 @@ export default class Grid extends Component {
                 <div className="grid-wrapper"
                      onMouseDown={this.handleMouseDown}
                      onMouseUp={this.handleMouseUp}
+                     onMouseLeave={this.handleMouseUp}
                 >
                     {this.state.letters.map((letters, col) =>
                         letters.map((letter, row) =>

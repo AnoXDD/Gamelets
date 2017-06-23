@@ -35,11 +35,18 @@ export default class Wordlink extends Component {
     render() {
         return (
             <div className="wordlink">
-                <div className="letter-selected">{this.state.word}</div>
-                <div className="score">{this.state.score}</div>
-                <Grid onWordChange={this.handleNewWord}
-                      onScoreChange={this.handleNewScore}
-                />
+                <header className="flex-center">
+                    <div className="score">{this.state.score}</div>
+                </header>
+                <div className="game-area">
+                    <div className="flex-inner-extend flex-center game-area-inner">
+                        <div
+                            className="letter-selected flex-center">{this.state.word}</div>
+                        <Grid onWordChange={this.handleNewWord}
+                              onScoreChange={this.handleNewScore}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }
