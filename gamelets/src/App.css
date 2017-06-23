@@ -337,43 +337,78 @@ body, html {
   width: 100%;
   height: 100%; }
 
-.wordlink {
+.game {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   user-select: none; }
-  .wordlink header {
+  .game header {
     width: 100%;
     text-align: right;
     background: #448AFF;
     height: 80px;
     color: white;
-    font-size: 30px; }
-  .wordlink .game-area {
+    font-size: 30px;
+    transition: .4s ease; }
+  .game .game-area {
     flex: 1 1 auto;
     position: relative; }
-    .wordlink .game-area .game-area-inner {
+    .game .game-area .game-area-inner {
       flex-direction: column; }
-  .wordlink .letter-selected {
-    width: 500px;
-    height: 100px;
-    background: #00BCD4;
-    color: white;
-    text-transform: uppercase;
-    font-size: 40px;
-    font-weight: bolder;
-    margin-bottom: 10px;
-    transition: .2s ease; }
-  .wordlink.not-valid .letter-selected {
-    background-color: #F44336; }
-  .wordlink.not-valid .grid .selected .letter-inner:before, .wordlink.not-valid .grid .selected .l, .wordlink.not-valid .grid .selected .lu, .wordlink.not-valid .grid .selected .u, .wordlink.not-valid .grid .selected .ru, .wordlink.not-valid .grid .selected .r, .wordlink.not-valid .grid .selected .rd, .wordlink.not-valid .grid .selected .d, .wordlink.not-valid .grid .selected .ld {
-    background-color: #F44336; }
-  .wordlink.valid .letter-selected {
-    background-color: #4CAF50; }
-  .wordlink.valid .grid .selected .letter-inner:before, .wordlink.valid .grid .selected .l, .wordlink.valid .grid .selected .lu, .wordlink.valid .grid .selected .u, .wordlink.valid .grid .selected .ru, .wordlink.valid .grid .selected .r, .wordlink.valid .grid .selected .rd, .wordlink.valid .grid .selected .d, .wordlink.valid .grid .selected .ld {
-    background-color: #4CAF50; }
+  .game.idle header, .game.ready header {
+    flex-direction: column;
+    height: 100%; }
+  .game.idle .grid, .game.ready .grid {
+    pointer-events: none; }
+  .game.idle .timer {
+    position: absolute;
+    width: 0;
+    margin: 0; }
+  .game.ready .timer {
+    position: absolute;
+    margin: 0;
+    font-size: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; }
+    .game.ready .timer:before {
+      content: ""; }
+  .game.ready .btns {
+    left: 100vw; }
+  .game.ready .score {
+    opacity: 0; }
+  .game .btn {
+    color: #00BCD4;
+    font-size: 20px;
+    padding: 10px 20px; }
+  .game .btns {
+    position: relative;
+    left: 0;
+    transition: 1s ease; }
+    .game .btns.replay {
+      margin-top: 50px; }
+
+.wordlink .letter-selected {
+  width: 500px;
+  height: 100px;
+  background: #00BCD4;
+  color: white;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-weight: bolder;
+  margin-bottom: 10px;
+  transition: .2s ease; }
+.wordlink.not-valid .letter-selected {
+  background-color: #F44336; }
+.wordlink.not-valid .grid .selected .letter-inner:before, .wordlink.not-valid .grid .selected .l, .wordlink.not-valid .grid .selected .lu, .wordlink.not-valid .grid .selected .u, .wordlink.not-valid .grid .selected .ru, .wordlink.not-valid .grid .selected .r, .wordlink.not-valid .grid .selected .rd, .wordlink.not-valid .grid .selected .d, .wordlink.not-valid .grid .selected .ld {
+  background-color: #F44336; }
+.wordlink.valid .letter-selected {
+  background-color: #4CAF50; }
+.wordlink.valid .grid .selected .letter-inner:before, .wordlink.valid .grid .selected .l, .wordlink.valid .grid .selected .lu, .wordlink.valid .grid .selected .u, .wordlink.valid .grid .selected .ru, .wordlink.valid .grid .selected .r, .wordlink.valid .grid .selected .rd, .wordlink.valid .grid .selected .d, .wordlink.valid .grid .selected .ld {
+  background-color: #4CAF50; }
 
 .grid {
   width: 100%;
@@ -501,7 +536,7 @@ body, html {
   position: relative; }
 @keyframes score-fade-in-1 {
   from {
-    bottom: -20px;
+    bottom: -30px;
     opacity: 1; }
   to {
     bottom: 0px;
@@ -527,5 +562,12 @@ body, html {
     opacity: 0; }
     .score .difference:before {
       content: "+"; }
+
+.timer {
+  margin-right: 50px;
+  transition: .4s ease;
+  overflow: hidden; }
+  .timer:before {
+    content: 'TIME:\00a0'; }
 
 /*# sourceMappingURL=App.css.map */

@@ -77,6 +77,7 @@ export default class Grid extends Component {
         this.getSelectedWord = this.getSelectedWord.bind(this);
         this.calculateSelectedWordScore = this.calculateSelectedWordScore.bind(
             this);
+        this.restart = this.restart.bind(this);
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -86,6 +87,16 @@ export default class Grid extends Component {
 
     componentDidMount() {
         this.fillLetters();
+    }
+
+    shouldComponentUpdate(nextProps) {
+        return nextProps.active;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (!prevProps.active && this.props.active) {
+            this.restart();
+        }
     }
 
     generateLetterStyle(col, row) {
@@ -191,7 +202,7 @@ export default class Grid extends Component {
             score += LETTER_SCORE[char];
         }
 
-        return score * word.length;
+        return score * word.length * word.length;
     }
 
     isSelectedWordValid(word) {
@@ -244,8 +255,15 @@ export default class Grid extends Component {
         this.forceUpdate();
     }
 
+    restart() {
+        this.setState({
+            letters: [[]],
+        });
+        this.fillLetters();
+    }
+
     handleMouseDown(e) {
-        if (e.target.dataset.tag && !this.isCoolingDown) {
+        if (this.props.active && e.target.dataset.tag && !this.isCoolingDown) {
             this.isMouseDown = true;
             this.handleMouseOver(e);
         }

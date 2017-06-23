@@ -7,12 +7,30 @@ import React, {Component} from "react";
 
 import Grid from "./Grid";
 import Scoreboard from "./Scoreboard";
+import Timer from "./Timer";
+import Button from "./Button";
+
+const DEFAULT_TIME = 30,
+    COUNTDOWN = 3;
+
+const GAME_STATE = {
+    IDLE: -1,
+    READY: 1,
+    START: 2,
+};
 
 export default class Wordlink extends Component {
+
+    newGame = true;
+
+
     state = {
         word: "",
         score: 0,
         isSelectedWordValid: "",
+
+        gameState: GAME_STATE.IDLE,
+        timeVersion: 0,
     };
 
     constructor(props) {
@@ -20,6 +38,14 @@ export default class Wordlink extends Component {
 
         this.handleNewWord = this.handleNewWord.bind(this);
         this.handleNewScore = this.handleNewScore.bind(this);
+        this.handleTimeFinish = this.handleTimeFinish.bind(this);
+
+        this.readyGame = this.readyGame.bind(this);
+        this.startGame = this.startGame.bind(this);
+    }
+
+    componentDidMount() {
+        // this.startGame();
     }
 
     handleNewWord(word) {
@@ -34,11 +60,56 @@ export default class Wordlink extends Component {
         });
     }
 
+    handleTimeFinish() {
+        if (this.state.gameState === GAME_STATE.READY) {
+            this.startGame();
+        } else {
+            this.setState({
+                gameState: GAME_STATE.IDLE,
+            });
+        }
+    }
+
+    readyGame() {
+        this.counter = COUNTDOWN;
+
+        this.setState({
+            gameState: GAME_STATE.READY,
+            timeVersion: this.state.timeVersion + 1,
+            score: 0,
+        })
+    }
+
+    startGame() {
+        this.newGame = false;
+        this.counter = DEFAULT_TIME;
+
+        this.setState({
+            gameState: GAME_STATE.START,
+            timeVersion: this.state.timeVersion + 1,
+        });
+    }
+
     render() {
         return (
-            <div className={`wordlink ${this.state.isSelectedWordValid}`}>
+            <div
+                className={`wordlink game ${this.state.isSelectedWordValid} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === GAME_STATE.READY ? "ready" : ""}`}>
                 <header className="flex-center">
-                    <Scoreboard score={this.state.score}/>
+                    <Timer
+                        version={this.state.timeVersion}
+                        start={this.counter}
+                        onFinish={this.handleTimeFinish}/>
+                    {this.newGame ? null :
+                        <Scoreboard score={this.state.score}/>}
+                    <div
+                        className={`btns ${this.state.gameState === GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
+                        <Button
+                            onClick={this.readyGame}
+                            text={`${this.newGame ? "" : "re"}start`}
+                        >
+                            {this.newGame ? "play_arrow" : "refresh"}
+                        </Button>
+                    </div>
                 </header>
                 <div className="game-area">
                     <div
@@ -49,6 +120,7 @@ export default class Wordlink extends Component {
                               onScoreChange={this.handleNewScore}
                               onWordValidChange={
                                   v => this.setState({isSelectedWordValid: v})}
+                              active={this.state.gameState === GAME_STATE.START}
                         />
                     </div>
                 </div>
