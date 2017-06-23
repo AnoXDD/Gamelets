@@ -328,32 +328,36 @@ img.center {
     box-sizing: border-box;
     padding: 20px 50px 25px; }
 
-.grid .letter-grid {
-  position: absolute;
-  box-sizing: border-box;
-  width: 100px;
-  height: 100px;
-  padding: 20px;
+.grid {
   user-select: none; }
-  .grid .letter-grid :before {
-    content: "";
-    background-color: #80DEEA;
-    width: 95px;
-    height: 95px;
+  .grid .letter-grid {
     position: absolute;
-    left: 2.5px;
-    top: 2.5px;
-    z-index: -1;
-    transition: .2s ease; }
-  .grid .letter-grid.selected :before {
-    background-color: #00BCD4; }
-.grid .letter-inner {
-  width: 100%;
-  height: 100%;
-  font-size: 45px;
-  text-transform: uppercase;
-  color: white; }
-  .grid .letter-inner span {
-    pointer-events: none; }
+    box-sizing: border-box;
+    width: 100px;
+    height: 100px;
+    padding: 20px; }
+    .grid .letter-grid :before {
+      content: "";
+      background-color: #e8e8e8;
+      width: 95px;
+      height: 95px;
+      position: absolute;
+      left: 2.5px;
+      top: 2.5px;
+      z-index: -1;
+      transition: .2s ease; }
+    .grid .letter-grid:hover :before {
+      background-color: #80DEEA; }
+    .grid .letter-grid.selected :before {
+      background-color: #00BCD4; }
+  .grid .letter-inner {
+    width: 100%;
+    height: 100%;
+    font-size: 45px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white; }
+    .grid .letter-inner span {
+      pointer-events: none; }
 
 /*# sourceMappingURL=App.css.map */

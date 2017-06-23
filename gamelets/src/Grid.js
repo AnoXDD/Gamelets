@@ -123,9 +123,7 @@ export default class Grid extends Component {
     handleMouseUp() {
         this.isMouseDown = false;
 
-        this.setState({
-            selectedLetters: [],
-        });
+        this.handleNewSelectedLetters([]);
     }
 
     handleMouseOver(e) {
