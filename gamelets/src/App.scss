@@ -1,0 +1,33 @@
+@import "base.scss";
+
+.grid {
+
+  $grid-size: 100px;
+
+  .letter-grid {
+    position: absolute;
+    box-sizing: border-box;
+    width: $grid-size;
+    height: $grid-size;
+    padding: 20px;
+
+    :before {
+      content: "";
+      background-color: $csl;
+      width: $grid-size - 5px;
+      height: $grid-size - 5px;
+      position: absolute;
+      left: 2.5px;
+      top: 2.5px;
+      z-index: -1;
+    }
+  }
+
+  .letter-inner {
+    width: 100%;
+    height: 100%;
+    font-size: 40px;
+    text-transform: uppercase;
+    color: white;
+  }
+}

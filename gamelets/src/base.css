@@ -1,0 +1,331 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "https://fonts.googleapis.com/css?family=Lato";
+@import "https://fonts.googleapis.com/earlyaccess/notosanssc.css";
+@keyframes fade-in {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes fade-out {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+@keyframes fade-in-2 {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes fade-out-2 {
+  from {
+    opacity: 1; }
+  to {
+    opacity: 0; } }
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+*:not(i) {
+  font-family: "Lato", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; }
+
+input, textarea {
+  border: none;
+  resize: none;
+  font-size: 30px;
+  padding: 20px; }
+  input:active, input:focus, textarea:active, textarea:focus {
+    outline: none; }
+  input:disabled, textarea:disabled {
+    color: black;
+    background-color: inherit; }
+
+.vertical-align .vertical-align-wrapper {
+  display: block;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+.material-icons {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none; }
+
+.shadow {
+  box-shadow: 3px 2px 9px grey; }
+
+.shadow-light {
+  box-shadow: 1px 1px 4px grey; }
+
+.normal, .normal input {
+  background: white;
+  font-size: 16px;
+  display: block;
+  height: 20px;
+  padding: 0;
+  position: relative; }
+  .normal.underlined, .normal.underlined input, .normal input.underlined, .normal input.underlined input {
+    border-bottom: 1px solid grey !important;
+    transition: border-bottom .4s ease; }
+    .normal.underlined.red, .normal.underlined input.red, .normal input.underlined.red, .normal input.underlined input.red {
+      border-bottom: 1px solid #F44336 !important; }
+    .normal.underlined:focus, .normal.underlined:active, .normal.underlined input:focus, .normal.underlined input:active, .normal input.underlined:focus, .normal input.underlined:active, .normal input.underlined input:focus, .normal input.underlined input:active {
+      border-bottom: 1px solid #448AFF !important; }
+  .normal.dark, .normal input.dark {
+    background: inherit;
+    color: white; }
+  .normal.disabled, .normal:disabled, .normal input.disabled, .normal input:disabled {
+    border-bottom-color: transparent !important; }
+
+.hidden {
+  display: none !important; }
+
+.transparent {
+  opacity: 0;
+  pointer-events: none !important; }
+
+.flex {
+  display: flex; }
+  .flex.column {
+    flex-direction: column; }
+
+.flex-filler {
+  flex: 1 1 auto; }
+
+.flex-last-item {
+  width: 100%; }
+
+.flex-extend-inner-wrapper, .flex-inner-extend {
+  position: absolute;
+  height: 100%;
+  width: 100%; }
+
+img.center {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+.btn, .toggle {
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  height: 50px;
+  width: 60px;
+  font-weight: lighter;
+  text-align: center;
+  transition: .4s ease;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 1px;
+  background: white; }
+  .btn[disabled], .btn.disabled, .toggle[disabled], .toggle.disabled {
+    pointer-events: none;
+    opacity: .5; }
+  .btn.icon, .toggle.icon {
+    pointer-events: none; }
+  .btn.dark, .toggle.dark {
+    background: #212121;
+    color: white; }
+  .btn.accent, .toggle.accent {
+    flex: 0 0 auto;
+    color: white;
+    background: #448AFF; }
+    .btn.accent:hover:not(:active), .toggle.accent:hover:not(:active) {
+      background: #4678ff;
+      box-shadow: 0px 1px 6px black;
+      color: white; }
+    .btn.accent:active, .toggle.accent:active {
+      color: white; }
+  .btn.text, .toggle.text {
+    width: auto;
+    display: flex; }
+    .btn.text .icon-wrapper, .toggle.text .icon-wrapper {
+      flex: 0 0 60px; }
+    .btn.text .text-wrapper, .toggle.text .text-wrapper {
+      display: block;
+      flex: 1 1 auto;
+      text-align: left;
+      pointer-events: none;
+      position: relative;
+      white-space: nowrap; }
+  .btn.loading, .toggle.loading {
+    opacity: .8; }
+    .btn.loading .loading-icon .material-icons, .toggle.loading .loading-icon .material-icons {
+      flex: 1 1 auto;
+      animation: spin 1s linear infinite; }
+  .btn.narrow, .toggle.narrow {
+    width: 36px; }
+  .btn.wide, .toggle.wide {
+    width: 180px; }
+  .btn.wider, .toggle.wider {
+    width: 240px; }
+  .btn:after, .toggle:after {
+    pointer-events: none;
+    content: "";
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    transition: background .4s ease; }
+  .btn.underlined:after, .toggle.underlined:after {
+    background: black; }
+  .btn.underlined.active:after, .btn.underlined:hover:after, .toggle.underlined.active:after, .toggle.underlined:hover:after {
+    background: #448AFF; }
+  .btn:hover .tooltip, .toggle:hover .tooltip {
+    opacity: 1;
+    bottom: -32px; }
+  .btn.active, .btn:hover, .toggle.active, .toggle:hover {
+    color: #448AFF; }
+  .btn:not(.underlined):hover .add-circle, .toggle:not(.underlined):hover .add-circle {
+    opacity: 1; }
+  .btn:not(.underlined):hover .original, .toggle:not(.underlined):hover .original {
+    opacity: 0; }
+  .btn:not(.accent):hover, .btn:not(.accent):active, .toggle:not(.accent):hover, .toggle:not(.accent):active {
+    color: #448AFF; }
+    .btn:not(.accent):hover span, .btn:not(.accent):active span, .toggle:not(.accent):hover span, .toggle:not(.accent):active span {
+      opacity: 1; }
+  .btn.border, .toggle.border {
+    border: 1px solid #212121; }
+  .btn .icon-wrapper, .btn .text-wrapper, .toggle .icon-wrapper, .toggle .text-wrapper {
+    height: 100%; }
+  .btn .text-wrapper, .toggle .text-wrapper {
+    display: none; }
+  .btn .loading-icon, .toggle .loading-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: inherit;
+    transition: .4s ease; }
+  .btn .tooltip, .toggle .tooltip {
+    z-index: 999999999;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    bottom: -20px;
+    transition: opacity .4s ease, bottom .4s ease;
+    text-transform: none;
+    width: 100%;
+    height: 32px; }
+    .btn .tooltip .tooltip-text, .toggle .tooltip .tooltip-text {
+      background: #212121;
+      color: white;
+      padding: 8px 10px;
+      border-radius: 2px;
+      font-size: 12px;
+      white-space: nowrap; }
+
+.toggle {
+  cursor: pointer;
+  position: relative;
+  display: inline-block; }
+  .toggle .first, .toggle .second {
+    transition: opacity .4s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%; }
+  .toggle.accent {
+    width: 120px; }
+  .toggle .first {
+    opacity: 1; }
+  .toggle .second {
+    opacity: 0; }
+  .toggle.change-hover:hover.show-second .first, .toggle:not(.change-hover).show-second .first {
+    opacity: 0; }
+  .toggle.change-hover:hover.show-second .second, .toggle:not(.change-hover).show-second .second {
+    opacity: 1; }
+  .toggle.loading {
+    opacity: .8;
+    pointer-events: none; }
+    .toggle.loading .first, .toggle.loading .second {
+      opacity: 0; }
+    .toggle.loading .loading-icon {
+      opacity: 1; }
+
+.btn-breaker {
+  margin: 10px 10px;
+  width: 1px;
+  background: lightgrey; }
+
+.btns {
+  justify-content: center;
+  display: flex; }
+  .btns .text-wrapper {
+    flex: none;
+    width: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 60px; }
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.block {
+  background: transparent;
+  position: fixed;
+  z-index: 900000000;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0; }
+
+.max-z-index {
+  z-index: 999999999;
+  position: relative; }
+
+.z-index-inherit {
+  z-index: inherit;
+  position: relative; }
+
+.no-width {
+  width: 0 !important; }
+
+.bg-grey {
+  background: #eeeced; }
+
+.title-dark {
+  padding: 0 20px;
+  background: #212121;
+  color: white;
+  margin-right: 5px; }
+
+.form {
+  width: 100%;
+  padding: 15px 0 20px;
+  z-index: 9999;
+  left: 0;
+  background: white; }
+  .form .form-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: auto; }
+  .form .form-row {
+    display: flex;
+    padding: 0 50px;
+    margin-top: 5px; }
+  .form .form-title {
+    width: 100%;
+    font-size: 18px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    padding: 20px 50px 25px; }
+
+/*# sourceMappingURL=base.css.map */
