@@ -11,6 +11,35 @@ const LETTER_FREQUENCY = [0.08167, 0.09659, 0.12441, 0.16694, 0.29396, 0.31624, 
 
 const LETTER_OUTER_SIZE = 100;
 
+const LETTER_SCORE = {
+    a: 1,
+    b: 4,
+    c: 4,
+    d: 3,
+    e: 1,
+    f: 5,
+    g: 3,
+    h: 5,
+    i: 1,
+    j: 8,
+    k: 6,
+    l: 2,
+    m: 4,
+    n: 2,
+    o: 1,
+    p: 4,
+    q: 10,
+    r: 2,
+    s: 1,
+    t: 2,
+    u: 2,
+    v: 5,
+    w: 6,
+    x: 8,
+    y: 6,
+    z: 10,
+};
+
 export default class Grid extends Component {
 
     style = {};
@@ -42,6 +71,9 @@ export default class Grid extends Component {
         this.isAdjacent = this.isAdjacent.bind(this);
         this.isSelectedWordValid = this.isSelectedWordValid.bind(this);
         this.removeSelectedWord = this.removeSelectedWord.bind(this);
+        this.getSelectedWord = this.getSelectedWord.bind(this);
+        this.calculateSelectedWordScore = this.calculateSelectedWordScore.bind(
+            this);
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -138,8 +170,62 @@ export default class Grid extends Component {
         });
     }
 
-    isSelectedWordValid() {
-        return true;
+    getSelectedWord(letterIds) {
+        return (letterIds || this.state.selectedLetters)
+            .map(id => this.findLetterById(id))
+            .join("");
+    }
+
+    calculateSelectedWordScore(word) {
+        let score = 0;
+
+        for (let i = 0; i < word.length; ++i) {
+            let char = word[i];
+            score += LETTER_SCORE[char];
+        }
+
+        return score * word.length;
+    }
+
+    isSelectedWordValid(word) {
+        return new Promise((res, rej) => {
+            if (word.length <= 1) {
+                rej();
+            }
+
+            fetch(`/word/${word}`)
+                .then(response => {
+                    if (response.ok) {
+                        res();
+                    } else {
+                        rej();
+                    }
+                })
+                .catch(err => {
+                    rej();
+                });
+        });
+
+        // word = word.toLowerCase();
+        //
+        // // Do a binary search
+        // let l = 0, r = Word.dictionary.length;
+        // while (l < r) {
+        //     let mid = parseInt((l + r) / 2, 10),
+        //         midWord = Word.dictionary[mid];
+        //
+        //     if (midWord === word) {
+        //         return true;
+        //     }
+        //
+        //     if (word.localeCompare(midWord) < 0) {
+        //         r = mid - 1;
+        //     } else {
+        //         l = mid + 1;
+        //     }
+        // }
+        //
+        // return Word.dictionary[r] === word;
     }
 
     removeSelectedWord() {
@@ -161,13 +247,24 @@ export default class Grid extends Component {
     handleMouseUp() {
         this.isMouseDown = false;
 
-        if (this.isSelectedWordValid()) {
-            this.removeSelectedWord();
-            this.fillLetters();
-        }
+        let word = this.getSelectedWord();
 
-        this.relativePositions = {};
-        this.handleNewSelectedLetters([]);
+        this.isSelectedWordValid(word)
+            .then(() => {
+                let score = this.calculateSelectedWordScore(word);
+                this.props.onScoreChange(score);
+
+                this.removeSelectedWord();
+                this.fillLetters();
+            })
+            .catch(err => {
+            })
+            .then(() => {
+                this.relativePositions = {};
+                this.handleNewSelectedLetters([]);
+            });
+
+
     }
 
     handleMouseOver(e) {
@@ -197,14 +294,13 @@ export default class Grid extends Component {
         }
     }
 
-    handleNewSelectedLetters(letters) {
+    handleNewSelectedLetters(letterIds) {
         this.setState({
-            selectedLetters: letters,
+            selectedLetters: letterIds,
         });
 
         if (this.props.onWordChange) {
-            this.props.onWordChange(letters.map(id => this.findLetterById(id))
-                .join(""));
+            this.props.onWordChange(this.getSelectedWord(letterIds));
         }
     }
 

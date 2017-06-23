@@ -346,7 +346,7 @@ body, html {
 
 .grid {
   width: 100%;
-  height: 500px;
+  height: 700px;
   position: relative;
   overflow: hidden;
   user-select: none; }
@@ -355,6 +355,10 @@ body, html {
     margin-bottom: 100%; }
   to {
     margin-bottom: 0; } }
+  .grid .grid-wrapper {
+    width: 500px;
+    height: 500px;
+    position: relative; }
   .grid .letter-grid {
     position: absolute;
     box-sizing: border-box;
@@ -391,6 +395,51 @@ body, html {
         transform: rotate(-90deg); }
       .grid .letter-grid .arrow.ld {
         transform: rotate(-45deg); }
+    .grid .letter-grid:after {
+      content: "1";
+      color: white;
+      z-index: 1;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-weight: bold;
+      pointer-events: none; }
+    .grid .letter-grid.letter-l:after {
+      content: "2"; }
+    .grid .letter-grid.letter-n:after {
+      content: "2"; }
+    .grid .letter-grid.letter-r:after {
+      content: "2"; }
+    .grid .letter-grid.letter-t:after {
+      content: "2"; }
+    .grid .letter-grid.letter-u:after {
+      content: "2"; }
+    .grid .letter-grid.letter-d:after {
+      content: "3"; }
+    .grid .letter-grid.letter-g:after {
+      content: "3"; }
+    .grid .letter-grid.letter-b:after {
+      content: "4"; }
+    .grid .letter-grid.letter-c:after {
+      content: "4"; }
+    .grid .letter-grid.letter-f:after {
+      content: "5"; }
+    .grid .letter-grid.letter-h:after {
+      content: "5"; }
+    .grid .letter-grid.letter-v:after {
+      content: "5"; }
+    .grid .letter-grid.letter-k:after {
+      content: "6"; }
+    .grid .letter-grid.letter-w:after {
+      content: "6"; }
+    .grid .letter-grid.letter-x:after {
+      content: "8"; }
+    .grid .letter-grid.letter-j:after {
+      content: "8"; }
+    .grid .letter-grid.letter-z:after {
+      content: "10"; }
+    .grid .letter-grid.letter-q:after {
+      content: "10"; }
     .grid .letter-grid:hover :before {
       background-color: #80DEEA; }
     .grid .letter-grid.selected :before {

@@ -24,11 +24,6 @@ body, html {
 .grid {
   $grid-size: 100px;
 
-  width: 100%;
-  height: 5 * $grid-size;
-  position: relative;
-  overflow: hidden;
-
   @keyframes grid-enter {
     from {
       margin-bottom: 100%;
@@ -39,7 +34,17 @@ body, html {
     }
   }
 
+  width: 100%;
+  height: 7 * $grid-size;
+  position: relative;
+  overflow: hidden;
   user-select: none;
+
+  .grid-wrapper {
+    width: 5 * $grid-size;
+    height: 5 * $grid-size;
+    position: relative;
+  }
 
   .letter-grid {
     position: absolute;
@@ -90,6 +95,61 @@ body, html {
       }
     }
 
+    &:after {
+      content: "1";
+      color: white;
+      z-index: 1;
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    $point-2: ("l", "n", "r", 't', 'u');
+    $point-3: ('d', 'g');
+    $point-4: ('b', 'c');
+    $point-5: ('f', 'h', 'v');
+    $point-6: ('k', 'w');
+    $point-8: ('x', 'j');
+    $point-10: ('z', 'q');
+
+    @each $i in $point-2 {
+      &.letter-#{$i}:after {
+        content: "2";
+      }
+    }
+    @each $i in $point-3 {
+      &.letter-#{$i}:after {
+        content: "3";
+      }
+    }
+    @each $i in $point-4 {
+      &.letter-#{$i}:after {
+        content: "4";
+      }
+    }
+    @each $i in $point-5 {
+      &.letter-#{$i}:after {
+        content: "5";
+      }
+    }
+    @each $i in $point-6 {
+      &.letter-#{$i}:after {
+        content: "6";
+      }
+    }
+    @each $i in $point-8 {
+      &.letter-#{$i}:after {
+        content: "8";
+      }
+    }
+    @each $i in $point-10 {
+      &.letter-#{$i}:after {
+        content: "10";
+      }
+    }
+
     &:hover {
       :before {
         background-color: $csl;
@@ -121,6 +181,10 @@ body, html {
       top: 2.5px;
       transition: .2s ease;
       pointer-events: none;
+    }
+
+    &:after {
+
     }
 
     span {
