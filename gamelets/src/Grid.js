@@ -40,6 +40,8 @@ export default class Grid extends Component {
         this.findLetterById = this.findLetterById.bind(this);
         this.findPositionById = this.findPositionById.bind(this);
         this.isAdjacent = this.isAdjacent.bind(this);
+        this.isSelectedWordValid = this.isSelectedWordValid.bind(this);
+        this.removeSelectedWord = this.removeSelectedWord.bind(this);
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
@@ -51,7 +53,7 @@ export default class Grid extends Component {
         this.fillLetters();
     }
 
-    generateLetterStyle(row, col) {
+    generateLetterStyle(col, row) {
         return {
             bottom: row * LETTER_OUTER_SIZE,
             left: col * LETTER_OUTER_SIZE,
@@ -72,7 +74,7 @@ export default class Grid extends Component {
     findLetterById(id) {
         let pos = this.findPositionById(id);
 
-        return this.state.letters[pos.row][pos.col].letter;
+        return this.state.letters[pos.col][pos.row].letter;
     }
 
     /**
@@ -83,8 +85,8 @@ export default class Grid extends Component {
     findPositionById(id) {
         let col = -1, row = -1;
 
-        row = this.state.letters.findIndex(
-            letterRow => (col = letterRow.findIndex(
+        col = this.state.letters.findIndex(
+            letterCol => (row = letterCol.findIndex(
                 letter => letter.id === id)) !== -1);
 
         return {
@@ -121,19 +123,32 @@ export default class Grid extends Component {
     fillLetters() {
         let letters = this.state.letters;
 
-        for (let row = 0; row < ROW; ++row) {
-            if (!letters[row]) {
-                letters[row] = [];
+        for (let col = 0; col < COLUMN; ++col) {
+            if (!letters[col]) {
+                letters[col] = [];
             }
 
-            while (letters[row].length < COLUMN) {
-                letters[row].push(this.generateRandomLetterBlock());
+            while (letters[col].length < ROW) {
+                letters[col].push(this.generateRandomLetterBlock());
             }
         }
 
         this.setState({
             letters: letters,
         });
+    }
+
+    isSelectedWordValid() {
+        return true;
+    }
+
+    removeSelectedWord() {
+        for (let id of this.state.selectedLetters) {
+            let pos = this.findPositionById(id);
+            this.state.letters[pos.col].splice(pos.row, 1);
+        }
+
+        this.forceUpdate();
     }
 
     handleMouseDown(e) {
@@ -145,6 +160,11 @@ export default class Grid extends Component {
 
     handleMouseUp() {
         this.isMouseDown = false;
+
+        if (this.isSelectedWordValid()) {
+            this.removeSelectedWord();
+            this.fillLetters();
+        }
 
         this.relativePositions = {};
         this.handleNewSelectedLetters([]);
@@ -195,13 +215,13 @@ export default class Grid extends Component {
                      onMouseDown={this.handleMouseDown}
                      onMouseUp={this.handleMouseUp}
                 >
-                    {this.state.letters.map((letters, row) =>
-                        letters.map((letter, col) =>
+                    {this.state.letters.map((letters, col) =>
+                        letters.map((letter, row) =>
                             <div
                                 key={letter.id}
                                 className={`letter-grid letter-${letter.letter} ${this.state.selectedLetters.indexOf(
                                     letter.id) === -1 ? "" : "selected"}`}
-                                style={this.generateLetterStyle(row, col)}
+                                style={this.generateLetterStyle(col, row)}
                             >
                                 <span
                                     className={`arrow ${this.relativePositions[letter.id] || ""}`}/>
