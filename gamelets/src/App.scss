@@ -21,6 +21,7 @@
       left: 2.5px;
       top: 2.5px;
       z-index: -1;
+      transition: .2s ease;
     }
 
     &.selected {
@@ -33,7 +34,7 @@
   .letter-inner {
     width: 100%;
     height: 100%;
-    font-size: 40px;
+    font-size: 45px;
     text-transform: uppercase;
     color: white;
 

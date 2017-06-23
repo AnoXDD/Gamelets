@@ -31,12 +31,14 @@ export default class Grid extends Component {
         this.generateRandomLetterBlock = this.generateRandomLetterBlock.bind(
             this);
         this.fillLetters = this.fillLetters.bind(this);
+        this.findLetterById = this.findLetterById.bind(this);
         this.findPositionById = this.findPositionById.bind(this);
         this.isAdjacent = this.isAdjacent.bind(this);
 
         this.handleMouseDown = this.handleMouseDown.bind(this);
         this.handleMouseUp = this.handleMouseUp.bind(this);
         this.handleMouseOver = this.handleMouseOver.bind(this);
+        this.handleNewSelectedLetters = this.handleNewSelectedLetters.bind(this);
     }
 
     componentDidMount() {
@@ -59,6 +61,12 @@ export default class Grid extends Component {
             id: '' + this.idVersion++,
             letter: letter,
         };
+    }
+
+    findLetterById(id) {
+        let pos = this.findPositionById(id);
+
+        return this.state.letters[pos.col][pos.row].letter;
     }
 
     /**
@@ -128,19 +136,26 @@ export default class Grid extends Component {
             let letters = this.state.selectedLetters;
             if (letters[letters.length - 2] === id) {
                 letters.pop();
-                this.setState({
-                    selectedLetters: letters,
-                });
+                this.handleNewSelectedLetters(letters);
             } else if (letters.indexOf(id) === -1) {
                 // Check if they are adjacent
                 let lastLetter = letters[letters.length - 1];
                 if (!lastLetter || this.isAdjacent(lastLetter, id)) {
                     // Add this
-                    this.setState({
-                        selectedLetters: [...letters, id],
-                    });
+                    this.handleNewSelectedLetters([...letters, id]);
                 }
             }
+        }
+    }
+
+    handleNewSelectedLetters(letters) {
+        this.setState({
+            selectedLetters: letters,
+        });
+
+        if (this.props.onWordChange) {
+            this.props.onWordChange(letters.map(id => this.findLetterById(id))
+                .join(""));
         }
     }
 
