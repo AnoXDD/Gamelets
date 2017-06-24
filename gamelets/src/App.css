@@ -393,17 +393,18 @@ body, html {
     transition: 1s ease; }
     .game .btns.replay {
       margin-top: 50px; }
+  .game .letter-selected {
+    width: 500px;
+    height: 100px;
+    background: #00BCD4;
+    color: white;
+    text-transform: uppercase;
+    font-size: 40px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    transition: .2s ease;
+    position: relative; }
 
-.wordlink .letter-selected {
-  width: 500px;
-  height: 100px;
-  background: #00BCD4;
-  color: white;
-  text-transform: uppercase;
-  font-size: 40px;
-  font-weight: bolder;
-  margin-bottom: 10px;
-  transition: .2s ease; }
 .wordlink.not-valid .letter-selected {
   background-color: #F44336; }
 .wordlink.not-valid .grid .selected .letter-inner:before, .wordlink.not-valid .grid .selected .l, .wordlink.not-valid .grid .selected .lu, .wordlink.not-valid .grid .selected .u, .wordlink.not-valid .grid .selected .ru, .wordlink.not-valid .grid .selected .r, .wordlink.not-valid .grid .selected .rd, .wordlink.not-valid .grid .selected .d, .wordlink.not-valid .grid .selected .ld {
@@ -450,6 +451,22 @@ body, html {
     margin-bottom: 100%; }
   to {
     margin-bottom: 0; } }
+  .letter-prompt .grid {
+    height: 300px; }
+    .letter-prompt .grid .grid-wrapper {
+      width: 300px;
+      height: 300px; }
+    .letter-prompt .grid .letter-grid {
+      pointer-events: auto;
+      animation: none;
+      transition: 5s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
+      .letter-prompt .grid .letter-grid.letter-0 {
+        opacity: 0;
+        pointer-events: none; }
+    .letter-prompt .grid .letter-inner {
+      color: white; }
+      .letter-prompt .grid .letter-inner:before {
+        background-color: #212121; }
   .grid .grid-wrapper {
     width: 500px;
     height: 500px;
@@ -510,13 +527,19 @@ body, html {
       content: "2"; }
     .grid .letter-grid.letter-u:after {
       content: "2"; }
+    .grid .letter-grid.letter-2:after {
+      content: "2"; }
     .grid .letter-grid.letter-d:after {
       content: "3"; }
     .grid .letter-grid.letter-g:after {
       content: "3"; }
+    .grid .letter-grid.letter-3:after {
+      content: "3"; }
     .grid .letter-grid.letter-b:after {
       content: "4"; }
     .grid .letter-grid.letter-c:after {
+      content: "4"; }
+    .grid .letter-grid.letter-4:after {
       content: "4"; }
     .grid .letter-grid.letter-f:after {
       content: "5"; }
@@ -524,9 +547,13 @@ body, html {
       content: "5"; }
     .grid .letter-grid.letter-v:after {
       content: "5"; }
+    .grid .letter-grid.letter-5:after {
+      content: "5"; }
     .grid .letter-grid.letter-k:after {
       content: "6"; }
     .grid .letter-grid.letter-w:after {
+      content: "6"; }
+    .grid .letter-grid.letter-6:after {
       content: "6"; }
     .grid .letter-grid.letter-x:after {
       content: "8"; }
@@ -536,7 +563,7 @@ body, html {
       content: "10"; }
     .grid .letter-grid.letter-q:after {
       content: "10"; }
-    .grid .letter-grid.hover :before {
+    .grid .letter-grid.hover :before, .grid .letter-grid:hover :before {
       background-color: #80DEEA; }
     .grid .letter-grid.selected :before {
       background-color: #00BCD4; }
@@ -599,5 +626,8 @@ body, html {
   overflow: hidden; }
   .timer:before {
     content: 'TIME:\00a0'; }
+
+.letter-prompt .game-area-inner {
+  flex-direction: column; }
 
 /*# sourceMappingURL=App.css.map */

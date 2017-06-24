@@ -101,9 +101,6 @@ body, html {
     }
   }
 
-}
-
-.wordlink {
   .letter-selected {
     width: 500px;
     height: 100px;
@@ -114,8 +111,11 @@ body, html {
     font-weight: bolder;
     margin-bottom: 10px;
     transition: .2s ease;
+    position: relative;
   }
+}
 
+.wordlink {
   &.not-valid {
     .letter-selected {
       background-color: $red;
@@ -198,6 +198,34 @@ body, html {
     }
   }
 
+  .letter-prompt & {
+    height: 3 * $grid-size;
+
+    .grid-wrapper {
+      width: 3 * $grid-size;
+      height: 3 * $grid-size;
+    }
+
+    .letter-grid {
+      pointer-events: auto;
+      animation: none;
+      transition: 5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+
+      &.letter-0 {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
+    .letter-inner {
+      color: white;
+
+      &:before {
+        background-color: $darkgrey;
+      }
+    }
+  }
+
   width: 100%;
   height: 5 * $grid-size;
   position: relative;
@@ -271,11 +299,11 @@ body, html {
       pointer-events: none;
     }
 
-    $point-2: ("l", "n", "r", 't', 'u');
-    $point-3: ('d', 'g');
-    $point-4: ('b', 'c');
-    $point-5: ('f', 'h', 'v');
-    $point-6: ('k', 'w');
+    $point-2: ("l", "n", "r", 't', 'u', '2');
+    $point-3: ('d', 'g', '3');
+    $point-4: ('b', 'c', '4');
+    $point-5: ('f', 'h', 'v', '5');
+    $point-6: ('k', 'w', '6');
     $point-8: ('x', 'j');
     $point-10: ('z', 'q');
 
@@ -315,7 +343,7 @@ body, html {
       }
     }
 
-    &.hover {
+    &.hover, &:hover {
       :before {
         background-color: $csl;
       }
@@ -417,3 +445,29 @@ body, html {
     content: 'TIME:\00a0';
   }
 }
+
+.letter-prompt {
+  .game-area-inner {
+    flex-direction: column;
+  }
+}
+
+//-----------------------------
+//
+//html, body {
+//  overflow: scroll;
+//}
+//
+//a {
+//  display: inline-block;
+//}
+//
+//h2 {
+//  font-family: monospace;
+//}
+//
+//input, textarea {
+//  padding: 0;
+//  font-size: 30px;
+//  background: lightgrey;
+//}
