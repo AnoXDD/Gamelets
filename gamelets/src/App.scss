@@ -27,6 +27,10 @@ body, html {
     color: white;
     font-size: 30px;
     transition: .4s ease;
+
+    @media screen and (max-width: 510px) {
+      font-size: 20px;
+    }
   }
 
   .game-area {
@@ -132,6 +136,53 @@ body, html {
       }
     }
   }
+
+  @media screen and (max-width: 510px) {
+
+    .letter-selected {
+      height: 70px;
+      font-size: 25px;
+      width: 80%;
+    }
+
+    .grid {
+      $grid-size: 60px;
+
+      height: 5 * $grid-size;
+
+      .grid-wrapper {
+        width: 5 * $grid-size;
+        height: 5 * $grid-size;
+      }
+
+      .letter-grid {
+        width: $grid-size;
+        height: $grid-size;
+        padding: 5px;
+        font-size: 12px;
+
+        .arrow {
+          height: 4%;
+          top: 48%;
+        }
+
+        &:after {
+          right: 5px;
+          bottom: 5px;
+        }
+      }
+
+      .letter-inner {
+        font-size: 30px;
+
+        &:before {
+          width: $grid-size - 5px;
+          height: $grid-size - 5px;
+        }
+      }
+    }
+  }
+
 }
 
 .grid {
@@ -297,10 +348,6 @@ body, html {
       pointer-events: none;
     }
 
-    &:after {
-
-    }
-
     span {
       position: relative;
       pointer-events: none;
@@ -369,14 +416,4 @@ body, html {
   &:before {
     content: 'TIME:\00a0';
   }
-}
-
-//-----------------------------
-.blk {
-  pointer-events: none;
-  background: black;
-  width: 30px;
-  height: 30px;
-  margin: 10px;
-  display: inline-block;
 }

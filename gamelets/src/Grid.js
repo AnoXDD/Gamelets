@@ -10,7 +10,8 @@ const ROW = 5, COLUMN = 5;
 const LETTER_FREQUENCY = [0.08167, 0.09659, 0.12441, 0.16694, 0.29396, 0.31624, 0.33639, .39733, 0.46699, 0.46852, 0.47624, 0.51649, 0.54055, 0.60804, 0.68311, 0.7024, 0.70335, 0.76322, 0.82649, 0.91705, 0.94463, 0.95441, 0.97801, 0.97951, 0.99925, 1],
     CHARCODE_A = 97;
 
-const LETTER_OUTER_SIZE = 100;
+const LETTER_OUTER_SIZE = 100,
+    LETTER_OUTER_SIZE_MINI = 60;
 
 const LETTER_SCORE = {
     a: 1,
@@ -42,6 +43,11 @@ const LETTER_SCORE = {
 };
 
 const SELECT_WORD_COOLDOWN = 500;
+
+const GRID_SIZE = 80,
+    MARGIN_SIZE = 10,
+    GRID_SIZE_MINI = 50,
+    MARGIN_SIZE_MINI = 5;
 
 export default class Grid extends Component {
 
@@ -103,8 +109,8 @@ export default class Grid extends Component {
 
     generateLetterStyle(col, row) {
         return {
-            bottom: row * LETTER_OUTER_SIZE,
-            left: col * LETTER_OUTER_SIZE,
+            bottom: row * (this.props.mini ? LETTER_OUTER_SIZE_MINI : LETTER_OUTER_SIZE),
+            left: col * (this.props.mini ? LETTER_OUTER_SIZE_MINI : LETTER_OUTER_SIZE),
         };
     }
 
@@ -316,7 +322,7 @@ export default class Grid extends Component {
     }
 
     handleMouseOver(pos) {
-        if (pos) {
+        if (pos && pos.x >= 0 && pos.x < COLUMN && pos.y >= 0 && pos.y < ROW) {
             let id = this.state.letters[pos.x][ROW - pos.y - 1].id;
             this.setState({
                 hoveredLetterId: id,
@@ -362,13 +368,14 @@ export default class Grid extends Component {
             <div
                 className={`grid flex-center ${this.state.isSelectedWordValid}`}>
                 <div className="grid-wrapper">
-                    <TouchPad marginHeight={10}
-                              marginWidth={10}
-                              gridHeight={80}
-                              gridWidth={80}
-                              onStart={this.handleMouseDown}
-                              onMove={this.handleMouseOver}
-                              onEnd={this.handleMouseUp}
+                    <TouchPad
+                        marginHeight={this.props.mini ? MARGIN_SIZE_MINI : MARGIN_SIZE}
+                        marginWidth={this.props.mini ? MARGIN_SIZE_MINI : MARGIN_SIZE}
+                        gridHeight={this.props.mini ? GRID_SIZE_MINI : GRID_SIZE}
+                        gridWidth={this.props.mini ? GRID_SIZE_MINI : GRID_SIZE}
+                        onStart={this.handleMouseDown}
+                        onMove={this.handleMouseOver}
+                        onEnd={this.handleMouseUp}
                     >
                         {this.state.letters.map((letters, col) =>
                             letters.map((letter, row) =>

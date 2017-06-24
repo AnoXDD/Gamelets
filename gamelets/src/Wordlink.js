@@ -10,7 +10,7 @@ import Scoreboard from "./Scoreboard";
 import Timer from "./Timer";
 import Button from "./Button";
 
-const DEFAULT_TIME = 90,
+const DEFAULT_TIME = 3000,
     COUNTDOWN = 3;
 
 const GAME_STATE = {
@@ -19,12 +19,15 @@ const GAME_STATE = {
     START: 2,
 };
 
+const MINI_THRESHOLD = 510;
+
 export default class Wordlink extends Component {
 
     newGame = true;
 
-
     state = {
+        mini: false,
+
         word: "",
         score: 0,
         isSelectedWordValid: "",
@@ -36,6 +39,8 @@ export default class Wordlink extends Component {
     constructor(props) {
         super(props);
 
+
+        this.handleWindowResize = this.handleWindowResize.bind(this);
         this.handleNewWord = this.handleNewWord.bind(this);
         this.handleNewScore = this.handleNewScore.bind(this);
         this.handleTimeFinish = this.handleTimeFinish.bind(this);
@@ -45,7 +50,21 @@ export default class Wordlink extends Component {
     }
 
     componentDidMount() {
-        // this.startGame();
+        this.handleWindowResize();
+
+        window.addEventListener("resize", this.handleWindowResize);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.handleWindowResize)
+    }
+
+    handleWindowResize() {
+        let width = window.outerWidth;
+
+        this.setState({
+            mini: width <= MINI_THRESHOLD,
+        });
     }
 
     handleNewWord(word) {
@@ -121,6 +140,7 @@ export default class Wordlink extends Component {
                               onWordValidChange={
                                   v => this.setState({isSelectedWordValid: v})}
                               active={this.state.gameState === GAME_STATE.START}
+                              mini={this.state.mini}
                         />
                     </div>
                 </div>
