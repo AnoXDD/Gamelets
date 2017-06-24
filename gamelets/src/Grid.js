@@ -354,6 +354,8 @@ export default class Grid extends Component {
                      onMouseDown={this.handleMouseDown}
                      onMouseUp={this.handleMouseUp}
                      onMouseLeave={this.handleMouseUp}
+                     onMouseMove={console.log}
+                     onTouchMove={console.log}
                 >
                     {this.state.letters.map((letters, col) =>
                         letters.map((letter, row) =>
