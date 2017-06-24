@@ -10,7 +10,7 @@ import Scoreboard from "./Scoreboard";
 import Timer from "./Timer";
 import Button from "./Button";
 
-const DEFAULT_TIME = 30,
+const DEFAULT_TIME = 90,
     COUNTDOWN = 3;
 
 const GAME_STATE = {

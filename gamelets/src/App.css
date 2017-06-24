@@ -432,7 +432,8 @@ body, html {
     height: 100px;
     padding: 10px;
     transition: .4s ease;
-    animation: grid-enter .4s ease; }
+    animation: grid-enter .4s ease;
+    pointer-events: none; }
     .grid .letter-grid .arrow {
       display: block;
       content: "";
@@ -506,7 +507,7 @@ body, html {
       content: "10"; }
     .grid .letter-grid.letter-q:after {
       content: "10"; }
-    .grid .letter-grid:hover :before {
+    .grid .letter-grid.hover :before {
       background-color: #80DEEA; }
     .grid .letter-grid.selected :before {
       background-color: #00BCD4; }
@@ -551,9 +552,9 @@ body, html {
   .score:before {
     content: "SCORE: "; }
   .score .difference-1 {
-    animation: score-fade-in-1 1.5s ease; }
+    animation: score-fade-in-1 2s ease; }
   .score .difference-2 {
-    animation: score-fade-in-2 1.5s ease; }
+    animation: score-fade-in-2 2s ease; }
   .score .difference {
     position: absolute;
     color: #FFC107;

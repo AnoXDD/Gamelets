@@ -28,7 +28,6 @@ export default class TouchPad extends Component {
         let $picker = event.target.getBoundingClientRect();
 
         if (this.isMouseEvent(event)) {
-            console.log(event.pageY - $picker.top);
             return {
                 x: event.pageX - $picker.left,
                 y: event.pageY - $picker.top,
@@ -97,9 +96,7 @@ export default class TouchPad extends Component {
 
     handleStart(e) {
         let grid = this.getGrid(e);
-        if (this.isNewGrid(grid)) {
-            this.props.onStart(grid);
-        }
+        this.props.onStart(grid);
     }
 
     handleMove(e) {
@@ -111,9 +108,7 @@ export default class TouchPad extends Component {
 
     handleEnd(e) {
         let grid = this.getGrid(e);
-        if (this.isNewGrid(grid)) {
-            this.props.onEnd(grid);
-        }
+        this.props.onEnd(grid);
     }
 
     render() {

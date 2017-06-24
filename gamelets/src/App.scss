@@ -167,6 +167,7 @@ body, html {
     padding: 10px;
     transition: .4s ease;
     animation: grid-enter .4s ease;
+    pointer-events: none;
 
     .arrow {
       display: block;
@@ -263,7 +264,7 @@ body, html {
       }
     }
 
-    &:hover {
+    &.hover {
       :before {
         background-color: $csl;
       }
@@ -340,10 +341,10 @@ body, html {
   }
 
   .difference-1 {
-    animation: score-fade-in-1 1.5s ease;
+    animation: score-fade-in-1 2s ease;
   }
   .difference-2 {
-    animation: score-fade-in-2 1.5s ease;
+    animation: score-fade-in-2 2s ease;
   }
 
   .difference {

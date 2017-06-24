@@ -3,6 +3,7 @@
  */
 
 import React, {Component} from "react";
+import TouchPad from "./TouchPad";
 
 const ROW = 5, COLUMN = 5;
 
@@ -50,6 +51,7 @@ export default class Grid extends Component {
         // The elements are from bottom to top, left to right
         letters: [],
         selectedLetters: [],
+        hoveredLetterId: -1,
     };
 
     idVersion = 0;
@@ -262,15 +264,19 @@ export default class Grid extends Component {
         this.fillLetters();
     }
 
-    handleMouseDown(e) {
-        if (this.props.active && e.target.dataset.tag && !this.isCoolingDown) {
+    handleMouseDown(pos) {
+        if (this.props.active && pos && !this.isCoolingDown) {
             this.isMouseDown = true;
-            this.handleMouseOver(e);
+            this.handleMouseOver(pos);
         }
     }
 
     handleMouseUp(e) {
         let onFinish = () => {
+            this.setState({
+                hoveredLetterId: -1,
+            });
+
             this.isCoolingDown = false;
             this.relativePositions = {};
             this.handleNewSelectedLetters([]);
@@ -309,28 +315,33 @@ export default class Grid extends Component {
             });
     }
 
-    handleMouseOver(e) {
-        if (this.isMouseDown) {
-            let id = e.target.dataset.tag;
+    handleMouseOver(pos) {
+        if (pos) {
+            let id = this.state.letters[pos.x][ROW - pos.y - 1].id;
+            this.setState({
+                hoveredLetterId: id,
+            });
 
-            // Removing
-            let letters = this.state.selectedLetters,
-                lastLetter = letters[letters.length - 1];
+            if (this.isMouseDown) {
+                // Removing
+                let letters = this.state.selectedLetters,
+                    lastLetter = letters[letters.length - 1];
 
-            if (letters[letters.length - 2] === id) {
-                delete this.relativePositions[id];
+                if (letters[letters.length - 2] === id) {
+                    delete this.relativePositions[id];
 
-                letters.pop();
-                this.handleNewSelectedLetters(letters);
-            } else if (letters.indexOf(id) === -1) {
-                // Check if they are adjacent
-                let position = lastLetter ? this.findRelativePositionOf(
-                    lastLetter, id) : lastLetter;
-                if (!lastLetter || position) {
-                    this.relativePositions[lastLetter] = position;
+                    letters.pop();
+                    this.handleNewSelectedLetters(letters);
+                } else if (letters.indexOf(id) === -1) {
+                    // Check if they are adjacent
+                    let position = lastLetter ? this.findRelativePositionOf(
+                        lastLetter, id) : lastLetter;
+                    if (!lastLetter || position) {
+                        this.relativePositions[lastLetter] = position;
 
-                    // Add this
-                    this.handleNewSelectedLetters([...letters, id]);
+                        // Add this
+                        this.handleNewSelectedLetters([...letters, id]);
+                    }
                 }
             }
         }
@@ -350,31 +361,32 @@ export default class Grid extends Component {
         return (
             <div
                 className={`grid flex-center ${this.state.isSelectedWordValid}`}>
-                <div className="grid-wrapper"
-                     onMouseDown={this.handleMouseDown}
-                     onMouseUp={this.handleMouseUp}
-                     onMouseLeave={this.handleMouseUp}
-                     onMouseMove={console.log}
-                     onTouchMove={console.log}
-                >
-                    {this.state.letters.map((letters, col) =>
-                        letters.map((letter, row) =>
-                            <div
-                                key={letter.id}
-                                className={`letter-grid letter-${letter.letter} ${this.state.selectedLetters.indexOf(
-                                    letter.id) === -1 ? "" : "selected"}`}
-                                style={this.generateLetterStyle(col, row)}
-                            >
+                <div className="grid-wrapper">
+                    <TouchPad marginHeight={10}
+                              marginWidth={10}
+                              gridHeight={80}
+                              gridWidth={80}
+                              onStart={this.handleMouseDown}
+                              onMove={this.handleMouseOver}
+                              onEnd={this.handleMouseUp}
+                    >
+                        {this.state.letters.map((letters, col) =>
+                            letters.map((letter, row) =>
+                                <div
+                                    key={letter.id}
+                                    className={`letter-grid letter-${letter.letter} ${this.state.selectedLetters.indexOf(
+                                        letter.id) === -1 ? "" : "selected"} ${this.state.hoveredLetterId === letter.id ? "hover" : ""}`}
+                                    style={this.generateLetterStyle(col, row)}
+                                >
                                 <span
                                     className={`arrow ${this.relativePositions[letter.id] || ""}`}/>
-                                <div
-                                    onMouseEnter={this.handleMouseOver}
-                                    data-tag={letter.id}
-                                    className="letter-inner flex-center">
-                                    <span>{letter.letter}</span></div>
-                            </div>
-                        )
-                    )}
+                                    <div
+                                        className="letter-inner flex-center">
+                                        <span>{letter.letter}</span></div>
+                                </div>
+                            )
+                        )}
+                    </TouchPad>
                 </div>
             </div>
         )
