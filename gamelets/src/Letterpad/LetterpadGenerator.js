@@ -8,136 +8,192 @@ const DEFAULT_BUCKET_SIZE = 10,
     DEFAULT_LETTER_SIZE = 9;
 
 function sanitizeMaps(obj, entry) {
-    for (let word of STOP_WORDS) {
-        delete obj[word];
-    }
+  for (let word of STOP_WORDS) {
+    delete obj[word];
+  }
 
-    delete obj[entry];
+  delete obj[entry];
 }
 
 function generateSortedMap(obj) {
-    let keys = Object.keys(obj);
+  let keys = Object.keys(obj);
 
-    let array = [];
+  let array = [];
 
-    for (let key of keys) {
-        array.push({
-            word: key,
-            freq: obj[key],
-        });
-    }
+  for (let key of keys) {
+    array.push({
+      word: key,
+      freq: obj[key],
+    });
+  }
 
-    return array.sort((lhs, rhs) => rhs.freq - lhs.freq);
+  return array.sort((lhs, rhs) => rhs.freq - lhs.freq);
 }
 
 function generateMaps(p, entry, filterWords) {
-    // First, remove puncuations
-    let groups = p.toLowerCase().replace(/[^ a-zA-Z]/g, "").split(/[ \r\n]/);
+  // First, remove puncuations
+  let groups = p.toLowerCase().replace(/[^ a-zA-Z]/g, "").split(/[ \r\n]/);
 
-    let obj = {};
-    for (let i = 0; i < groups.length; ++i) {
-        let word = groups[i];
-        if (word && word.length > 2 && filterWords.indexOf(word) === -1) {
-            if (!obj[word] && obj[word.slice(0, -1)]) {
-                word = word.slice(0, -1);
-            } else if (!obj[word] && obj[word + 's']) {
-                let freq = obj[word + 's'];
-                delete obj[word + 's'];
-                obj[word] = freq;
-            }
+  let obj = {};
+  for (let i = 0; i < groups.length; ++i) {
+    let word = groups[i];
+    if (word && word.length > 2 && filterWords.indexOf(word) === -1) {
+      if (!obj[word] && obj[word.slice(0, -1)]) {
+        word = word.slice(0, -1);
+      } else if (!obj[word] && obj[word + 's']) {
+        let freq = obj[word + 's'];
+        delete obj[word + 's'];
+        obj[word] = freq;
+      }
 
-            obj[word] = (obj[word] || 0) + 1;
-        }
+      obj[word] = (obj[word] || 0) + 1;
     }
+  }
 
-    // Remove stop words
-    sanitizeMaps(obj, entry);
+  // Remove stop words
+  sanitizeMaps(obj, entry);
 
-    return generateSortedMap(obj);
+  return generateSortedMap(obj);
 }
 
 function isFitInGroup(group, set) {
-    let uniques = 0;
-    for (let letter of set) {
-        if (group.indexOf(letter) === -1) {
-            ++uniques;
-        }
+  let uniques = 0;
+  for (let letter of set) {
+    if (group.indexOf(letter) === -1) {
+      ++uniques;
     }
+  }
 
-    return uniques + group.length <= DEFAULT_LETTER_SIZE;
+  return uniques + group.length <= DEFAULT_LETTER_SIZE;
 }
 
 function addToGroup(group, set) {
-    for (let letter of set) {
-        if (group.indexOf(letter) === -1) {
-            group.push(letter);
-        }
+  for (let letter of set) {
+    if (group.indexOf(letter) === -1) {
+      group.push(letter);
     }
+  }
 }
 
 function allBucketsFull(buckets) {
-    for (let bucket of buckets) {
-        if (bucket.length !== DEFAULT_BUCKET_SIZE) {
-            return false;
-        }
+  for (let bucket of buckets) {
+    if (bucket.length !== DEFAULT_BUCKET_SIZE) {
+      return false;
     }
+  }
 
-    return true;
+  return true;
 }
 
 function generatePossibleWords(map) {
 
-    let words = map.map(elem => elem.word);
-    let buckets = words.slice(0, DEFAULT_BUCKET_SIZE).map(word => [word]),
-        letters = buckets.map(wordArray => wordArray[0].split(""));
+  let words = map.map(elem => elem.word);
+  let buckets = words.slice(0, DEFAULT_BUCKET_SIZE).map(word => [word]),
+      letters = buckets.map(wordArray => wordArray[0].split(""));
 
-    for (let word of words) {
-        for (let i = 0; i < DEFAULT_BUCKET_SIZE; ++i) {
-            let bucket = buckets[i],
-                letterGroup = letters[i];
+  for (let word of words) {
+    for (let i = 0; i < DEFAULT_BUCKET_SIZE; ++i) {
+      let bucket = buckets[i],
+          letterGroup = letters[i];
 
-            if (bucket.indexOf(word) !== -1) {
-                break;
-            }
+      if (bucket.indexOf(word) !== -1) {
+        break;
+      }
 
-            let set = word.split("").filter((v, i, s) => s.indexOf(v) === i);
-            if (isFitInGroup(letterGroup, set)) {
-                if (bucket.length < DEFAULT_BUCKET_SIZE) {
-                    bucket.push(word);
-                    addToGroup(letterGroup, set);
-                }
-            }
+      let set = word.split("").filter((v, i, s) => s.indexOf(v) === i);
+      if (isFitInGroup(letterGroup, set)) {
+        if (bucket.length < DEFAULT_BUCKET_SIZE) {
+          bucket.push(word);
+          addToGroup(letterGroup, set);
         }
-
-        if (allBucketsFull(buckets)) {
-            return buckets;
-        }
+      }
     }
 
-    return buckets;
+    if (allBucketsFull(buckets)) {
+      return buckets;
+    }
+  }
+
+  return buckets;
 }
 
 function printList(lists) {
-    for (let list of lists) {
-        let letters = {};
-        for (let word of list) {
-            let group = word.split("");
-            for (let letter of group) {
-                letters[letter] = 1;
-            }
-        }
-
-        console.log("Letters ",
-            Object.keys(letters).join(),
-            " | Words: ",
-            list.join(" "));
-    }
+  for (let list of lists) {
+    console.log("Letters ",
+        getLettersFromList(list),
+        " | Words: ",
+        list.join(" "));
+  }
 }
 
 function generateWords(p, entry, filterWords) {
-    filterWords = filterWords || "";
-    let obj = generateMaps(p, entry, filterWords.split(" "));
-    let wordLists = generatePossibleWords(obj);
+  filterWords = filterWords || [];
+  let obj = generateMaps(p, entry, filterWords);
+  let wordLists = generatePossibleWords(obj);
 
-    printList(wordLists);
+  printList(wordLists);
+  return wordLists;
+}
+
+function getLettersFromList(list) {
+  let letters = {};
+  for (let word of list) {
+    let group = word.split("");
+    for (let letter of group) {
+      letters[letter] = 1;
+    }
+  }
+
+  return Object.keys(letters).join("");
+}
+
+import React, {Component} from "react";
+
+export default class LetterpadGenerator extends Component {
+
+  state = {
+    entry      : "",
+    passage    : "",
+    words      : [],
+    filterWords: [],
+  };
+
+  componentWillUpdate(nextProps, nextState) {
+    nextState.words = generateWords(nextState.passage,
+        nextState.entry,
+        nextState.filterWords);
+
+  }
+
+  handlePassageChange(e) {
+    this.setState({
+      passage: e.target.value,
+    });
+  }
+
+  render() {
+    return (
+        <div className="">
+          <h1>Entry</h1>
+          <textarea value={this.state.entry}
+                    onChange={e => this.setState({entry: e.target.value})}/>
+          <h1>Passage</h1>
+          <textarea value={this.state.passage}
+                    onChange={this.handlePassageChange.bind(this)}></textarea>
+          <h1>Filter words</h1>
+          {this.state.filterWords.join()}
+          <h1>Result</h1>
+          {this.state.words.map((words, i) =>
+              <div key={i}>
+                <h2>{getLettersFromList(words)}</h2>
+                {words.map(word =>
+                    <div key={word}>
+                      <a onClick={() => this.setState({filterWords: [this.state.filterWords, word]})}>{word}</a>
+                    </div>
+                )}
+              </div>
+          )}
+        </div>
+    );
+  }
 }
