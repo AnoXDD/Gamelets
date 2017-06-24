@@ -5,7 +5,7 @@
 
 import React, {Component} from "react";
 
-import Grid from "./Grid";
+import Grid from "./Wordlink/Grid";
 import Scoreboard from "./Scoreboard";
 import Timer from "./Timer";
 import Button from "./Button";

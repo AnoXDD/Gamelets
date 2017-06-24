@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from "react";
-import TouchPad from "./TouchPad";
+import TouchPad from "../TouchPad";
 
 const ROW = 5, COLUMN = 5;
 
