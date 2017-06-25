@@ -1,267 +1,274 @@
-/**
- * Created by Anoxic on 6/24/2017.
- */
-
-const KEYS = [
-  {
-    prompt : "red",
-    letters: "flagdyebo",
-    words  : ["flag", "dye", "blood", "eye", "leaf"]
-  },
-  {
-    prompt : "apple",
-    letters: "fruitecdo",
-    words  : ["fruit", "tree", "cider", "food", "red", "doctor", "feed"]
-  },
-  {
-    prompt : "egg",
-    letters: "birdyolkf",
-    words  : ["bird", "yolk", "food", "brood", "roll", "fry", "oil", "blood", "york"]
-  },
-  {
-    prompt : "bee",
-    letters: "honeyisct",
-    words  : ["honey", "insect", "nest", "host"]
-  },
-  {
-    prompt : "foot",
-    letters: "musclegho",
-    words  : ["muscle", "leg", "heel", "shoe"]
-  },
-  {
-    prompt : "hand",
-    letters: "fingerbop",
-    words  : ["finger", "bone", "ring", "grip", "green", "forefinger"]
-  },
-  {
-    prompt : "door",
-    letters: "hingeopsw",
-    words  : ["hinge", "open", "swing", "spin"]
-  },
-  {
-    prompt : "cat",
-    letters: "domesticp",
-    words  : ["domestic", "species", "pet", "mice", "tom"]
-  },
-  {
-    prompt : "fish",
-    letters: "watersymg",
-    words  : ["water", "system", "egg", "sea"]
-  },
-  {
-    prompt : "water",
-    letters: "icelqudfo",
-    words  : ["ice", "liquid", "life", "cloud", "fluid", "flood", "cold"]
-  },
-  {
-    prompt : "sport",
-    letters: "gamefotbl",
-    words  : ["game", "football", "team", "goal", "ball"]
-  },
-  {
-    prompt : "window",
-    letters: "framepnou",
-    words  : ["frame", "pane", "roof", "open", "room"]
-  },
-  {
-    prompt : "computer",
-    letters: "progamey",
-    words  : ["program", "memory", "ram", "rom", "programmer", "error", "game"]
-  },
-  {
-    prompt : "sun",
-    letters: "solarethn",
-    words  : ["solar", "earth", "star", "nasa", "heat", "stellar", "hot"]
-  },
-  {
-    prompt : "moon",
-    letters: "lunareths",
-    words  : ["lunar", "earth", "nasa", "sun", "nature", "star"]
-  },
-  {
-    prompt : "black",
-    letters: "lightnksy",
-    words  : ["light", "ink", "list", "sky", "night"]
-  },
-  {
-    prompt : "pencil",
-    letters: "graphites",
-    words  : ["graphite", "eraser", "paper", "art", "sharp"]
-  },
-  {
-    prompt : "music",
-    letters: "soundtyle",
-    words  : ["sound", "style", "notes", "tone", "solo", "tune", "lesson"]
-  },
-  {
-    prompt : "mobile_phone",
-    letters: "networkxi",
-    words  : ["network", "text", "internet", "tower"]
-  },
-  {
-    prompt : "party",
-    letters: "evntdirf",
-    words  : ["event", "dinner", "friend", "eve", "invite"]
-  },
-  {
-    prompt : "face",
-    letters: "emotinsl",
-    words  : ["emotion", "smile", "nose", "sense", "smell"]
-  },
-  {
-    prompt : "map",
-    letters: "scaleftur",
-    words  : ["scale", "features", "surface", "east", "atlas", "sea"]
-  },
-  {
-    prompt : "winter",
-    letters: "snowcldie",
-    words  : ["snow", "cold", "ice", "wind", "low", "cool", "die"]
-  },
-  {
-    prompt : "shoe",
-    letters: "botfhelg",
-    words  : ["boot", "foot", "heel", "toe", "feet", "leg"]
-  },
-  {
-    prompt : "team",
-    letters: "groupmebl",
-    words  : ["group", "member", "people", "peer"]
-  },
-  {
-    prompt : "key_(lock)",
-    letters: "carpinset",
-    words  : ["car", "pin", "set", "access", "pattern"]
-  },
-];
-
 import React, {Component} from "react";
 import Ink from "react-ink";
 
 import Button from "./Button";
 
-const LETTER_OUTER_SIZE = 100;
+/**
+ * Created by Anoxic on 6/24/2017.
+ */
+
+const KEYS = [
+    {
+        prompt: "red",
+        letters: "flagdyebo",
+        words: ["flag", "dye", "blood", "eye", "leaf"]
+    },
+    {
+        prompt: "apple",
+        letters: "fruitecdo",
+        words: ["fruit", "tree", "cider", "food", "red", "doctor", "feed"]
+    },
+    {
+        prompt: "egg",
+        letters: "birdyolkf",
+        words: ["bird", "yolk", "food", "brood", "roll", "fry", "oil", "blood", "york"]
+    },
+    {
+        prompt: "bee",
+        letters: "honeyisct",
+        words: ["honey", "insect", "nest", "host"]
+    },
+    {
+        prompt: "foot",
+        letters: "musclegho",
+        words: ["muscle", "leg", "heel", "shoe"]
+    },
+    {
+        prompt: "hand",
+        letters: "fingerbop",
+        words: ["finger", "bone", "ring", "grip", "green", "forefinger"]
+    },
+    {
+        prompt: "door",
+        letters: "hingeopsw",
+        words: ["hinge", "open", "swing", "spin"]
+    },
+    {
+        prompt: "cat",
+        letters: "domesticp",
+        words: ["domestic", "species", "pet", "mice", "tom"]
+    },
+    {
+        prompt: "fish",
+        letters: "watersymg",
+        words: ["water", "system", "egg", "sea"]
+    },
+    {
+        prompt: "water",
+        letters: "icelqudfo",
+        words: ["ice", "liquid", "life", "cloud", "fluid", "flood", "cold"]
+    },
+    {
+        prompt: "sport",
+        letters: "gamefotbl",
+        words: ["game", "football", "team", "goal", "ball"]
+    },
+    {
+        prompt: "window",
+        letters: "framepnou",
+        words: ["frame", "pane", "roof", "open", "room"]
+    },
+    {
+        prompt: "computer",
+        letters: "progamey",
+        words: ["program", "memory", "ram", "rom", "programmer", "error", "game"]
+    },
+    {
+        prompt: "sun",
+        letters: "solarethn",
+        words: ["solar", "earth", "star", "nasa", "heat", "stellar", "hot"]
+    },
+    {
+        prompt: "moon",
+        letters: "lunareths",
+        words: ["lunar", "earth", "nasa", "sun", "nature", "star"]
+    },
+    {
+        prompt: "black",
+        letters: "lightnksy",
+        words: ["light", "ink", "list", "sky", "night"]
+    },
+    {
+        prompt: "pencil",
+        letters: "graphites",
+        words: ["graphite", "eraser", "paper", "art", "sharp"]
+    },
+    {
+        prompt: "music",
+        letters: "soundtyle",
+        words: ["sound", "style", "notes", "tone", "solo", "tune", "lesson"]
+    },
+    {
+        prompt: "mobile_phone",
+        letters: "networkxi",
+        words: ["network", "text", "internet", "tower"]
+    },
+    {
+        prompt: "party",
+        letters: "evntdirf",
+        words: ["event", "dinner", "friend", "eve", "invite"]
+    },
+    {
+        prompt: "face",
+        letters: "emotinsl",
+        words: ["emotion", "smile", "nose", "sense", "smell"]
+    },
+    {
+        prompt: "map",
+        letters: "scaleftur",
+        words: ["scale", "features", "surface", "east", "atlas", "sea"]
+    },
+    {
+        prompt: "winter",
+        letters: "snowcldie",
+        words: ["snow", "cold", "ice", "wind", "low", "cool", "die"]
+    },
+    {
+        prompt: "shoe",
+        letters: "botfhelg",
+        words: ["boot", "foot", "heel", "toe", "feet", "leg"]
+    },
+    {
+        prompt: "team",
+        letters: "groupmebl",
+        words: ["group", "member", "people", "peer"]
+    },
+    {
+        prompt: "key_(lock)",
+        letters: "carpinset",
+        words: ["car", "pin", "set", "access", "pattern"]
+    },
+];
 
 export default class LetterPrompt extends Component {
 
-  remainingLetters = {a: 1, b: 3, c: 5, d: 3, e: 2, f: 3, g: 2, i: 1};
+    constructor(props) {
+        super(props);
 
-  constructor(props) {
-    super(props);
+        this.state = {
 
-    this.state = {
+            word: "",
+            letters: {
+                a: {count: 1, index: 0},
+                b: {count: 3, index: 1},
+                c: {count: 5, index: 2},
+                d: {count: 3, index: 3},
+                e: {count: 2, index: 4},
+                f: {count: 3, index: 5},
+                g: {count: 2, index: 6},
+                i: {count: 1, index: 7},
+                h: {count: 1, index: 8},
+            },
 
-      word   : "",
-      letters: "abcdefgi".split(""),
+            isSelectedWordValid: "",
+        };
 
-      isSelectedWordValid: "",
-    };
+        this.generateLetterClassName = this.generateLetterClassName.bind(this);
+        this.shuffleLetters = this.shuffleLetters.bind(this);
 
-    this.generateLetterClassName = this.generateLetterClassName.bind(this);
-    this.shuffleLetters = this.shuffleLetters.bind(this);
-
-    this.handleLetterClick = this.handleLetterClick.bind(this);
-    this.handleSendShuffle = this.handleSendShuffle.bind(this);
-    this.handleBackspace = this.handleBackspace.bind(this);
-  }
-
-  generateLetterClassName(i) {
-    if (this.state.letters.length !== 9 && i >= 4) {
-      ++i;
+        this.handleLetterClick = this.handleLetterClick.bind(this);
+        this.handleSendShuffle = this.handleSendShuffle.bind(this);
+        this.handleBackspace = this.handleBackspace.bind(this);
     }
 
-    return "letter-position-3-3-" + i;
-  }
+    generateLetterClassName(i) {
+        if (Object.keys(this.state.letters).length !== 9 && i >= 4) {
+            ++i;
+        }
 
-  shuffleLetters() {
-    let letters = [...this.state.letters];
-
-    for (let i = 0; i < letters.length; ++i) {
-      let shuffleTarget = Math.floor(Math.random() * letters.length);
-      // Swap it
-      let tmp = letters[i];
-      letters[i] = letters[shuffleTarget];
-      letters[shuffleTarget] = tmp;
+        return "letter-position-3-3-" + i;
     }
 
-    // letters.unshift(letters.pop());
+    shuffleLetters() {
+        let letters = Object.keys(this.state.letters);
 
-    this.setState({
-      letters: letters,
-    });
-  }
+        for (let i = 0; i < letters.length; ++i) {
+            let shuffleTarget = Math.floor(Math.random() * letters.length);
+            // Swap it
+            let src = letters[i],
+                dest = letters[shuffleTarget];
 
-  handleLetterClick(letter) {
-    if (this.remainingLetters[letter]) {
-      --this.remainingLetters[letter];
+            let tmp = this.state.letters[src].index;
+            // eslint-disable-next-line
+            this.state.letters[src].index = this.state.letters[dest].index;
+            // eslint-disable-next-line
+            this.state.letters[dest].index = tmp;
+        }
 
-      this.setState({
-        word: this.state.word + letter,
-      });
+        this.forceUpdate();
     }
-  }
 
-  handleSendShuffle() {
-    if (this.state.word.length) {
-      // Send
-    } else {
-      // Shuffle
-      this.shuffleLetters();
+    handleLetterClick(letter) {
+        if (this.state.letters[letter].count) {
+            --this.state.letters[letter].count;
+
+            this.setState({
+                word: this.state.word + letter,
+            });
+        }
     }
-  }
 
-  handleBackspace() {
-    let lastLetter = this.state.word[this.state.word.length - 1];
-    ++this.remainingLetters[lastLetter];
+    handleSendShuffle() {
+        if (this.state.word.length) {
+            // Send
+        } else {
+            // Shuffle
+            this.shuffleLetters();
+        }
+    }
 
-    this.setState({
-      word: this.state.word.slice(0, -1),
-    });
-  }
+    handleBackspace() {
+        let lastLetter = this.state.word[this.state.word.length - 1];
+        ++this.state.letters[lastLetter].count;
 
-  render() {
-    return (
-        <div className="letter-prompt game">
-          <div className="game-area">
-            <div
-                className="flex-inner-extend flex-center game-area-inner">
-              <div className="letter-selected flex-center">
-                {this.state.word}
-              </div>
-              <div
-                  className={`grid flex-center ${this.state.isSelectedWordValid}`}>
-                <div className="grid-wrapper">
-                  {this.state.letters.map((letter, i) =>
-                      <div
-                          key={letter}
-                          className={`letter-grid letter-${this.remainingLetters[letter]} ${this.generateLetterClassName(
-                              i)}`}
-                      >
-                        <div
-                            onClick={() => this.handleLetterClick(letter)}
-                            className="letter-inner flex-center">
-                          <Ink/>
-                          <span>{letter}</span>
+        this.setState({
+            word: this.state.word.slice(0, -1),
+        });
+    }
+
+    render() {
+        return (
+            <div className="letter-prompt game">
+                <div className="game-area">
+                    <div
+                        className="flex-inner-extend flex-center game-area-inner">
+                        <div className="letter-selected flex-center">
+                            {this.state.word}
                         </div>
-                      </div>
-                  )}
+                        <div
+                            className={`grid flex-center ${this.state.isSelectedWordValid}`}>
+                            <div className="grid-wrapper">
+                                {Object.keys(this.state.letters).map(letter =>
+                                    <div
+                                        className={`letter-grid letter-${this.state.letters[letter].count}
+                                    ${this.generateLetterClassName(this.state.letters[letter].index)}`}
+                                    >
+                                        <div
+                                            onClick={() => this.handleLetterClick(
+                                                letter)}
+                                            className="letter-inner flex-center">
+                                            <Ink/>
+                                            <span>{letter}</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="btns">
+                            <Button
+                                onClick={this.handleSendShuffle}
+                                text={this.state.word.length ? "submit" : "shuffle"}>
+                                {this.state.word.length ? "send" : "shuffle"}
+                            </Button>
+                            <Button
+                                onClick={this.handleBackspace}
+                                className={this.state.word.length ? "" : "hidden"}>
+                                backspace
+                            </Button>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className="btns">
-                <Button
-                    onClick={this.handleSendShuffle}
-                    text={this.state.word.length ? "submit" : "shuffle"}>
-                  {this.state.word.length ? "send" : "shuffle"}
-                </Button>
-                <Button
-                    onClick={this.handleBackspace}
-                    className={this.state.word.length ? "" : "hidden"}>
-                  backspace
-                </Button>
-              </div>
             </div>
-          </div>
-        </div>
-    );
-  }
+        );
+    }
 }

@@ -211,7 +211,7 @@ body, html {
     .letter-grid {
       pointer-events: auto;
       animation: none;
-      transition: .2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      transition: top .2s cubic-bezier(0.18, 0.89, 0.32, 1.28), left .2s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity .4s ease;
       top: 0;
       left: 0;
 
