@@ -157,7 +157,7 @@ export default class LetterPrompt extends Component {
       isSelectedWordValid: "",
     };
 
-    this.generateLetterStyle = this.generateLetterStyle.bind(this);
+    this.generateLetterClassName = this.generateLetterClassName.bind(this);
     this.shuffleLetters = this.shuffleLetters.bind(this);
 
     this.handleLetterClick = this.handleLetterClick.bind(this);
@@ -165,19 +165,16 @@ export default class LetterPrompt extends Component {
     this.handleBackspace = this.handleBackspace.bind(this);
   }
 
-  generateLetterStyle(i) {
+  generateLetterClassName(i) {
     if (this.state.letters.length !== 9 && i >= 4) {
       ++i;
     }
 
-    return {
-      top : LETTER_OUTER_SIZE * Math.floor(i / 3),
-      left: LETTER_OUTER_SIZE * (i % 3),
-    };
+    return "letter-position-3-3-" + i;
   }
 
   shuffleLetters() {
-    let letters = this.state.letters;
+    let letters = [...this.state.letters];
 
     for (let i = 0; i < letters.length; ++i) {
       let shuffleTarget = Math.floor(Math.random() * letters.length);
@@ -186,6 +183,8 @@ export default class LetterPrompt extends Component {
       letters[i] = letters[shuffleTarget];
       letters[shuffleTarget] = tmp;
     }
+
+    // letters.unshift(letters.pop());
 
     this.setState({
       letters: letters,
@@ -235,11 +234,10 @@ export default class LetterPrompt extends Component {
                   {this.state.letters.map((letter, i) =>
                       <div
                           key={letter}
-                          className={`letter-grid letter-${this.remainingLetters[letter]}`}
-                          style={this.generateLetterStyle(i)}
+                          className={`letter-grid letter-${this.remainingLetters[letter]} ${this.generateLetterClassName(
+                              i)}`}
                       >
                         <div
-                            data-tag={letter}
                             onClick={() => this.handleLetterClick(letter)}
                             className="letter-inner flex-center">
                           <Ink/>

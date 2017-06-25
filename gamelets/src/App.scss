@@ -200,20 +200,33 @@ body, html {
 
   .letter-prompt & {
     height: 3 * $grid-size;
+    overflow: visible;
 
     .grid-wrapper {
       width: 3 * $grid-size;
       height: 3 * $grid-size;
+      z-index: 5;
     }
 
     .letter-grid {
       pointer-events: auto;
       animation: none;
-      transition: 5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      transition: .2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      top: 0;
+      left: 0;
 
       &.letter-0 {
         opacity: 0;
         pointer-events: none;
+      }
+    }
+
+    @for $i from 0 through 2 {
+      @for $j from 0 through 2 {
+        .letter-position-3-3-#{3*$i+$j} {
+          top: $i * $grid-size;
+          left: $j * $grid-size;
+        }
       }
     }
 

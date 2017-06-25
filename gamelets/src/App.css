@@ -452,17 +452,48 @@ body, html {
   to {
     margin-bottom: 0; } }
   .letter-prompt .grid {
-    height: 300px; }
+    height: 300px;
+    overflow: visible; }
     .letter-prompt .grid .grid-wrapper {
       width: 300px;
-      height: 300px; }
+      height: 300px;
+      z-index: 5; }
     .letter-prompt .grid .letter-grid {
       pointer-events: auto;
       animation: none;
-      transition: 5s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
+      transition: 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      top: 0;
+      left: 0; }
       .letter-prompt .grid .letter-grid.letter-0 {
         opacity: 0;
         pointer-events: none; }
+    .letter-prompt .grid .letter-position-3-3-0 {
+      top: 0px;
+      left: 0px; }
+    .letter-prompt .grid .letter-position-3-3-1 {
+      top: 0px;
+      left: 100px; }
+    .letter-prompt .grid .letter-position-3-3-2 {
+      top: 0px;
+      left: 200px; }
+    .letter-prompt .grid .letter-position-3-3-3 {
+      top: 100px;
+      left: 0px; }
+    .letter-prompt .grid .letter-position-3-3-4 {
+      top: 100px;
+      left: 100px; }
+    .letter-prompt .grid .letter-position-3-3-5 {
+      top: 100px;
+      left: 200px; }
+    .letter-prompt .grid .letter-position-3-3-6 {
+      top: 200px;
+      left: 0px; }
+    .letter-prompt .grid .letter-position-3-3-7 {
+      top: 200px;
+      left: 100px; }
+    .letter-prompt .grid .letter-position-3-3-8 {
+      top: 200px;
+      left: 200px; }
     .letter-prompt .grid .letter-inner {
       color: white; }
       .letter-prompt .grid .letter-inner:before {
