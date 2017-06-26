@@ -470,6 +470,10 @@ body, html {
       .letter-prompt .grid .letter-grid.letter-0 {
         opacity: 0;
         pointer-events: none; }
+        .letter-prompt .grid .letter-grid.letter-0:after {
+          content: "0"; }
+        .letter-prompt .grid .letter-grid.letter-0.letter-in-use {
+          opacity: .2; }
     .letter-prompt .grid .letter-position-3-3-0 {
       top: 0px;
       left: 0px; }
@@ -550,19 +554,38 @@ body, html {
       right: 10px;
       bottom: 10px;
       font-weight: bold;
-      pointer-events: none; }
+      pointer-events: none;
+      animation: test .4s ease; }
+@keyframes test {
+  from {
+    bottom: 100px;
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes test-2 {
+  from {
+    bottom: 100px;
+    opacity: 0; }
+  to {
+    opacity: 1; } }
     .grid .letter-grid.letter-l:after {
-      content: "2"; }
+      content: "2";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-n:after {
-      content: "2"; }
+      content: "2";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-r:after {
-      content: "2"; }
+      content: "2";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-t:after {
-      content: "2"; }
+      content: "2";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-u:after {
-      content: "2"; }
+      content: "2";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-2:after {
-      content: "2"; }
+      content: "2";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-d:after {
       content: "3"; }
     .grid .letter-grid.letter-g:after {
@@ -570,11 +593,14 @@ body, html {
     .grid .letter-grid.letter-3:after {
       content: "3"; }
     .grid .letter-grid.letter-b:after {
-      content: "4"; }
+      content: "4";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-c:after {
-      content: "4"; }
+      content: "4";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-4:after {
-      content: "4"; }
+      content: "4";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-f:after {
       content: "5"; }
     .grid .letter-grid.letter-h:after {
@@ -584,20 +610,38 @@ body, html {
     .grid .letter-grid.letter-5:after {
       content: "5"; }
     .grid .letter-grid.letter-k:after {
-      content: "6"; }
+      content: "6";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-w:after {
-      content: "6"; }
+      content: "6";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-6:after {
-      content: "6"; }
+      content: "6";
+      animation: test-2 .4s ease; }
+    .grid .letter-grid.letter-7:after {
+      content: "7"; }
     .grid .letter-grid.letter-x:after {
-      content: "8"; }
+      content: "8";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-j:after {
-      content: "8"; }
+      content: "8";
+      animation: test-2 .4s ease; }
+    .grid .letter-grid.letter-8:after {
+      content: "8";
+      animation: test-2 .4s ease; }
+    .grid .letter-grid.letter-9:after {
+      content: "9"; }
     .grid .letter-grid.letter-z:after {
-      content: "10"; }
+      content: "10";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.letter-q:after {
-      content: "10"; }
+      content: "10";
+      animation: test-2 .4s ease; }
+    .grid .letter-grid.letter-10:after {
+      content: "10";
+      animation: test-2 .4s ease; }
     .grid .letter-grid.hover :before, .grid .letter-grid:active :before {
+      transform: scale(0.95);
       background-color: #80DEEA; }
     .grid .letter-grid.selected :before {
       background-color: #00BCD4; }
@@ -679,7 +723,8 @@ body, html {
   flex: none;
   font-weight: lighter; }
 .letter-prompt .word-list {
-  flex: 1 1 auto;
+  height: auto;
+  margin-bottom: 30px;
   font-size: 30px;
   text-transform: uppercase;
   font-weight: bold;

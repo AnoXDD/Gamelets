@@ -387,8 +387,9 @@ export default class LetterPrompt extends Component {
                                 {Object.keys(this.state.letters).map(letter =>
                                     <div
                                         key={letter}
-                                        className={`letter-grid letter-${this.state.letters[letter].count}
-                                    ${this.generateLetterClassName(this.state.letters[letter].index)}`}
+                                        className={`letter-grid letter-${this.state.letters[letter].count} ${this.state.word.indexOf(
+                                            letter) === -1 ? "" : "letter-in-use"} ${this.generateLetterClassName(
+                                            this.state.letters[letter].index)}`}
                                     >
                                         <div
                                             onClick={() => this.handleLetterClick(

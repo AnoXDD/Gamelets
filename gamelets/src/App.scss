@@ -223,6 +223,14 @@ body, html {
       &.letter-0 {
         opacity: 0;
         pointer-events: none;
+
+        &:after {
+          content: "0";
+        }
+
+        &.letter-in-use {
+          opacity: .2;
+        }
       }
     }
 
@@ -315,6 +323,7 @@ body, html {
       bottom: 10px;
       font-weight: bold;
       pointer-events: none;
+      animation: test .4s ease;
     }
 
     $point-2: ("l", "n", "r", 't', 'u', '2');
@@ -322,12 +331,36 @@ body, html {
     $point-4: ('b', 'c', '4');
     $point-5: ('f', 'h', 'v', '5');
     $point-6: ('k', 'w', '6');
-    $point-8: ('x', 'j');
-    $point-10: ('z', 'q');
+    $point-7: ('7');
+    $point-8: ('x', 'j', '8');
+    $point-9: ('9');
+    $point-10: ('z', 'q', '10');
+
+    @keyframes test {
+      from {
+        bottom: 100px;
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes test-2 {
+      from {
+        bottom: 100px;
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
 
     @each $i in $point-2 {
       &.letter-#{$i}:after {
         content: "2";
+        animation: test-2 .4s ease;
       }
     }
     @each $i in $point-3 {
@@ -338,6 +371,7 @@ body, html {
     @each $i in $point-4 {
       &.letter-#{$i}:after {
         content: "4";
+        animation: test-2 .4s ease;
       }
     }
     @each $i in $point-5 {
@@ -348,21 +382,35 @@ body, html {
     @each $i in $point-6 {
       &.letter-#{$i}:after {
         content: "6";
+        animation: test-2 .4s ease;
+      }
+    }
+    @each $i in $point-7 {
+      &.letter-#{$i}:after {
+        content: "7";
       }
     }
     @each $i in $point-8 {
       &.letter-#{$i}:after {
         content: "8";
+        animation: test-2 .4s ease;
+      }
+    }
+    @each $i in $point-9 {
+      &.letter-#{$i}:after {
+        content: "9";
       }
     }
     @each $i in $point-10 {
       &.letter-#{$i}:after {
         content: "10";
+        animation: test-2 .4s ease;
       }
     }
 
     &.hover, &:active {
       :before {
+        transform: scale(.95);
         background-color: $csl;
       }
     }
@@ -497,7 +545,8 @@ body, html {
   }
 
   .word-list {
-    flex: 1 1 auto;
+    height: auto;
+    margin-bottom: 30px;
     font-size: 30px;
     text-transform: uppercase;
     font-weight: bold;
