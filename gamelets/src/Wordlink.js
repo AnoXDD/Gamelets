@@ -14,7 +14,7 @@ const DEFAULT_TIME = 90,
     COUNTDOWN = 3;
 
 const GAME_STATE = {
-    IDLE: -1,
+    IDLE : -1,
     READY: 1,
     START: 2,
 };
@@ -28,11 +28,11 @@ export default class Wordlink extends Component {
     state = {
         mini: false,
 
-        word: "",
-        score: 0,
+        word               : "",
+        score              : 0,
         isSelectedWordValid: "",
 
-        gameState: GAME_STATE.IDLE,
+        gameState  : GAME_STATE.IDLE,
         timeVersion: 0,
     };
 
@@ -93,9 +93,9 @@ export default class Wordlink extends Component {
         this.counter = COUNTDOWN;
 
         this.setState({
-            gameState: GAME_STATE.READY,
+            gameState  : GAME_STATE.READY,
             timeVersion: this.state.timeVersion + 1,
-            score: 0,
+            score      : 0,
         })
     }
 
@@ -104,7 +104,7 @@ export default class Wordlink extends Component {
         this.counter = DEFAULT_TIME;
 
         this.setState({
-            gameState: GAME_STATE.START,
+            gameState  : GAME_STATE.START,
             timeVersion: this.state.timeVersion + 1,
         });
     }
@@ -112,7 +112,7 @@ export default class Wordlink extends Component {
     render() {
         return (
             <div
-                className={`wordlink game ${this.state.classClassName} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === GAME_STATE.READY ? "ready" : ""}`}>
+                className={`wordlink game ${this.state.isSelectedWordValid} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === GAME_STATE.READY ? "ready" : ""}`}>
                 <header className="flex-center">
                     <Timer
                         version={this.state.timeVersion}

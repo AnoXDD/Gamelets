@@ -36,11 +36,14 @@ body, html {
   }
 
   .game-area {
+    overflow: hidden;
     flex: 1 1 auto;
     position: relative;
 
     .game-area-inner {
       flex-direction: column;
+      padding-bottom: 20px;
+      box-sizing: border-box;
     }
   }
 
@@ -477,15 +480,30 @@ body, html {
     .prompt {
       text-transform: uppercase;
     }
+
+    .word {
+      position: absolute;
+      top: 50px;
+      font-size: 40px;
+    }
+
+    .word-list {
+      max-width: 80vw;
+      margin-top: 50px;
+      font-size: 20px;
+      flex: none;
+      font-weight: lighter;
+    }
   }
 
   .word-list {
-    margin: -50px 0 50px 0;
+    flex: 1 1 auto;
     font-size: 30px;
     text-transform: uppercase;
     font-weight: bold;
     max-width: $screen-break;
     text-align: center;
+    flex-wrap: wrap;
 
     .word {
       padding: 0 20px;

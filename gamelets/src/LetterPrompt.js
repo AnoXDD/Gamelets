@@ -7,6 +7,13 @@ import Button from "./Button";
  * Created by Anoxic on 6/24/2017.
  */
 
+
+const GAME_STATE = {
+    IDLE : -1,
+    READY: 1,
+    START: 2,
+};
+
 const HIDDEN_CHAR = "·";
 
 const KEYS = [
@@ -101,7 +108,7 @@ const KEYS = [
         words  : ["sound", "style", "notes", "tone", "solo", "tune", "lesson"],
     },
     {
-        prompt : "mobile_phone",
+        prompt : "cellphone",
         letters: "networkxi",
         words  : ["network", "text", "internet", "tower"],
     },
@@ -136,7 +143,7 @@ const KEYS = [
         words  : ["group", "member", "people", "peer"],
     },
     {
-        prompt : "key_(lock)",
+        prompt : "key",
         letters: "carpinset",
         words  : ["car", "pin", "set", "access", "pattern"],
     },
@@ -145,12 +152,16 @@ const KEYS = [
 export default class LetterPrompt extends Component {
 
     wordList = [];
+    problemIndex = -1;
     solvedIndex = [];
+
+    newGame = true;
 
     constructor(props) {
         super(props);
 
         this.state = {
+            gameState: GAME_STATE.IDLE,
 
             prompt          : "",
             correctWordIndex: [],
@@ -161,7 +172,7 @@ export default class LetterPrompt extends Component {
         };
 
         this.findUnresolvedProblem = this.findUnresolvedProblem.bind(this);
-        this.generateNewProblem = this.generateNewProblem.bind(this);
+        this.startNewProblem = this.startNewProblem.bind(this);
 
         this.generateLetterClassName = this.generateLetterClassName.bind(this);
         this.shuffleLetters = this.shuffleLetters.bind(this);
@@ -170,10 +181,10 @@ export default class LetterPrompt extends Component {
         this.handleSendShuffle = this.handleSendShuffle.bind(this);
         this.handleBackspace = this.handleBackspace.bind(this);
         this.handleSend = this.handleSend.bind(this);
+        this.handleProblemSolved = this.handleProblemSolved.bind(this)
     }
 
     componentDidMount() {
-        this.generateNewProblem();
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -182,12 +193,16 @@ export default class LetterPrompt extends Component {
         }
     }
 
+    componentDidUpdate() {
+    }
+
     findUnresolvedProblem() {
         while (this.solvedIndex.length !== KEYS.length) {
             let index = Math.floor(Math.random() * KEYS.length);
 
             if (this.solvedIndex.indexOf(index) === -1) {
                 // This is not solved yet
+                this.problemIndex = index;
                 return JSON.parse(JSON.stringify(KEYS[index]));
             }
         }
@@ -218,11 +233,13 @@ export default class LetterPrompt extends Component {
         return state;
     }
 
-    generateNewProblem() {
+    startNewProblem() {
+        this.newGame = false;
         let problem = this.findUnresolvedProblem();
 
         this.wordList = problem.words;
         this.setState({
+            gameState       : GAME_STATE.START,
             prompt          : problem.prompt,
             correctWordIndex: [],
             word            : "",
@@ -272,11 +289,16 @@ export default class LetterPrompt extends Component {
         let index = this.wordList.indexOf(this.state.word);
 
         if (index !== -1 && this.state.correctWordIndex.indexOf(index) === -1) {
-            // This word is correct and not being added to the list
-            this.setState({
-                word            : "",
-                correctWordIndex: [...this.state.correctWordIndex, index],
-            });
+            if (this.state.correctWordIndex.length + 1 === this.wordList.length) {
+                // Puzzle solved
+                this.handleProblemSolved();
+            } else {
+                // This word is correct and not being added to the list
+                this.setState({
+                    word            : "",
+                    correctWordIndex: [...this.state.correctWordIndex, index],
+                });
+            }
         } else {
             // Not a match
             // Return all the letters
@@ -310,16 +332,40 @@ export default class LetterPrompt extends Component {
         });
     }
 
+    handleProblemSolved() {
+        this.solvedIndex.push(this.problemIndex);
+
+        this.setState({
+            gameState: GAME_STATE.IDLE,
+        });
+    }
+
     render() {
         return (
-            <div className={`letter-prompt game ${this.state.classClassName}`}>
+            <div
+                className={`letter-prompt game ${this.state.classClassName} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""}`}>
+                <header className="flex-center">
+                    {this.newGame || this.state.gameState !== GAME_STATE.IDLE ?
+                        null : <div className="word">WORD!</div>}
+                    <div className="prompt">{this.state.prompt}</div>
+                    {this.state.gameState === GAME_STATE.IDLE ?
+                        <div
+                            className="word-list">{this.wordList.join(" | ")}</div> : null
+                    }
+                    <div
+                        className={`btns ${this.state.gameState === GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
+                        <Button
+                            onClick={this.startNewProblem}
+                            text={this.newGame ? "start" : "next"}
+                        >
+                            {this.newGame ? "play_arrow" : "skip_next"}
+                        </Button>
+                    </div>
+                </header>
                 <div className="game-area">
-                    <header className="flex-center">
-                        <div className="prompt">{this.state.prompt}</div>
-                    </header>
                     <div
                         className="flex-inner-extend flex-center game-area-inner">
-                        <div className="word-list">
+                        <div className="word-list flex-center">
                             {this.wordList.map((word, i) =>
                                 <span key={word}
                                       className={`word ${this.state.correctWordIndex.indexOf(
