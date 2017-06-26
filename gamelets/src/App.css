@@ -464,7 +464,7 @@ body, html {
     .letter-prompt .grid .letter-grid {
       pointer-events: auto;
       animation: none;
-      transition: top 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), left 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.4s ease;
+      transition: top 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28), left 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28), opacity 0.4s ease;
       top: 0;
       left: 0; }
       .letter-prompt .grid .letter-grid.letter-0 {
@@ -558,13 +558,13 @@ body, html {
       animation: test .4s ease; }
 @keyframes test {
   from {
-    bottom: 100px;
+    bottom: 50px;
     opacity: 0; }
   to {
     opacity: 1; } }
 @keyframes test-2 {
   from {
-    bottom: 100px;
+    bottom: 50px;
     opacity: 0; }
   to {
     opacity: 1; } }
@@ -724,19 +724,26 @@ body, html {
   font-weight: lighter; }
 .letter-prompt .word-list {
   height: auto;
-  margin-bottom: 30px;
   font-size: 30px;
   text-transform: uppercase;
   font-weight: bold;
   max-width: 510px;
   text-align: center;
   flex-wrap: wrap; }
+@keyframes word-appear {
+  from {
+    transform: scale(0.3); } }
   .letter-prompt .word-list .word {
     padding: 0 20px;
-    display: inline-block; }
+    display: inline-block;
+    animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.65, 1.5); }
     .letter-prompt .word-list .word.empty {
-      letter-spacing: 5px; }
+      letter-spacing: 5px;
+      animation: none; }
 .letter-prompt.wrong .letter-selected {
   animation: wrong .3s ease; }
+
+.flex-bubble-wrap {
+  flex: 1 1 auto; }
 
 /*# sourceMappingURL=App.css.map */

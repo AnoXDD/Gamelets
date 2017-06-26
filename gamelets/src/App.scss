@@ -1,6 +1,8 @@
 @import "base.scss";
 
 $screen-break: 510px;
+$rollback: cubic-bezier(0.18, 0.88, 0.32, 1.28);
+$rollback-heavy: cubic-bezier(0.18, 0.88, 0.65, 1.5);
 
 body, html {
   width: 100vw;
@@ -216,7 +218,7 @@ body, html {
     .letter-grid {
       pointer-events: auto;
       animation: none;
-      transition: top .2s cubic-bezier(0.18, 0.89, 0.32, 1.28), left .2s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity .4s ease;
+      transition: top .2s $rollback, left .2s $rollback, opacity .4s ease;
       top: 0;
       left: 0;
 
@@ -338,7 +340,7 @@ body, html {
 
     @keyframes test {
       from {
-        bottom: 100px;
+        bottom: 50px;
         opacity: 0;
       }
 
@@ -348,7 +350,7 @@ body, html {
     }
     @keyframes test-2 {
       from {
-        bottom: 100px;
+        bottom: 50px;
         opacity: 0;
       }
 
@@ -546,7 +548,6 @@ body, html {
 
   .word-list {
     height: auto;
-    margin-bottom: 30px;
     font-size: 30px;
     text-transform: uppercase;
     font-weight: bold;
@@ -554,12 +555,20 @@ body, html {
     text-align: center;
     flex-wrap: wrap;
 
+    @keyframes word-appear {
+      from {
+        transform: scale(.3);
+      }
+    }
+
     .word {
       padding: 0 20px;
       display: inline-block;
+      animation: word-appear .2s $rollback-heavy;
 
       &.empty {
         letter-spacing: 5px;
+        animation: none;
       }
     }
   }
@@ -567,6 +576,10 @@ body, html {
   &.wrong .letter-selected {
     animation: wrong .3s ease;
   }
+}
+
+.flex-bubble-wrap {
+  flex: 1 1 auto;
 }
 
 //-----------------------------

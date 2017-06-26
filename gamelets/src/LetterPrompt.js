@@ -365,6 +365,7 @@ export default class LetterPrompt extends Component {
                 <div className="game-area">
                     <div
                         className="flex-inner-extend flex-center game-area-inner">
+                        <div className="flex-bubble-wrap"></div>
                         <div className="word-list flex-center">
                             {this.wordList.map((word, i) =>
                                 <span key={word}
@@ -378,6 +379,7 @@ export default class LetterPrompt extends Component {
                                 </span>,
                             )}
                         </div>
+                        <div className="flex-bubble-wrap"></div>
                         <div className="letter-selected flex-center">
                             {this.state.word}
                         </div>
