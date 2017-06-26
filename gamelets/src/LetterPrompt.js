@@ -381,7 +381,12 @@ export default class LetterPrompt extends Component {
                         </div>
                         <div className="flex-bubble-wrap"></div>
                         <div className="letter-selected flex-center">
-                            {this.state.word}
+                            {this.state.word.split("").map((letter, i) =>
+                                <span key={letter + i}
+                                      className="letter">
+                                    {letter}
+                                </span>,
+                            )}
                         </div>
                         <div
                             className="grid flex-center">

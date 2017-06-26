@@ -134,7 +134,14 @@ export default class Wordlink extends Component {
                     <div
                         className="flex-inner-extend flex-center game-area-inner">
                         <div
-                            className="letter-selected flex-center">{this.state.word}</div>
+                            className="letter-selected flex-center">
+                            {this.state.word.split("").map((letter, i) =>
+                                <span key={letter + i}
+                                      className="letter">
+                                    {letter}
+                                </span>,
+                            )}
+                        </div>
                         <Grid onWordChange={this.handleNewWord}
                               onScoreChange={this.handleNewScore}
                               onWordValidChange={

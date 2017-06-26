@@ -407,6 +407,8 @@ body, html {
     margin-bottom: 10px;
     transition: .2s ease;
     position: relative; }
+    .game .letter-selected .letter {
+      animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28); }
 
 .wordlink.not-valid .letter-selected {
   background-color: #F44336; }
@@ -712,16 +714,24 @@ body, html {
   flex-direction: column; }
 .letter-prompt header .prompt {
   text-transform: uppercase; }
+@keyframes word-appear-delay-half-s {
+  0%, 71.4% {
+    transform: scale(0); } }
+@keyframes word-appear-delay-1s {
+  0%, 83.3% {
+    transform: scale(0); } }
 .letter-prompt header .word {
   position: absolute;
   top: 50px;
-  font-size: 40px; }
+  font-size: 40px;
+  animation: word-appear-delay-half-s 0.7s cubic-bezier(0.18, 0.88, 0.65, 1.5); }
 .letter-prompt header .word-list {
   max-width: 80vw;
   margin-top: 50px;
   font-size: 20px;
   flex: none;
-  font-weight: lighter; }
+  font-weight: lighter;
+  animation: word-appear-delay-1s 1.2s cubic-bezier(0.18, 0.88, 0.65, 1.5); }
 .letter-prompt .word-list {
   height: auto;
   font-size: 30px;
