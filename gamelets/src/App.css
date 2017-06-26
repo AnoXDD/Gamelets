@@ -594,7 +594,7 @@ body, html {
       content: "10"; }
     .grid .letter-grid.letter-q:after {
       content: "10"; }
-    .grid .letter-grid.hover :before, .grid .letter-grid:hover :before {
+    .grid .letter-grid.hover :before, .grid .letter-grid:active :before {
       background-color: #80DEEA; }
     .grid .letter-grid.selected :before {
       background-color: #00BCD4; }
@@ -658,7 +658,26 @@ body, html {
   .timer:before {
     content: 'TIME:\00a0'; }
 
+@keyframes wrong {
+  50% {
+    background: #F44336; } }
 .letter-prompt .game-area-inner {
   flex-direction: column; }
+.letter-prompt header .prompt {
+  text-transform: uppercase; }
+.letter-prompt .word-list {
+  margin: -50px 0 50px 0;
+  font-size: 30px;
+  text-transform: uppercase;
+  font-weight: bold;
+  max-width: 510px;
+  text-align: center; }
+  .letter-prompt .word-list .word {
+    padding: 0 20px;
+    display: inline-block; }
+    .letter-prompt .word-list .word.empty {
+      letter-spacing: 5px; }
+.letter-prompt.wrong .letter-selected {
+  animation: wrong .3s ease; }
 
 /*# sourceMappingURL=App.css.map */

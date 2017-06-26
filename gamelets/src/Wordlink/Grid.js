@@ -348,7 +348,7 @@ export default class Grid extends Component {
   render() {
     return (
         <div
-            className={`grid flex-center ${this.state.isSelectedWordValid}`}>
+            className={`grid flex-center ${this.state.classClassName}`}>
           <div className="grid-wrapper">
             <TouchPad
                 marginHeight={this.props.mini ? MARGIN_SIZE_MINI : MARGIN_SIZE}

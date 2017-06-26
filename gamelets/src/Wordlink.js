@@ -112,7 +112,7 @@ export default class Wordlink extends Component {
     render() {
         return (
             <div
-                className={`wordlink game ${this.state.isSelectedWordValid} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === GAME_STATE.READY ? "ready" : ""}`}>
+                className={`wordlink game ${this.state.classClassName} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === GAME_STATE.READY ? "ready" : ""}`}>
                 <header className="flex-center">
                     <Timer
                         version={this.state.timeVersion}
