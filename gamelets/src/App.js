@@ -1,17 +1,15 @@
 import React, {Component} from 'react';
 
 import './App.css';
+import GameSelect from "./GameSelect";
 
-import Wordlink from "./Wordlink";
 // import LetterpadGenerator from "./Letterpad/LetterpadGenerator"
-import LetterPrompt from "./LetterPrompt";
 
 class App extends Component {
   render() {
     return (
         <div className="App">
-          <LetterPrompt/>
-          {/*<Wordlink/>*/}
+          <GameSelect/>
           {/*<LetterpadGenerator/>*/}
         </div>
     );

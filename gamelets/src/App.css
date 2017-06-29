@@ -333,9 +333,40 @@ body, html {
   height: 100vh;
   overflow: hidden; }
 
-#root, .App {
+#root, .App, .game-select, .game-list {
   width: 100%;
   height: 100%; }
+
+.game-select .game-list {
+  flex-direction: column;
+  background: #448AFF; }
+  .game-select .game-list .title, .game-select .game-list .game {
+    position: relative;
+    width: 450px;
+    height: 80px;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 30px;
+    border-radius: 20px;
+    border: 4px white solid;
+    margin: 2px;
+    transition: .4s ease; }
+  .game-select .game-list .title {
+    border: none;
+    font-size: 35px; }
+  .game-select .game-list .game {
+    cursor: pointer; }
+    .game-select .game-list .game:hover {
+      background: white;
+      color: #448AFF; }
+  @media screen and (max-width: 510px) {
+    .game-select .game-list .title, .game-select .game-list .game {
+      box-sizing: border-box;
+      width: 90vw;
+      font-size: 22px; }
+    .game-select .game-list .title {
+      font-size: 35px; } }
 
 .game {
   width: 100%;

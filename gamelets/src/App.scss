@@ -10,9 +10,58 @@ body, html {
   overflow: hidden;
 }
 
-#root, .App {
+#root, .App, .game-select, .game-list {
   width: 100%;
   height: 100%;
+}
+
+.game-select {
+
+  .game-list {
+    flex-direction: column;
+    background: $cp;
+
+    .title, .game {
+      position: relative;
+      width: 450px;
+      height: 80px;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bolder;
+      font-size: 30px;
+      border-radius: 20px;
+      border: 4px white solid;
+      margin: 2px;
+      transition: .4s ease;
+    }
+
+    .title {
+      border: none;
+      font-size: 35px;
+    }
+
+    .game {
+      cursor: pointer;
+
+      &:hover {
+        background: white;
+        color: $cp;
+      }
+    }
+
+    @media screen and (max-width: $screen-break) {
+
+      .title, .game {
+        box-sizing: border-box;
+        width: 90vw;
+        font-size: 22px;
+      }
+
+      .title {
+        font-size: 35px;
+      }
+    }
+  }
 }
 
 .game {
