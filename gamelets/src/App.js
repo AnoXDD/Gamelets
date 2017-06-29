@@ -10,8 +10,8 @@ class App extends Component {
   render() {
     return (
         <div className="App">
-          {/*<LetterPrompt/>*/}
-          <Wordlink/>
+          <LetterPrompt/>
+          {/*<Wordlink/>*/}
           {/*<LetterpadGenerator/>*/}
         </div>
     );

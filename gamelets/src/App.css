@@ -707,32 +707,6 @@ body, html {
   .timer:before {
     content: 'TIME:\00a0'; }
 
-@media screen and (max-width: 510px) {
-  .letter-prompt .letter-selected {
-    height: 70px;
-    font-size: 25px;
-    width: 80%; }
-  .letter-prompt .grid {
-    height: 300px; }
-    .letter-prompt .grid .grid-wrapper {
-      width: 300px;
-      height: 300px; }
-    .letter-prompt .grid .letter-grid {
-      width: 60px;
-      height: 60px;
-      padding: 5px;
-      font-size: 12px; }
-      .letter-prompt .grid .letter-grid .arrow {
-        height: 4%;
-        top: 48%; }
-      .letter-prompt .grid .letter-grid:after {
-        right: 5px;
-        bottom: 5px; }
-    .letter-prompt .grid .letter-inner {
-      font-size: 30px; }
-      .letter-prompt .grid .letter-inner:before {
-        width: 55px;
-        height: 55px; } }
 @keyframes wrong {
   50% {
     background: #F44336; } }
@@ -778,6 +752,61 @@ body, html {
       animation: none; }
 .letter-prompt.wrong .letter-selected {
   animation: wrong .3s ease; }
+@media screen and (max-width: 510px) {
+  .letter-prompt .word-list {
+    font-size: 25px; }
+  .letter-prompt .letter-selected {
+    height: 70px;
+    font-size: 25px;
+    width: 80%; }
+  .letter-prompt .grid {
+    height: 180px; }
+    .letter-prompt .grid .grid-wrapper {
+      width: 180px;
+      height: 180px; }
+    .letter-prompt .grid .letter-grid {
+      width: 60px;
+      height: 60px;
+      padding: 5px;
+      font-size: 12px; }
+      .letter-prompt .grid .letter-grid .arrow {
+        height: 4%;
+        top: 48%; }
+      .letter-prompt .grid .letter-grid:after {
+        right: 5px;
+        bottom: 5px; }
+    .letter-prompt .grid .letter-position-3-3-0 {
+      top: 0px;
+      left: 0px; }
+    .letter-prompt .grid .letter-position-3-3-1 {
+      top: 0px;
+      left: 60px; }
+    .letter-prompt .grid .letter-position-3-3-2 {
+      top: 0px;
+      left: 120px; }
+    .letter-prompt .grid .letter-position-3-3-3 {
+      top: 60px;
+      left: 0px; }
+    .letter-prompt .grid .letter-position-3-3-4 {
+      top: 60px;
+      left: 60px; }
+    .letter-prompt .grid .letter-position-3-3-5 {
+      top: 60px;
+      left: 120px; }
+    .letter-prompt .grid .letter-position-3-3-6 {
+      top: 120px;
+      left: 0px; }
+    .letter-prompt .grid .letter-position-3-3-7 {
+      top: 120px;
+      left: 60px; }
+    .letter-prompt .grid .letter-position-3-3-8 {
+      top: 120px;
+      left: 120px; }
+    .letter-prompt .grid .letter-inner {
+      font-size: 30px; }
+      .letter-prompt .grid .letter-inner:before {
+        width: 55px;
+        height: 55px; } }
 
 .flex-bubble-wrap {
   flex: 1 1 auto; }

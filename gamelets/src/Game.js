@@ -49,6 +49,12 @@ export default class Game extends Component {
     window.removeEventListener("resize", this.handleWindowResize)
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.gameState) {
+      nextState.gameState = nextProps.gameState;
+    }
+  }
+
   handleWindowResize() {
     let width = window.outerWidth;
 
@@ -101,12 +107,16 @@ export default class Game extends Component {
                     version={this.state.timeVersion}
                     start={this.counter}
                     onFinish={this.handleTimeFinish}/>}
-            {this.newGame && typeof(this.props.score) !== "undefined" ? null :
+            {this.newGame || typeof(this.props.score) === "undefined" ? null :
                 <Scoreboard score={this.props.score}/>}
+            {this.props.prompt ? (<div
+                className="prompt">{this.props.prompt}</div>) : null}
+            {(!this.newGame && (this.state.gameState === GAME_STATE.IDLE)) ?
+                (this.props.gameSummary || null) : null}
             <div
                 className={`btns ${this.state.gameState === GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
               <Button
-                  onClick={this.readyGame}
+                  onClick={this.props.roundTime ? this.readyGame : this.startGame}
                   text={this.newGame ? "start" : this.props.restartText}
               >
                 {this.newGame ? "play_arrow" : this.props.restartIcon}
@@ -136,6 +146,8 @@ Game.propTypes = {
     PropTypes.string,
     PropTypes.element,
   ]),
+
+  gameState: PropTypes.number,
 
   restartText: PropTypes.string,
   restartIcon: PropTypes.string,
