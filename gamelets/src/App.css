@@ -707,6 +707,32 @@ body, html {
   .timer:before {
     content: 'TIME:\00a0'; }
 
+@media screen and (max-width: 510px) {
+  .letter-prompt .letter-selected {
+    height: 70px;
+    font-size: 25px;
+    width: 80%; }
+  .letter-prompt .grid {
+    height: 300px; }
+    .letter-prompt .grid .grid-wrapper {
+      width: 300px;
+      height: 300px; }
+    .letter-prompt .grid .letter-grid {
+      width: 60px;
+      height: 60px;
+      padding: 5px;
+      font-size: 12px; }
+      .letter-prompt .grid .letter-grid .arrow {
+        height: 4%;
+        top: 48%; }
+      .letter-prompt .grid .letter-grid:after {
+        right: 5px;
+        bottom: 5px; }
+    .letter-prompt .grid .letter-inner {
+      font-size: 30px; }
+      .letter-prompt .grid .letter-inner:before {
+        width: 55px;
+        height: 55px; } }
 @keyframes wrong {
   50% {
     background: #F44336; } }

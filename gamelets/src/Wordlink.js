@@ -5,153 +5,100 @@
 
 import React, {Component} from "react";
 
+import Game from "./Game";
 import Grid from "./Wordlink/Grid";
-import Scoreboard from "./Scoreboard";
-import Timer from "./Timer";
-import Button from "./Button";
 
-const DEFAULT_TIME = 90,
-    COUNTDOWN = 3;
+const DEFAULT_TIME = 90;
 
 const GAME_STATE = {
-    IDLE : -1,
-    READY: 1,
-    START: 2,
+  IDLE : -1,
+  READY: 1,
+  START: 2,
 };
 
-const MINI_THRESHOLD = 510;
 
 export default class Wordlink extends Component {
 
-    newGame = true;
+  state = {
+    mini: false,
 
-    state = {
-        mini: false,
+    word : "",
+    score: 0,
 
-        word               : "",
-        score              : 0,
-        isSelectedWordValid: "",
+    timeVersion: 0,
 
-        gameState  : GAME_STATE.IDLE,
-        timeVersion: 0,
-    };
+    isSelectedWordValid: "",
+  };
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
 
-        this.handleWindowResize = this.handleWindowResize.bind(this);
-        this.handleNewWord = this.handleNewWord.bind(this);
-        this.handleNewScore = this.handleNewScore.bind(this);
-        this.handleTimeFinish = this.handleTimeFinish.bind(this);
+    this.handleWindowResize = this.handleWindowResize.bind(this);
+    this.handleNewWord = this.handleNewWord.bind(this);
+    this.handleNewScore = this.handleNewScore.bind(this);
+    this.handleNewState = this.handleNewState.bind(this);
 
-        this.readyGame = this.readyGame.bind(this);
-        this.startGame = this.startGame.bind(this);
-    }
+    this.readyGame = this.readyGame.bind(this);
+  }
 
-    componentDidMount() {
-        this.handleWindowResize();
+  handleWindowResize(state) {
+    this.setState({
+      mini: state,
+    });
+  }
 
-        window.addEventListener("resize", this.handleWindowResize);
-    }
+  handleNewWord(word) {
+    this.setState({
+      word: word,
+    });
+  }
 
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.handleWindowResize)
-    }
+  handleNewScore(score) {
+    this.setState({
+      score: this.state.score + score,
+    });
+  }
 
-    handleWindowResize() {
-        let width = window.outerWidth;
+  readyGame() {
+    this.setState({
+      score: 0,
+    })
+  }
 
-        this.setState({
-            mini: width <= MINI_THRESHOLD,
-        });
-    }
+  handleNewState(state) {
+    this.setState({
+      gameState: state,
+    });
+  }
 
-    handleNewWord(word) {
-        this.setState({
-            word: word,
-        });
-    }
-
-    handleNewScore(score) {
-        this.setState({
-            score: this.state.score + score,
-        });
-    }
-
-    handleTimeFinish() {
-        if (this.state.gameState === GAME_STATE.READY) {
-            this.startGame();
-        } else {
-            this.setState({
-                gameState: GAME_STATE.IDLE,
-            });
-        }
-    }
-
-    readyGame() {
-        this.counter = COUNTDOWN;
-
-        this.setState({
-            gameState  : GAME_STATE.READY,
-            timeVersion: this.state.timeVersion + 1,
-            score      : 0,
-        })
-    }
-
-    startGame() {
-        this.newGame = false;
-        this.counter = DEFAULT_TIME;
-
-        this.setState({
-            gameState  : GAME_STATE.START,
-            timeVersion: this.state.timeVersion + 1,
-        });
-    }
-
-    render() {
-        return (
-            <div
-                className={`wordlink game ${this.state.isSelectedWordValid} ${this.state.gameState === GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === GAME_STATE.READY ? "ready" : ""}`}>
-                <header className="flex-center">
-                    <Timer
-                        version={this.state.timeVersion}
-                        start={this.counter}
-                        onFinish={this.handleTimeFinish}/>
-                    {this.newGame ? null :
-                        <Scoreboard score={this.state.score}/>}
-                    <div
-                        className={`btns ${this.state.gameState === GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
-                        <Button
-                            onClick={this.readyGame}
-                            text={`${this.newGame ? "" : "re"}start`}
-                        >
-                            {this.newGame ? "play_arrow" : "refresh"}
-                        </Button>
-                    </div>
-                </header>
-                <div className="game-area">
-                    <div
-                        className="flex-inner-extend flex-center game-area-inner">
-                        <div
-                            className="letter-selected flex-center">
-                            {this.state.word.split("").map((letter, i) =>
-                                <span key={letter + i}
-                                      className="letter">
+  render() {
+    return (
+        <Game name="wordlink"
+              className={this.state.isSelectedWordValid}
+              roundTime={DEFAULT_TIME}
+              score={this.state.score}
+              onResize={this.handleWindowResize}
+              onStart={this.readyGame}
+              onStateChange={this.handleNewState}
+        >
+          <div
+              className="letter-selected flex-center">
+            {this.state.word.split("").map((letter, i) =>
+                <span key={letter + i}
+                      className="letter">
                                     {letter}
                                 </span>,
-                            )}
-                        </div>
-                        <Grid onWordChange={this.handleNewWord}
-                              onScoreChange={this.handleNewScore}
-                              onWordValidChange={
-                                  v => this.setState({isSelectedWordValid: v})}
-                              active={this.state.gameState === GAME_STATE.START}
-                              mini={this.state.mini}
-                        />
-                    </div>
-                </div>
-            </div>
-        );
-    }
+            )}
+          </div>
+          <Grid onWordChange={this.handleNewWord}
+                onScoreChange={this.handleNewScore}
+                onWordValidChange={
+                  v => this.setState({isSelectedWordValid: v})}
+                active={this.state.gameState === GAME_STATE.START}
+                mini={this.state.mini}
+          />
+        </Game>
+    );
+  }
 }
