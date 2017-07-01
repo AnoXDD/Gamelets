@@ -183,16 +183,12 @@ export default class LetterPrompt extends Component {
     this.handleProblemSolved = this.handleProblemSolved.bind(this)
   }
 
-  componentDidMount() {
-  }
 
   componentWillUpdate(nextProps, nextState) {
     if (this.state.classClassName === "wrong") {
       nextState.classClassName = "";
     }
-  }
 
-  componentWillUpdate(nextProps, nextState) {
     if (nextState.gameState && this.state.gameState) {
       nextState.gameState = undefined;
     }
