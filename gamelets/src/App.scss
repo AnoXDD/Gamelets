@@ -1,8 +1,15 @@
+$font: "Lato";
+
 @import "base.scss";
+@import url(https://fonts.googleapis.com/css?family=#{$font}:400,700);
 
 $screen-break: 510px;
 $rollback: cubic-bezier(0.18, 0.88, 0.32, 1.28);
 $rollback-heavy: cubic-bezier(0.18, 0.88, 0.65, 1.5);
+
+*:not(i) {
+  font-family: $font, sans-serif;
+}
 
 body, html {
   width: 100vw;
@@ -12,6 +19,8 @@ body, html {
   left: 0;
   bottom: 0;
   right: 0;
+  margin:0;
+  padding:0;
   overflow: hidden;
 }
 

@@ -1,6 +1,7 @@
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 @import "https://fonts.googleapis.com/css?family=Lato";
 @import "https://fonts.googleapis.com/earlyaccess/notosanssc.css";
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700);
 @keyframes fade-in {
   from {
     opacity: 0; }
@@ -328,6 +329,9 @@ img.center {
     box-sizing: border-box;
     padding: 20px 50px 25px; }
 
+*:not(i) {
+  font-family: "Lato", sans-serif; }
+
 body, html {
   width: 100vw;
   height: 100%;
@@ -336,6 +340,8 @@ body, html {
   left: 0;
   bottom: 0;
   right: 0;
+  margin: 0;
+  padding: 0;
   overflow: hidden; }
 
 #root, .App, .game-select, .game-list {

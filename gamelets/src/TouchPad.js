@@ -50,8 +50,8 @@ export default class TouchPad extends Component {
     let y = event.targetTouches[0].clientY - this.top;
 
     // this.log(`pageX: ${Math.floor(event.targetTouches[0].pageX)}\tpageY: ${Math.floor(
-    //     event.targetTouches[0].pageY)}\t left: ${Math.floor($picker.left)}\t top: ${Math.floor(
-    //     $picker.top)}\t x: ${Math.floor(x)}\t y: ${Math.floor(y)} `)
+    //     event.targetTouches[0].pageY)}\t left: ${Math.floor(this.left)}\t top: ${Math.floor(
+    //     this.top)}\t x: ${Math.floor(x)}\t y: ${Math.floor(y)} `)
 
     return {
       x: x,
@@ -151,12 +151,13 @@ export default class TouchPad extends Component {
              onTouchMove={this.handleMove}
         >
           <div style={{
-            position  : "fixed",
-            top       : 0,
-            left      : 0,
-            height    : "300px",
-            width     : "100%",
-            color     : "red"
+            position     : "fixed",
+            top          : 0,
+            left         : 0,
+            height       : "300px",
+            width        : "100%",
+            color        : "red",
+            pointerEvents: "none",
           }}>{this.state.debug.map(d => <p>{d}</p>)}</div>
           {this.props.children}
         </div>

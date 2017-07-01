@@ -46,8 +46,8 @@ const LETTER_SCORE = {
 
 const SELECT_WORD_COOLDOWN = 500;
 
-const GRID_SIZE = 80,
-    MARGIN_SIZE = 10,
+const GRID_SIZE = 90,
+    MARGIN_SIZE = 5,
     GRID_SIZE_MINI = 50,
     MARGIN_SIZE_MINI = 5;
 
