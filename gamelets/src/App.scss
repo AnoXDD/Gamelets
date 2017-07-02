@@ -19,8 +19,8 @@ body, html {
   left: 0;
   bottom: 0;
   right: 0;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -30,10 +30,36 @@ body, html {
 }
 
 .game-select {
+  background: $cp;
+
+  .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    height: 80px;
+  }
+
+  .game-list, .game-real {
+    position: absolute;
+    top: 0;
+    transition: .2s ease;
+    height: 100%;
+    width: 100%;
+  }
+
+  .game-real {
+    left: 100vw;
+  }
 
   .game-list {
+    position: relative;
     flex-direction: column;
-    background: $cp;
+    right: 0;
 
     .title, .game {
       position: relative;
@@ -76,6 +102,21 @@ body, html {
       }
     }
   }
+
+  &.in-game {
+    .back {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .game-real {
+      left: 0;
+    }
+
+    .game-list {
+      right: 100vw;
+    }
+  }
 }
 
 .game {
@@ -104,6 +145,7 @@ body, html {
     overflow: hidden;
     flex: 1 1 auto;
     position: relative;
+    background: white;
 
     .game-area-inner {
       flex-direction: column;

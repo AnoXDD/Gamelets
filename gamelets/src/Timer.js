@@ -45,6 +45,10 @@ export default class Timer extends Component {
         }
     }
 
+    componentWillUnmount() {
+      clearInterval(this.intervalId);
+    }
+
     startTimer() {
         clearInterval(this.intervalId);
         this.intervalId = setInterval(() => {

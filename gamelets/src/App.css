@@ -348,36 +348,64 @@ body, html {
   width: 100%;
   height: 100%; }
 
-.game-select .game-list {
-  flex-direction: column;
+.game-select {
   background: #448AFF; }
-  .game-select .game-list .title, .game-select .game-list .game {
-    position: relative;
-    width: 450px;
-    height: 80px;
+  .game-select .back {
+    position: absolute;
+    top: 0;
+    left: 0;
     color: white;
-    text-transform: uppercase;
-    font-weight: bolder;
-    font-size: 30px;
-    border-radius: 20px;
-    border: 4px white solid;
-    margin: 2px;
-    transition: .4s ease; }
-  .game-select .game-list .title {
-    border: none;
-    font-size: 35px; }
-  .game-select .game-list .game {
-    cursor: pointer; }
-    .game-select .game-list .game:hover {
-      background: white;
-      color: #448AFF; }
-  @media screen and (max-width: 510px) {
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    height: 80px; }
+  .game-select .game-list, .game-select .game-real {
+    position: absolute;
+    top: 0;
+    transition: .2s ease;
+    height: 100%;
+    width: 100%; }
+  .game-select .game-real {
+    left: 100vw; }
+  .game-select .game-list {
+    position: relative;
+    flex-direction: column;
+    right: 0; }
     .game-select .game-list .title, .game-select .game-list .game {
-      box-sizing: border-box;
-      width: 90vw;
-      font-size: 22px; }
+      position: relative;
+      width: 450px;
+      height: 80px;
+      color: white;
+      text-transform: uppercase;
+      font-weight: bolder;
+      font-size: 30px;
+      border-radius: 20px;
+      border: 4px white solid;
+      margin: 2px;
+      transition: .4s ease; }
     .game-select .game-list .title {
-      font-size: 35px; } }
+      border: none;
+      font-size: 35px; }
+    .game-select .game-list .game {
+      cursor: pointer; }
+      .game-select .game-list .game:hover {
+        background: white;
+        color: #448AFF; }
+    @media screen and (max-width: 510px) {
+      .game-select .game-list .title, .game-select .game-list .game {
+        box-sizing: border-box;
+        width: 90vw;
+        font-size: 22px; }
+      .game-select .game-list .title {
+        font-size: 35px; } }
+  .game-select.in-game .back {
+    opacity: 1;
+    pointer-events: auto; }
+  .game-select.in-game .game-real {
+    left: 0; }
+  .game-select.in-game .game-list {
+    right: 100vw; }
 
 .game {
   width: 100%;
@@ -400,7 +428,8 @@ body, html {
   .game .game-area {
     overflow: hidden;
     flex: 1 1 auto;
-    position: relative; }
+    position: relative;
+    background: white; }
     .game .game-area .game-area-inner {
       flex-direction: column;
       padding-bottom: 20px;
