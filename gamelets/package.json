@@ -14,10 +14,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "react-scripts build && aws s3 cp build s3://gamelets.anoxic.me --recursive",
+    "deploy-only" : "aws s3 cp build s3://gamelets.anoxic.me --recursive"
   },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
+  "description": "A website for small games by Anoxic",
   "main": "index.js",
-  "author": "",
+  "author": "Anoxic",
   "license": "ISC"
 }
