@@ -10,7 +10,7 @@ import Game from "./Game";
 
 
 const GAME_STATE = {
-  IDLE : -1,
+  IDLE: -1,
   READY: 1,
   START: 2,
 };
@@ -19,134 +19,134 @@ const HIDDEN_CHAR = "·";
 
 const KEYS = [
   {
-    prompt : "red",
+    prompt: "red",
     letters: "flagdyebo",
-    words  : ["flag", "dye", "blood", "eye", "leaf"],
+    words: ["flag", "dye", "blood", "eye", "leaf"],
   },
   {
-    prompt : "apple",
+    prompt: "apple",
     letters: "fruitecdo",
-    words  : ["fruit", "tree", "cider", "food", "red", "doctor", "feed"],
+    words: ["fruit", "tree", "cider", "food", "red", "doctor", "feed"],
   },
   {
-    prompt : "egg",
+    prompt: "egg",
     letters: "birdyolkf",
-    words  : ["bird", "yolk", "food", "brood", "roll", "fry", "oil", "blood", "york"],
+    words: ["bird", "yolk", "food", "brood", "roll", "fry", "oil", "blood", "york"],
   },
   {
-    prompt : "bee",
+    prompt: "bee",
     letters: "honeyisct",
-    words  : ["honey", "insect", "nest", "host"],
+    words: ["honey", "insect", "nest", "host"],
   },
   {
-    prompt : "foot",
+    prompt: "foot",
     letters: "musclegho",
-    words  : ["muscle", "leg", "heel", "shoe"],
+    words: ["muscle", "leg", "heel", "shoe"],
   },
   {
-    prompt : "hand",
+    prompt: "hand",
     letters: "fingerbop",
-    words  : ["finger", "bone", "ring", "grip", "green", "forefinger"],
+    words: ["finger", "bone", "ring", "grip", "green", "forefinger"],
   },
   {
-    prompt : "door",
+    prompt: "door",
     letters: "hingeopsw",
-    words  : ["hinge", "open", "swing", "spin"],
+    words: ["hinge", "open", "swing", "spin"],
   },
   {
-    prompt : "cat",
+    prompt: "cat",
     letters: "domesticp",
-    words  : ["domestic", "species", "pet", "mice", "tom"],
+    words: ["domestic", "species", "pet", "mice", "tom"],
   },
   {
-    prompt : "fish",
+    prompt: "fish",
     letters: "watersymg",
-    words  : ["water", "system", "egg", "sea"],
+    words: ["water", "system", "egg", "sea"],
   },
   {
-    prompt : "water",
+    prompt: "water",
     letters: "icelqudfo",
-    words  : ["ice", "liquid", "life", "cloud", "fluid", "flood", "cold"],
+    words: ["ice", "liquid", "life", "cloud", "fluid", "flood", "cold"],
   },
   {
-    prompt : "sport",
+    prompt: "sport",
     letters: "gamefotbl",
-    words  : ["game", "football", "team", "goal", "ball"],
+    words: ["game", "football", "team", "goal", "ball"],
   },
   {
-    prompt : "window",
+    prompt: "window",
     letters: "framepnou",
-    words  : ["frame", "pane", "roof", "open", "room"],
+    words: ["frame", "pane", "roof", "open", "room"],
   },
   {
-    prompt : "computer",
+    prompt: "computer",
     letters: "progamey",
-    words  : ["program", "memory", "ram", "rom", "programmer", "error", "game"],
+    words: ["program", "memory", "ram", "rom", "programmer", "error", "game"],
   },
   {
-    prompt : "sun",
+    prompt: "sun",
     letters: "solarethn",
-    words  : ["solar", "earth", "star", "nasa", "heat", "stellar", "hot"],
+    words: ["solar", "earth", "star", "nasa", "heat", "stellar", "hot"],
   },
   {
-    prompt : "moon",
+    prompt: "moon",
     letters: "lunareths",
-    words  : ["lunar", "earth", "nasa", "sun", "nature", "star"],
+    words: ["lunar", "earth", "nasa", "sun", "nature", "star"],
   },
   {
-    prompt : "black",
+    prompt: "black",
     letters: "lightnksy",
-    words  : ["light", "ink", "list", "sky", "night"],
+    words: ["light", "ink", "list", "sky", "night"],
   },
   {
-    prompt : "pencil",
+    prompt: "pencil",
     letters: "graphites",
-    words  : ["graphite", "eraser", "paper", "art", "sharp"],
+    words: ["graphite", "eraser", "paper", "art", "sharp"],
   },
   {
-    prompt : "music",
+    prompt: "music",
     letters: "soundtyle",
-    words  : ["sound", "style", "notes", "tone", "solo", "tune", "lesson"],
+    words: ["sound", "style", "notes", "tone", "solo", "tune", "lesson"],
   },
   {
-    prompt : "cellphone",
+    prompt: "cellphone",
     letters: "networkxi",
-    words  : ["network", "text", "internet", "tower"],
+    words: ["network", "text", "internet", "tower"],
   },
   {
-    prompt : "party",
+    prompt: "party",
     letters: "evntdirf",
-    words  : ["event", "dinner", "friend", "eve", "invite"],
+    words: ["event", "dinner", "friend", "eve", "invite"],
   },
   {
-    prompt : "face",
+    prompt: "face",
     letters: "emotinsl",
-    words  : ["emotion", "smile", "nose", "sense", "smell"],
+    words: ["emotion", "smile", "nose", "sense", "smell"],
   },
   {
-    prompt : "map",
+    prompt: "map",
     letters: "scaleftur",
-    words  : ["scale", "features", "surface", "east", "atlas", "sea"],
+    words: ["scale", "features", "surface", "east", "atlas", "sea"],
   },
   {
-    prompt : "winter",
+    prompt: "winter",
     letters: "snowcldie",
-    words  : ["snow", "cold", "ice", "wind", "low", "cool", "die"],
+    words: ["snow", "cold", "ice", "wind", "low", "cool", "die"],
   },
   {
-    prompt : "shoe",
+    prompt: "shoe",
     letters: "botfhelg",
-    words  : ["boot", "foot", "heel", "toe", "feet", "leg"],
+    words: ["boot", "foot", "heel", "toe", "feet", "leg"],
   },
   {
-    prompt : "team",
+    prompt: "team",
     letters: "groupmebl",
-    words  : ["group", "member", "people", "peer"],
+    words: ["group", "member", "people", "peer"],
   },
   {
-    prompt : "key",
+    prompt: "key",
     letters: "carpinset",
-    words  : ["car", "pin", "set", "access", "pattern"],
+    words: ["car", "pin", "set", "access", "pattern"],
   },
 ];
 
@@ -162,10 +162,10 @@ export default class LetterPrompt extends Component {
     super(props);
 
     this.state = {
-      prompt          : "",
+      prompt: "",
       correctWordIndex: [],
-      word            : "",
-      letters         : {},
+      word: "",
+      letters: {},
 
       classClassName: "",
     };
@@ -180,7 +180,9 @@ export default class LetterPrompt extends Component {
     this.handleSendShuffle = this.handleSendShuffle.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
     this.handleSend = this.handleSend.bind(this);
-    this.handleProblemSolved = this.handleProblemSolved.bind(this)
+    this.handleProblemSolved = this.handleProblemSolved.bind(this);
+
+    this.isAnswerForEasterEgg = this.isAnswerForEasterEgg.bind(this);
   }
 
 
@@ -237,10 +239,10 @@ export default class LetterPrompt extends Component {
 
     this.wordList = problem.words;
     this.setState({
-      prompt          : problem.prompt,
+      prompt: problem.prompt,
       correctWordIndex: [],
-      word            : "",
-      letters         : this.generateLetterState(problem.words),
+      word: "",
+      letters: this.generateLetterState(problem.words),
     });
   }
 
@@ -272,6 +274,35 @@ export default class LetterPrompt extends Component {
     this.forceUpdate();
   }
 
+  isAnswerForEasterEgg() {
+    let letters = Object.keys(this.state.letters);
+
+    if (letters.length !== 9) {
+      return false;
+    }
+
+    // Must use every letter
+    for (let letter of letters) {
+      if (this.state.letters[letter].count !== 0) {
+        return false;
+      }
+    }
+
+    let ee = [8, 5, 2, 4, 7, 9, 3, 6, 1],
+        e = -1,
+        index = 0;
+
+    for (e of ee) {
+      while (this.state.letters[this.state.word[index]].index === e - 1) {
+        if (++index >= this.state.word.length) {
+          break;
+        }
+      }
+    }
+
+    return e === 1 && index >= this.state.word.length;
+  }
+
   handleLetterClick(letter) {
     if (this.state.letters[letter].count) {
       --this.state.letters[letter].count;
@@ -283,6 +314,11 @@ export default class LetterPrompt extends Component {
   }
 
   handleSend() {
+    // Quick win, or an easter egg
+    if (this.isAnswerForEasterEgg()) {
+      this.handleProblemSolved();
+    }
+
     let index = this.wordList.indexOf(this.state.word);
 
     if (index !== -1 && this.state.correctWordIndex.indexOf(index) === -1) {
@@ -292,7 +328,7 @@ export default class LetterPrompt extends Component {
       } else {
         // This word is correct and not being added to the list
         this.setState({
-          word            : "",
+          word: "",
           correctWordIndex: [...this.state.correctWordIndex, index],
         });
       }
@@ -304,7 +340,7 @@ export default class LetterPrompt extends Component {
       }
 
       this.setState({
-        word          : "",
+        word: "",
         classClassName: "wrong",
       });
     }

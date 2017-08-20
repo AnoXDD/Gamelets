@@ -143,10 +143,10 @@ Game.propTypes = {
   roundTime  : PropTypes.number,
   score      : PropTypes.number,
   prompt     : PropTypes.string,
-  gameSummary: PropTypes.oneOfType([
+  gameSummary: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
-  ]),
+  ])),
 
   gameState: PropTypes.number,
 

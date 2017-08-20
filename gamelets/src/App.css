@@ -502,8 +502,8 @@ body, html {
     .wordlink .grid .letter-grid {
       width: 60px;
       height: 60px;
-      padding: 5px;
-      font-size: 12px; }
+      font-size: 12px;
+      padding: 0; }
       .wordlink .grid .letter-grid .arrow {
         height: 4%;
         top: 48%; }
@@ -839,7 +839,6 @@ body, html {
     .letter-prompt .grid .letter-grid {
       width: 60px;
       height: 60px;
-      padding: 5px;
       font-size: 12px; }
       .letter-prompt .grid .letter-grid .arrow {
         height: 4%;

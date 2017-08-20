@@ -274,8 +274,8 @@ body, html {
       .letter-grid {
         width: $grid-size;
         height: $grid-size;
-        padding: 5px;
         font-size: 12px;
+        padding: 0;
 
         .arrow {
           height: 4%;
@@ -728,7 +728,6 @@ body, html {
       .letter-grid {
         width: $grid-size;
         height: $grid-size;
-        padding: 5px;
         font-size: 12px;
 
         .arrow {
