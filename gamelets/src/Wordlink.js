@@ -63,7 +63,8 @@ export default class Wordlink extends Component {
   readyGame() {
     this.setState({
       score: 0,
-    })
+      timeVersion: new Date().getTime(),
+    });
   }
 
   handleNewState(state) {
@@ -91,7 +92,8 @@ export default class Wordlink extends Component {
                                 </span>,
             )}
           </div>
-          <Grid onWordChange={this.handleNewWord}
+          <Grid key={this.state.timeVersion}
+                onWordChange={this.handleNewWord}
                 onScoreChange={this.handleNewScore}
                 onWordValidChange={
                   v => this.setState({isSelectedWordValid: v})}
