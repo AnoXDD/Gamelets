@@ -57,7 +57,7 @@ export default class Game extends Component {
 
   handleWindowResize() {
     // Stupid iOS, why???
-    let width = window.outerWidth || screen.width;
+    let width = window.outerWidth || window.screen.width;
 
     this.props.onResize(width <= MINI_THRESHOLD);
   }
