@@ -8,7 +8,7 @@ import React, {Component} from "react";
 import Game from "./Game";
 import Grid from "./Wordlink/Grid";
 
-const DEFAULT_TIME = 90;
+const DEFAULT_TIME = 60000;
 
 const GAME_STATE = {
   IDLE : -1,

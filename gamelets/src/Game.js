@@ -12,7 +12,7 @@ import Scoreboard from "./Scoreboard";
 import Button from "./Button";
 
 const MINI_THRESHOLD = 510,
-    COUNTDOWN = 3;
+    COUNTDOWN = 3000;
 
 const GAME_STATE = {
   IDLE : -1,
@@ -107,6 +107,8 @@ export default class Game extends Component {
                 <Timer
                     version={this.state.timeVersion}
                     start={this.counter}
+                    timeInterval={this.state.gameState !== GAME_STATE.START ? 1000 : this.props.timeInterval}
+                    countDown={this.state.gameState !== GAME_STATE.START ? true : this.props.timeCountDown}
                     onFinish={this.handleTimeFinish}/>}
             {this.newGame || typeof(this.props.score) === "undefined" ? null :
                 <Scoreboard score={this.props.score}/>}
@@ -140,10 +142,12 @@ Game.propTypes = {
   name     : PropTypes.string.isRequired,
   className: PropTypes.string,
 
-  roundTime  : PropTypes.number,
-  score      : PropTypes.number,
-  prompt     : PropTypes.string,
-  gameSummary: PropTypes.arrayOf(PropTypes.oneOfType([
+  roundTime    : PropTypes.number,
+  timeInterval : PropTypes.number,
+  timeCountDown: PropTypes.bool,
+  score        : PropTypes.number,
+  prompt       : PropTypes.string,
+  gameSummary  : PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.element,
   ])),
@@ -167,4 +171,4 @@ Game.defaultProps = {
 
   onResize     : e => void(e),
   onStateChange: e => void(e),
-}
+};
