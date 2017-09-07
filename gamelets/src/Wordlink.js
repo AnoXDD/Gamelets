@@ -16,7 +16,6 @@ const GAME_STATE = {
   START: 2,
 };
 
-
 export default class Wordlink extends Component {
 
   state = {

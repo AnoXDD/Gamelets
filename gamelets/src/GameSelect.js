@@ -8,6 +8,7 @@ import Ink from "react-ink";
 import Button from "./Button";
 import Wordlink from "./Wordlink";
 import LetterPrompt from "./LetterPrompt";
+import HanoiWord from "./HanoiWord";
 
 const GAME_LIST = [
   {
@@ -17,7 +18,11 @@ const GAME_LIST = [
   {
     name: "Letter Prompt",
     game: <LetterPrompt/>,
-  }
+  },
+  {
+    name: "Hanoi Word",
+    game: <HanoiWord/>,
+  },
 ];
 
 export default class GameSelect extends Component {

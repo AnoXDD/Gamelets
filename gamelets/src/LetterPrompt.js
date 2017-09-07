@@ -8,13 +8,6 @@ import Game from "./Game";
  * Created by Anoxic on 6/24/2017.
  */
 
-
-const GAME_STATE = {
-  IDLE: -1,
-  READY: 1,
-  START: 2,
-};
-
 const HIDDEN_CHAR = "·";
 
 const KEYS = [
@@ -369,7 +362,7 @@ export default class LetterPrompt extends Component {
     this.solvedIndex.push(this.problemIndex);
 
     this.setState({
-      gameState: GAME_STATE.IDLE,
+      gameState: R.GAME_STATE.IDLE,
     });
   }
 
