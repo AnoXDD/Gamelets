@@ -5,7 +5,7 @@
 import React, {Component} from "react";
 import Ink from "react-ink";
 
-import Button from "./Button";
+import Button from "./lib/Button";
 import Wordlink from "./Wordlink";
 import LetterPrompt from "./LetterPrompt";
 import HanoiWord from "./HanoiWord";

@@ -5,7 +5,7 @@
 
 import React, {Component} from "react";
 
-import Game from "./Game";
+import Game from "./lib/Game";
 import Grid from "./Wordlink/Grid";
 
 const DEFAULT_TIME = 60000;

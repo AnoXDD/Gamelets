@@ -1,145 +1,146 @@
-import React, {Component} from "react";
-import Ink from "react-ink";
-
-import Button from "./Button";
-import Game from "./Game";
-
 /**
  * Created by Anoxic on 6/24/2017.
  */
+import React, {Component} from "react";
+
+import Button from "./lib/Button";
+import Game from "./lib/Game";
+import Letter from "./lib/Letter";
+
+import * as R from "./R";
 
 const HIDDEN_CHAR = "·";
 
 const KEYS = [
   {
-    prompt: "red",
+    prompt : "red",
     letters: "flagdyebo",
-    words: ["flag", "dye", "blood", "eye", "leaf"],
+    words  : ["flag", "dye", "blood", "eye", "leaf"],
   },
   {
-    prompt: "apple",
+    prompt : "apple",
     letters: "fruitecdo",
-    words: ["fruit", "tree", "cider", "food", "red", "doctor", "feed"],
+    words  : ["fruit", "tree", "cider", "food", "red", "doctor", "feed"],
   },
   {
-    prompt: "egg",
+    prompt : "egg",
     letters: "birdyolkf",
-    words: ["bird", "yolk", "food", "brood", "roll", "fry", "oil", "blood", "york"],
+    words  : ["bird", "yolk", "food", "brood", "roll", "fry", "oil", "blood", "york"],
   },
   {
-    prompt: "bee",
+    prompt : "bee",
     letters: "honeyisct",
-    words: ["honey", "insect", "nest", "host"],
+    words  : ["honey", "insect", "nest", "host"],
   },
   {
-    prompt: "foot",
+    prompt : "foot",
     letters: "musclegho",
-    words: ["muscle", "leg", "heel", "shoe"],
+    words  : ["muscle", "leg", "heel", "shoe"],
   },
   {
-    prompt: "hand",
+    prompt : "hand",
     letters: "fingerbop",
-    words: ["finger", "bone", "ring", "grip", "green", "forefinger"],
+    words  : ["finger", "bone", "ring", "grip", "green", "forefinger"],
   },
   {
-    prompt: "door",
+    prompt : "door",
     letters: "hingeopsw",
-    words: ["hinge", "open", "swing", "spin"],
+    words  : ["hinge", "open", "swing", "spin"],
   },
   {
-    prompt: "cat",
+    prompt : "cat",
     letters: "domesticp",
-    words: ["domestic", "species", "pet", "mice", "tom"],
+    words  : ["domestic", "species", "pet", "mice", "tom"],
   },
   {
-    prompt: "fish",
+    prompt : "fish",
     letters: "watersymg",
-    words: ["water", "system", "egg", "sea"],
+    words  : ["water", "system", "egg", "sea"],
   },
   {
-    prompt: "water",
+    prompt : "water",
     letters: "icelqudfo",
-    words: ["ice", "liquid", "life", "cloud", "fluid", "flood", "cold"],
+    words  : ["ice", "liquid", "life", "cloud", "fluid", "flood", "cold"],
   },
   {
-    prompt: "sport",
+    prompt : "sport",
     letters: "gamefotbl",
-    words: ["game", "football", "team", "goal", "ball"],
+    words  : ["game", "football", "team", "goal", "ball"],
   },
   {
-    prompt: "window",
+    prompt : "window",
     letters: "framepnou",
-    words: ["frame", "pane", "roof", "open", "room"],
+    words  : ["frame", "pane", "roof", "open", "room"],
   },
   {
-    prompt: "computer",
+    prompt : "computer",
     letters: "progamey",
-    words: ["program", "memory", "ram", "rom", "programmer", "error", "game"],
+    words  : ["program", "memory", "ram", "rom", "programmer", "error", "game"],
   },
   {
-    prompt: "sun",
+    prompt : "sun",
     letters: "solarethn",
-    words: ["solar", "earth", "star", "nasa", "heat", "stellar", "hot"],
+    words  : ["solar", "earth", "star", "nasa", "heat", "stellar", "hot"],
   },
   {
-    prompt: "moon",
+    prompt : "moon",
     letters: "lunareths",
-    words: ["lunar", "earth", "nasa", "sun", "nature", "star"],
+    words  : ["lunar", "earth", "nasa", "sun", "nature", "star"],
   },
   {
-    prompt: "black",
+    prompt : "black",
     letters: "lightnksy",
-    words: ["light", "ink", "list", "sky", "night"],
+    words  : ["light", "ink", "list", "sky", "night"],
   },
   {
-    prompt: "pencil",
+    prompt : "pencil",
     letters: "graphites",
-    words: ["graphite", "eraser", "paper", "art", "sharp"],
+    words  : ["graphite", "eraser", "paper", "art", "sharp"],
   },
   {
-    prompt: "music",
+    prompt : "music",
     letters: "soundtyle",
-    words: ["sound", "style", "notes", "tone", "solo", "tune", "lesson"],
+    words  : ["sound", "style", "notes", "tone", "solo", "tune", "lesson"],
   },
   {
-    prompt: "cellphone",
+    prompt : "cellphone",
     letters: "networkxi",
-    words: ["network", "text", "internet", "tower"],
+    words  : ["network", "text", "internet", "tower"],
   },
   {
-    prompt: "party",
+    prompt : "party",
     letters: "evntdirf",
-    words: ["event", "dinner", "friend", "eve", "invite"],
+    words  : ["event", "dinner", "friend", "eve", "invite"],
   },
   {
-    prompt: "face",
+    prompt : "face",
     letters: "emotinsl",
-    words: ["emotion", "smile", "nose", "sense", "smell"],
+    words  : ["emotion", "smile", "nose", "sense", "smell"],
   },
   {
-    prompt: "map",
+    prompt : "map",
     letters: "scaleftur",
-    words: ["scale", "features", "surface", "east", "atlas", "sea"],
+    words  : ["scale", "features", "surface", "east", "atlas", "sea"],
   },
   {
-    prompt: "winter",
+    prompt : "winter",
     letters: "snowcldie",
-    words: ["snow", "cold", "ice", "wind", "low", "cool", "die"],
+    words  : ["snow", "cold", "ice", "wind", "low", "cool", "die"],
   },
   {
-    prompt: "shoe",
+    prompt : "shoe",
     letters: "botfhelg",
-    words: ["boot", "foot", "heel", "toe", "feet", "leg"],
+    words  : ["boot", "foot", "heel", "toe", "feet", "leg"],
   },
   {
-    prompt: "team",
+    prompt : "team",
     letters: "groupmebl",
-    words: ["group", "member", "people", "peer"],
+    words  : ["group", "member", "people", "peer"],
   },
   {
-    prompt: "key",
+    prompt : "key",
     letters: "carpinset",
-    words: ["car", "pin", "set", "access", "pattern"],
+    words  : ["car", "pin", "set", "access", "pattern"],
   },
 ];
 
@@ -155,10 +156,10 @@ export default class LetterPrompt extends Component {
     super(props);
 
     this.state = {
-      prompt: "",
+      prompt          : "",
       correctWordIndex: [],
-      word: "",
-      letters: {},
+      word            : "",
+      letters         : {},
 
       classClassName: "",
     };
@@ -209,7 +210,7 @@ export default class LetterPrompt extends Component {
    */
   generateLetterState(words) {
     let state = {},
-        currentIndex = 0;
+      currentIndex = 0;
 
     for (let word of words) {
       for (let letter of word) {
@@ -232,10 +233,10 @@ export default class LetterPrompt extends Component {
 
     this.wordList = problem.words;
     this.setState({
-      prompt: problem.prompt,
+      prompt          : problem.prompt,
       correctWordIndex: [],
-      word: "",
-      letters: this.generateLetterState(problem.words),
+      word            : "",
+      letters         : this.generateLetterState(problem.words),
     });
   }
 
@@ -255,7 +256,7 @@ export default class LetterPrompt extends Component {
       let shuffleTarget = Math.floor(Math.random() * letters.length);
       // Swap it
       let src = letters[i],
-          dest = letters[shuffleTarget];
+        dest = letters[shuffleTarget];
 
       let tmp = letterObjects[src].index;
       // eslint-disable-next-line
@@ -282,8 +283,8 @@ export default class LetterPrompt extends Component {
     }
 
     let ee = [8, 5, 2, 4, 7, 9, 3, 6, 1],
-        e = -1,
-        index = 0;
+      e = -1,
+      index = 0;
 
     for (e of ee) {
       while (this.state.letters[this.state.word[index]].index === e - 1) {
@@ -321,7 +322,7 @@ export default class LetterPrompt extends Component {
       } else {
         // This word is correct and not being added to the list
         this.setState({
-          word: "",
+          word            : "",
           correctWordIndex: [...this.state.correctWordIndex, index],
         });
       }
@@ -333,7 +334,7 @@ export default class LetterPrompt extends Component {
       }
 
       this.setState({
-        word: "",
+        word          : "",
         classClassName: "wrong",
       });
     }
@@ -368,75 +369,70 @@ export default class LetterPrompt extends Component {
 
   render() {
     return (
-        <Game name="letter-prompt"
-              className={this.state.classClassName}
-              gameSummary={[
-                <div className="word">WORD!</div>,
-                <div className="word-list">{this.wordList.join(" | ")}</div>
-              ]}
-              gameState={this.state.gameState}
-              prompt={this.state.prompt}
-              onStart={this.startNewProblem}
-              restartText="next"
-              restartIcon="skip_next"
-        >
-          <div className="flex-bubble-wrap"></div>
-          <div className="word-list flex-center">
-            {this.wordList.map((word, i) =>
-                <span key={word}
-                      className={`word ${this.state.correctWordIndex.indexOf(
-                          i) === -1 ? "empty" : ""}`}>
+      <Game name="letter-prompt"
+            className={this.state.classClassName}
+            gameSummary={[
+              <div className="word">WORD!</div>,
+              <div className="word-list">{this.wordList.join(" | ")}</div>
+            ]}
+            gameState={this.state.gameState}
+            prompt={this.state.prompt}
+            onStart={this.startNewProblem}
+            restartText="next"
+            restartIcon="skip_next"
+      >
+        <div className="flex-bubble-wrap"></div>
+        <div className="word-list flex-center">
+          {this.wordList.map((word, i) =>
+            <span key={word}
+                  className={`word ${this.state.correctWordIndex.indexOf(
+                    i) === -1 ? "empty" : ""}`}>
                                     {
                                       this.state.correctWordIndex.indexOf(i) === -1 ?
-                                          word.replace(/./g, HIDDEN_CHAR) :
-                                          word
+                                        word.replace(/./g, HIDDEN_CHAR) :
+                                        word
                                     }
                                 </span>,
-            )}
-          </div>
-          <div className="flex-bubble-wrap"></div>
-          <div className="letter-selected flex-center">
-            {this.state.word.split("").map((letter, i) =>
-                <span key={letter + i}
-                      className="letter">
+          )}
+        </div>
+        <div className="flex-bubble-wrap"></div>
+        <div className="letter-selected flex-center">
+          {this.state.word.split("").map((letter, i) =>
+            <span key={letter + i}
+                  className="letter">
                                     {letter}
                                 </span>,
+          )}
+        </div>
+        <div
+          className="grid flex-center">
+          <div className="grid-wrapper">
+            {Object.keys(this.state.letters).map(letter =>
+              <Letter
+                key={letter}
+                letter={letter}
+                onClick={() => this.handleLetterClick(letter)}
+                badge={this.state.letters[letter].count}
+                className={`${this.state.word.indexOf(
+                  letter) === -1 ? "" : "letter-in-use"} ${this.generateLetterClassName(
+                  this.state.letters[letter].index)}`}
+              />
             )}
           </div>
-          <div
-              className="grid flex-center">
-            <div className="grid-wrapper">
-              {Object.keys(this.state.letters).map(letter =>
-                  <div
-                      key={letter}
-                      className={`letter-grid letter-${this.state.letters[letter].count} ${this.state.word.indexOf(
-                          letter) === -1 ? "" : "letter-in-use"} ${this.generateLetterClassName(
-                          this.state.letters[letter].index)}`}
-                  >
-                    <div
-                        onClick={() => this.handleLetterClick(
-                            letter)}
-                        className="letter-inner flex-center">
-                      <Ink/>
-                      <span>{letter}</span>
-                    </div>
-                  </div>,
-              )}
-            </div>
-          </div>
-          <div className="btns">
-            <Button
-                onClick={this.handleSendShuffle}
-                text={this.state.word.length ? "submit" : "shuffle"}>
-              {this.state.word.length ? "send" : "shuffle"}
-            </Button>
-            <Button
-                onClick={this.handleBackspace}
-                className={this.state.word.length ? "" : "hidden"}>
-              backspace
-            </Button>
-          </div>
-        </Game>
+        </div>
+        <div className="btns">
+          <Button
+            onClick={this.handleSendShuffle}
+            text={this.state.word.length ? "submit" : "shuffle"}>
+            {this.state.word.length ? "send" : "shuffle"}
+          </Button>
+          <Button
+            onClick={this.handleBackspace}
+            className={this.state.word.length ? "" : "hidden"}>
+            backspace
+          </Button>
+        </div>
+      </Game>
     );
   }
 }

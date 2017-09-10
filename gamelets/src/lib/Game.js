@@ -7,10 +7,10 @@
 import PropTypes from "prop-types";
 import React, {Component} from "react";
 
-import Timer from "./Timer";
-import Scoreboard from "./Scoreboard";
+import Timer from "../Timer";
+import Scoreboard from "../Scoreboard";
 import Button from "./Button";
-import * as R from "./R";
+import * as R from "../R";
 
 const MINI_THRESHOLD = 510,
     COUNTDOWN = 3000;

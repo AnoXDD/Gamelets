@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from "react";
-import TouchPad from "../TouchPad";
+import TouchPad from "../lib/TouchPad";
 import * as R from "../R";
 
 
