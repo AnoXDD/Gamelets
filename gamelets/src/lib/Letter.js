@@ -11,7 +11,7 @@ export default class Letter extends Component {
   render() {
     return (
       <div
-        className={`letter-grid ${typeof this.props.badge !== "undefined" ? `letter-${this.props.badge}` : ""} ${this.props.className || ""}`}
+        className={`letter-grid ${typeof this.props.badge !== "undefined" ? `letter-${this.props.badge}` : "no-badge"} ${this.props.className || ""}`}
       >
         <div
           onClick={this.props.onClick}
