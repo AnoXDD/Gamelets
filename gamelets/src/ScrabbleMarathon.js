@@ -9,24 +9,17 @@ import Letter from "./lib/Letter";
 
 import * as R from "./R";
 
-const HIDDEN_CHAR = "·";
-
-const CANDIDATES = {
-  7: "acehprs acehrst aeilrst abelrst adeilrs adelrst aelprst aelpsst acelrst aeelrst aelrsst aelrstv aelrsty acenrst aeenrst acdeprs aceprss aceprst adeiprs aeprsst aceerst aceorst acersst".split(
+const CANDIDATES = [
+  "aers aeps aehs aest aert ehst aeht elst aelt aist airt aels apst aept esty aety aesy aery elsy aent aort".split(
+    " "), "aeprs aehrs acers aerst aehst aehrt acest eilst aelst aelrt airst ailst abest abelt aelrs aeirs aders adels aprst aepst aeprt aesty aersy aelsy aelry aenst aenrt aorst".split(
+    " "), "aehprs aceprs acehrs aehrst acerst acehrt eilrst aelrst aeirst aeilst aberst abelst aeilrs adelrs adeirs adeils aderst adelst aeprst aelpst aelprt aelsst acelst aeerst aeelst aersst aerstv aelstv aelrsv aersty aelrsy aenrst adeprs acders aeiprs aeorst".split(
+    " "), "acehprs acehrst aeilrst abelrst adeilrs adelrst aelprst aelpsst acelrst aeelrst aelrsst aelrstv aelrsty acenrst aeenrst acdeprs aceprss aceprst adeiprs aeprsst aceerst aceorst acersst".split(
     " "),
-  6: "aehprs aceprs acehrs aehrst acerst acehrt eilrst aelrst aeirst aeilst aberst abelst aeilrs adelrs adeirs adeils aderst adelst aeprst aelpst aelprt aelsst acelst aeerst aeelst aersst aerstv aelstv aelrsv aersty aelrsy aenrst adeprs acders aeiprs aeorst".split(
-    " "),
-  5: "aeprs aehrs acers aerst aehst aehrt acest eilst aelst aelrt airst ailst abest abelt aelrs aeirs aders adels aprst aepst aeprt aesty aersy aelsy aelry aenst aenrt aorst".split(
-    " "),
-  4: "aers aeps aehs aest aert ehst aeht elst aelt aist airt aels apst aept esty aety aesy aery elsy aent aort".split(
-    " "),
-};
+];
+const LEVEL_REQ = [6, 12, 20, 30];
+const UNUSED_TIME_MULTIPLIER = 500;
 
 export default class ScrabbleMarathon extends Component {
-
-  wordList = [];
-  problemIndex = -1;
-  solvedIndex = [];
 
   newGame = true;
 
@@ -34,27 +27,34 @@ export default class ScrabbleMarathon extends Component {
     super(props);
 
     this.state = {
-      prompt          : "",
-      correctWordIndex: [],
-      word            : "",
-      letters         : {},
+      prompt       : "",
+      word         : "",
+      letters      : {},
+      level        : 0,
+      levelReq     : LEVEL_REQ[0],
+      levelProgress: 0,
+      wordList     : [],
+      score        : 0,
 
       classClassName: "",
     };
 
-    this.findUnresolvedProblem = this.findUnresolvedProblem.bind(this);
+    this.findNewLetters = this.findNewLetters.bind(
+      this);
     this.startNewProblem = this.startNewProblem.bind(this);
 
-    this.generateLetterClassName = this.generateLetterClassName.bind(this);
     this.shuffleLetters = this.shuffleLetters.bind(this);
 
     this.handleLetterClick = this.handleLetterClick.bind(this);
     this.handleSendShuffle = this.handleSendShuffle.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
     this.handleSend = this.handleSend.bind(this);
-    this.handleProblemSolved = this.handleProblemSolved.bind(this);
+    this.handleStateChange = this.handleStateChange.bind(this);
+    this.onFinishGame = this.onFinishGame.bind(this);
 
-    this.isAnswerForEasterEgg = this.isAnswerForEasterEgg.bind(this);
+    this.isWordLongEnough = this.isWordLongEnough.bind(this);
+    this.maybeLevelUp = this.maybeLevelUp.bind(this);
+    this.getCurrentScore = this.getCurrentScore.bind(this);
   }
 
 
@@ -68,36 +68,72 @@ export default class ScrabbleMarathon extends Component {
     }
   }
 
-  findUnresolvedProblem() {
-    while (this.solvedIndex.length !== KEYS.length) {
-      let index = Math.floor(Math.random() * KEYS.length);
+  /**
+   * Returns if `long` can be used as continuing problem set of `set`. For
+   * example, "abcd" is a good pair with "abc", but not "afg". `long` should
+   * only have letter different from `short`
+   * @param short
+   * @param long
+   */
+  static isGoodCandidatePair(short, long) {
+    let s = 0, l = 0;
+    let flag = false;
+    while (s < short.length) {
+      if (short[s++] !== long[l++]) {
+        if (flag) {
+          return false;
+        }
 
-      if (this.solvedIndex.indexOf(index) === -1) {
-        // This is not solved yet
-        this.problemIndex = index;
-        return JSON.parse(JSON.stringify(KEYS[index]));
+        // Compare this again
+        --s;
+        flag = true;
       }
     }
 
-    return null;
+    return flag;
+  }
+
+  /**
+   * Finds a problem
+   * @param isNewGame - if this is a new game. If so, a new set of letters will
+   *   be generated, otherwise the new problem will be based on current letters
+   */
+  findNewLetters(isNewGame) {
+    if (isNewGame) {
+      let index = Math.floor(Math.random() * CANDIDATES[0].length);
+      return CANDIDATES[0][index];
+    }
+
+    let currentLetters = Object.keys(this.state.letters).sort().join("");
+    let level = this.state.level + 1;
+    // Find the suitable candidates
+    let words = [];
+    for (let word of CANDIDATES[level]) {
+      if (ScrabbleMarathon.isGoodCandidatePair(currentLetters, word)) {
+        words.push(word);
+      }
+    }
+
+    if (words.empty()) {
+      alert(
+        "Looks like something goes wrong with this game. Could you restart the game?");
+      this.onFinishGame();
+    }
+
+    let index = Math.floor(Math.random() * words.length);
+    return words[index];
   }
 
   /**
    * Generate the object that this.state.letters needs
-   * @param words
+   * @param letters
    */
-  generateLetterState(words) {
+  generateLetterState(letters) {
     let state = {},
       currentIndex = 0;
 
-    for (let word of words) {
-      for (let letter of word) {
-        if (!state[letter]) {
-          state[letter] = {count: 0, index: currentIndex++};
-        }
-
-        ++state[letter].count;
-      }
+    for (let letter of letters) {
+      state[letter] = 1;
     }
 
     this.shuffleLetters(state);
@@ -107,23 +143,14 @@ export default class ScrabbleMarathon extends Component {
 
   startNewProblem() {
     this.newGame = false;
-    let problem = this.findUnresolvedProblem();
+    let problem = this.findNewLetters();
 
-    this.wordList = problem.words;
     this.setState({
-      prompt          : problem.prompt,
-      correctWordIndex: [],
-      word            : "",
-      letters         : this.generateLetterState(problem.words),
+      word    : "",
+      letters : this.generateLetterState(problem),
+      wordList: [],
+      score   : 0,
     });
-  }
-
-  generateLetterClassName(i) {
-    if (Object.keys(this.state.letters).length !== 9 && i >= 4) {
-      ++i;
-    }
-
-    return "letter-position-3-3-" + i;
   }
 
   shuffleLetters(letterObjects) {
@@ -146,33 +173,38 @@ export default class ScrabbleMarathon extends Component {
     this.forceUpdate();
   }
 
-  isAnswerForEasterEgg() {
-    let letters = Object.keys(this.state.letters);
+  isWordLongEnough() {
+    return this.state.word >= 3;
+  }
 
-    if (letters.length !== 9) {
-      return false;
+  maybeLevelUp() {
+    alert("implement maybeLevelUp");
+
+    if (this.state.levelProgress <= this.state.levelReq) {
+      return;
     }
 
-    // Must use every letter
-    for (let letter of letters) {
-      if (this.state.letters[letter].count !== 0) {
-        return false;
-      }
+    if (this.state.level + 1 === LEVEL_REQ.length) {
+      // Max level, just stop the game
+      this.onFinishGame();
+      return;
     }
 
-    let ee = [8, 5, 2, 4, 7, 9, 3, 6, 1],
-      e = -1,
-      index = 0;
+    // Find the next letter
+    let newLevel = this.state.level + 1;
+    this.setState({
+      level        : newLevel,
+      levelProgress: 0,
+      levelReq     : LEVEL_REQ[newLevel],
+      letters      : this.findNewLetters(),
+    });
+  }
 
-    for (e of ee) {
-      while (this.state.letters[this.state.word[index]].index === e - 1) {
-        if (++index >= this.state.word.length) {
-          break;
-        }
-      }
-    }
-
-    return e === 1 && index >= this.state.word.length;
+  /**
+   * Returns the current score calculated by level and length
+   */
+  getCurrentScore() {
+    return (this.state.level + 1) * this.state.word.length * this.state.word.length * 5;
   }
 
   handleLetterClick(letter) {
@@ -186,24 +218,18 @@ export default class ScrabbleMarathon extends Component {
   }
 
   handleSend() {
-    // Quick win, or an easter egg
-    if (this.isAnswerForEasterEgg()) {
-      this.handleProblemSolved();
-    }
+    let index = this.state.wordList.indexOf(this.state.word);
 
-    let index = this.wordList.indexOf(this.state.word);
+    if (index !== -1 && R.isSelectedWordValid(this.state.word)) {
+      // This word is correct and not being added to the list
+      this.setState({
+        word         : "",
+        wordList     : [...this.state.wordList, this.state.word],
+        levelProgress: this.state.levelProgress + this.state.word.length,
+        score        : this.state.score + this.getCurrentScore(),
+      });
 
-    if (index !== -1 && this.state.correctWordIndex.indexOf(index) === -1) {
-      if (this.state.correctWordIndex.length + 1 === this.wordList.length) {
-        // Puzzle solved
-        this.handleProblemSolved();
-      } else {
-        // This word is correct and not being added to the list
-        this.setState({
-          word            : "",
-          correctWordIndex: [...this.state.correctWordIndex, index],
-        });
-      }
+      this.maybeLevelUp();
     } else {
       // Not a match
       // Return all the letters
@@ -219,7 +245,7 @@ export default class ScrabbleMarathon extends Component {
   }
 
   handleSendShuffle() {
-    if (this.state.word.length) {
+    if (this.isWordLongEnough()) {
       // Send
       this.handleSend();
     } else {
@@ -237,8 +263,14 @@ export default class ScrabbleMarathon extends Component {
     });
   }
 
-  handleProblemSolved() {
-    this.solvedIndex.push(this.problemIndex);
+  handleStateChange(state) {
+    if (state === R.GAME_STATE.IDLE) {
+      this.onFinishGame();
+    }
+  }
+
+  onFinishGame() {
+    alert("apply timeLeft here");
 
     this.setState({
       gameState: R.GAME_STATE.IDLE,
@@ -246,54 +278,55 @@ export default class ScrabbleMarathon extends Component {
   }
 
   render() {
+    let bubbles = [];
+    for (let i = 0; i < this.state.levelReq; ++i) {
+      bubbles.push(0);
+    }
+    let bubbleStyle = {height: `${1 / LEVEL_REQ[this.state.level]}%`};
+
     return (
-      <Game name="letter-prompt"
+      <Game name="scrabble-marathon"
             className={this.state.classClassName}
             gameSummary={[
               <div className="word">WORD!</div>,
-              <div className="word-list">{this.wordList.join(" | ")}</div>
+              <div className="word-list">{this.state.wordList.join(" | ")}</div>
             ]}
             gameState={this.state.gameState}
-            prompt={this.state.prompt}
             onStart={this.startNewProblem}
+            onStateChange={this.handleStateChange}
             restartText="next"
             restartIcon="skip_next"
+            score={this.state.score}
       >
         <div className="flex-bubble-wrap"></div>
         <div className="word-list flex-center">
-          {this.wordList.map((word, i) =>
-            <span key={word}
-                  className={`word ${this.state.correctWordIndex.indexOf(
-                    i) === -1 ? "empty" : ""}`}>
-                                    {
-                                      this.state.correctWordIndex.indexOf(i) === -1 ?
-                                        word.replace(/./g, HIDDEN_CHAR) :
-                                        word
-                                    }
-                                </span>,
+          {this.state.wordList.map((word, i) =>
+            <span key={word} className={"word"}>{word}</span>,
+          )}
+        </div>
+        <div className="progress">
+          {bubbles.map((bubble, i) =>
+            <span key={i}
+                  style={bubbleStyle}
+                  className={`progress-bubble ${i < this.state.levelProgress ? "finished" : ""}`}/>
           )}
         </div>
         <div className="flex-bubble-wrap"></div>
         <div className="letter-selected flex-center">
           {this.state.word.split("").map((letter, i) =>
-            <span key={letter + i}
-                  className="letter">
-                                    {letter}
-                                </span>,
+            <span key={letter + i} className="letter">{letter}</span>,
           )}
         </div>
         <div
           className="grid flex-center">
           <div className="grid-wrapper">
-            {Object.keys(this.state.letters).map(letter =>
+            {Object.keys(this.state.letters).map((letter, i) =>
               <Letter
                 key={letter}
                 letter={letter}
                 onClick={() => this.handleLetterClick(letter)}
-                badge={this.state.letters[letter].count}
                 className={`${this.state.word.indexOf(
-                  letter) === -1 ? "" : "letter-in-use"} ${this.generateLetterClassName(
-                  this.state.letters[letter].index)}`}
+                  letter) === -1 ? "" : "letter-in-use"} letter-pos-${i}`}
               />
             )}
           </div>
@@ -301,8 +334,8 @@ export default class ScrabbleMarathon extends Component {
         <div className="btns">
           <Button
             onClick={this.handleSendShuffle}
-            text={this.state.word.length ? "submit" : "shuffle"}>
-            {this.state.word.length ? "send" : "shuffle"}
+            text={this.isWordLongEnough() ? "submit" : "shuffle"}>
+            {this.isWordLongEnough() ? "send" : "shuffle"}
           </Button>
           <Button
             onClick={this.handleBackspace}
