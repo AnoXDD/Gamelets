@@ -16,7 +16,7 @@ const CANDIDATES = [
     " "), "acehprs acehrst aeilrst abelrst adeilrs adelrst aelprst aelpsst acelrst aeelrst aelrsst aelrstv aelrsty acenrst aeenrst acdeprs aceprss aceprst adeiprs aeprsst aceerst aceorst acersst".split(
     " "),
 ];
-const LEVEL_REQ = [6, 12, 20, 30];
+const LEVEL_REQ = [6, 18, 40, 70];
 const UNUSED_TIME_MULTIPLIER = 500;
 
 export default class ScrabbleMarathon extends Component {
@@ -27,7 +27,6 @@ export default class ScrabbleMarathon extends Component {
     super(props);
 
     this.state = {
-      prompt       : "",
       word         : "",
       letters      : {},
       level        : 0,
@@ -41,10 +40,11 @@ export default class ScrabbleMarathon extends Component {
 
     this.findNewLetters = this.findNewLetters.bind(
       this);
-    this.startNewProblem = this.startNewProblem.bind(this);
+    this.startNewGame = this.startNewGame.bind(this);
 
     this.shuffleLetters = this.shuffleLetters.bind(this);
 
+    this.handleKeydown = this.handleKeydown.bind(this);
     this.handleLetterClick = this.handleLetterClick.bind(this);
     this.handleSendShuffle = this.handleSendShuffle.bind(this);
     this.handleBackspace = this.handleBackspace.bind(this);
@@ -66,6 +66,14 @@ export default class ScrabbleMarathon extends Component {
     if (nextState.gameState && this.state.gameState) {
       nextState.gameState = undefined;
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener("keydown", this.handleKeydown);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.handleKeydown);
   }
 
   /**
@@ -91,6 +99,27 @@ export default class ScrabbleMarathon extends Component {
     }
 
     return flag;
+  }
+
+  handleKeydown(e) {
+    let key = e.key;
+
+    if (key === "Enter") {
+      this.handleSendShuffle();
+      return;
+    }
+
+    if (key === "Backspace") {
+      if (!this.state.word.length) {
+        return;
+      }
+
+      this.handleBackspace();
+    }
+
+    if (this.state.letters[key]) {
+      this.handleLetterClick(key);
+    }
   }
 
   /**
@@ -141,15 +170,18 @@ export default class ScrabbleMarathon extends Component {
     return state;
   }
 
-  startNewProblem() {
+  startNewGame() {
     this.newGame = false;
     let problem = this.findNewLetters(true);
 
     this.setState({
-      word    : "",
-      letters : this.generateLetterState(problem),
-      wordList: [],
-      score   : 0,
+      word         : "",
+      letters      : this.generateLetterState(problem),
+      wordList     : [],
+      score        : 0,
+      level        : 0,
+      levelReq     : LEVEL_REQ[0],
+      levelProgress: 0,
     });
   }
 
@@ -288,11 +320,11 @@ export default class ScrabbleMarathon extends Component {
       <Game name="scrabble-marathon"
             className={this.state.classClassName}
             gameSummary={[
-              <div className="word">WORD!</div>,
+              <div className="word">Nice!</div>,
               <div className="word-list">{this.state.wordList.join(" | ")}</div>
             ]}
             gameState={this.state.gameState}
-            onStart={this.startNewProblem}
+            onStart={this.startNewGame}
             onStateChange={this.handleStateChange}
             restartText="next"
             restartIcon="skip_next"
@@ -300,10 +332,14 @@ export default class ScrabbleMarathon extends Component {
       >
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
-        <div className="word-list flex-center">
-          {this.state.wordList.map((word, i) =>
-            <span key={word} className={"word"}>{word}</span>,
-          )}
+        <div className="word-list-wrapper flex-center">
+          <div className="flex-inner-extend flex-center">
+            <div className="word-list">
+              {this.state.wordList.map((word, i) =>
+                <span key={word} className={"word"}>{word}</span>,
+              )}
+            </div>
+          </div>
         </div>
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>

@@ -935,6 +935,10 @@ body, html {
     .scrabble-marathon .grid .letter-grid.letter-pos-7 {
       top: 0;
       left: 490px; }
+.scrabble-marathon .word-list-wrapper {
+  height: 50vh;
+  position: relative;
+  width: 100%; }
 .scrabble-marathon .progress {
   width: 400px;
   height: 5px;

@@ -817,6 +817,12 @@ $grid-size: 100px;
     }
   }
 
+  .word-list-wrapper {
+    height: 50vh;
+    position: relative;
+    width: 100%;
+  }
+
   .progress {
     width: 400px;
     height: 5px;
