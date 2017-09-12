@@ -301,9 +301,9 @@ body, html {
 
 }
 
-.grid {
-  $grid-size: 100px;
+$grid-size: 100px;
 
+.grid {
   @keyframes grid-enter {
     from {
       margin-bottom: 100%;
@@ -314,7 +314,7 @@ body, html {
     }
   }
 
-  .letter-prompt & {
+  .letter-prompt &, .scrabble-marathon & {
     height: 3 * $grid-size;
     overflow: visible;
 
@@ -342,6 +342,10 @@ body, html {
         &.letter-in-use {
           opacity: .2;
         }
+      }
+
+      &.no-badge:after {
+        display: none;
       }
     }
 
@@ -624,7 +628,7 @@ body, html {
   }
 }
 
-.letter-prompt {
+.letter-prompt, .scrabble-marathon {
 
   @keyframes wrong {
     50% {
@@ -764,6 +768,85 @@ body, html {
 
 .flex-bubble-wrap {
   flex: 1 1 auto;
+}
+
+.scrabble-marathon {
+  $grid-size: 70px;
+
+  .grid {
+    height: $grid-size;
+
+    .grid-wrapper {
+      width: 500px;
+      height: $grid-size;
+      display: flex;
+      justify-content: center;
+      transition: .4s ease;
+
+      @for $i from 0 through 3 {
+        &.level-#{$i} {
+          width: $grid-size * ($i + 4);
+        }
+      }
+    }
+
+    .letter-grid {
+      height: $grid-size;
+      width: $grid-size;
+
+      &.letter-in-use {
+        opacity: .2;
+        pointer-events: none;
+      }
+
+      .letter-inner {
+        font-size: 30px;
+
+        &:before {
+          width: $grid-size - 5px;
+          height: $grid-size - 5px;
+        }
+      }
+
+      @for $i from 0 through 7 {
+        &.letter-pos-#{$i} {
+          top: 0;
+          left: $i * $grid-size;
+        }
+      }
+    }
+  }
+
+  .progress {
+    width: 400px;
+    height: 5px;
+    padding: 10px 0;
+    position: relative;
+
+    .progress-bubble {
+      height: 100%;
+      background-color: $bg-grey;
+      box-sizing: border-box;
+      border-right: 1px solid white;
+    }
+
+    .progress-bar {
+      position: absolute;
+      background-color: $blue;
+      width: 0;
+      height: 5px;
+      left: 0;
+      transition: .4s ease;
+    }
+  }
+
+  .btns {
+    margin-top: 10px;
+  }
+
+  &.wrong .letter-selected {
+    animation: wrong .3s ease;
+  }
 }
 
 //-----------------------------

@@ -114,7 +114,7 @@ export default class ScrabbleMarathon extends Component {
       }
     }
 
-    if (words.empty()) {
+    if (!words.length) {
       alert(
         "Looks like something goes wrong with this game. Could you restart the game?");
       this.onFinishGame();
@@ -133,7 +133,7 @@ export default class ScrabbleMarathon extends Component {
       currentIndex = 0;
 
     for (let letter of letters) {
-      state[letter] = 1;
+      state[letter] = {count: 1, index: currentIndex++};
     }
 
     this.shuffleLetters(state);
@@ -143,7 +143,7 @@ export default class ScrabbleMarathon extends Component {
 
   startNewProblem() {
     this.newGame = false;
-    let problem = this.findNewLetters();
+    let problem = this.findNewLetters(true);
 
     this.setState({
       word    : "",
@@ -170,17 +170,17 @@ export default class ScrabbleMarathon extends Component {
       letterObjects[dest].index = tmp;
     }
 
-    this.forceUpdate();
+    this.setState({
+      letters: letterObjects,
+    });
   }
 
   isWordLongEnough() {
-    return this.state.word >= 3;
+    return this.state.word.length >= 3;
   }
 
   maybeLevelUp() {
-    alert("implement maybeLevelUp");
-
-    if (this.state.levelProgress <= this.state.levelReq) {
+    if (this.state.levelProgress < this.state.levelReq) {
       return;
     }
 
@@ -196,7 +196,7 @@ export default class ScrabbleMarathon extends Component {
       level        : newLevel,
       levelProgress: 0,
       levelReq     : LEVEL_REQ[newLevel],
-      letters      : this.findNewLetters(),
+      letters      : this.generateLetterState(this.findNewLetters()),
     });
   }
 
@@ -218,25 +218,25 @@ export default class ScrabbleMarathon extends Component {
   }
 
   handleSend() {
+    // Return all the letters
+    for (let letter of this.state.word) {
+      ++this.state.letters[letter].count;
+    }
+
     let index = this.state.wordList.indexOf(this.state.word);
 
-    if (index !== -1 && R.isSelectedWordValid(this.state.word)) {
+    if (index === -1 && R.isSelectedWordValid(this.state.word)) {
       // This word is correct and not being added to the list
       this.setState({
         word         : "",
         wordList     : [...this.state.wordList, this.state.word],
         levelProgress: this.state.levelProgress + this.state.word.length,
         score        : this.state.score + this.getCurrentScore(),
+      }, () => {
+        this.maybeLevelUp();
       });
-
-      this.maybeLevelUp();
     } else {
       // Not a match
-      // Return all the letters
-      for (let letter of this.state.word) {
-        ++this.state.letters[letter].count;
-      }
-
       this.setState({
         word          : "",
         classClassName: "wrong",
@@ -282,7 +282,7 @@ export default class ScrabbleMarathon extends Component {
     for (let i = 0; i < this.state.levelReq; ++i) {
       bubbles.push(0);
     }
-    let bubbleStyle = {height: `${1 / LEVEL_REQ[this.state.level]}%`};
+    let bubbleStyle = {width: `${100 / LEVEL_REQ[this.state.level]}%`};
 
     return (
       <Game name="scrabble-marathon"
@@ -299,19 +299,23 @@ export default class ScrabbleMarathon extends Component {
             score={this.state.score}
       >
         <div className="flex-bubble-wrap"></div>
+        <div className="flex-bubble-wrap"></div>
         <div className="word-list flex-center">
           {this.state.wordList.map((word, i) =>
             <span key={word} className={"word"}>{word}</span>,
           )}
         </div>
-        <div className="progress">
+        <div className="flex-bubble-wrap"></div>
+        <div className="flex-bubble-wrap"></div>
+        <div className="progress flex-center">
+          <span className="progress-bar"
+                style={{width: `${100 * this.state.levelProgress / this.state.levelReq}%`}}/>
           {bubbles.map((bubble, i) =>
             <span key={i}
                   style={bubbleStyle}
-                  className={`progress-bubble ${i < this.state.levelProgress ? "finished" : ""}`}/>
+                  className="progress-bubble"/>
           )}
         </div>
-        <div className="flex-bubble-wrap"></div>
         <div className="letter-selected flex-center">
           {this.state.word.split("").map((letter, i) =>
             <span key={letter + i} className="letter">{letter}</span>,
@@ -319,18 +323,19 @@ export default class ScrabbleMarathon extends Component {
         </div>
         <div
           className="grid flex-center">
-          <div className="grid-wrapper">
-            {Object.keys(this.state.letters).map((letter, i) =>
+          <div className={`grid-wrapper level-${this.state.level}`}>
+            {Object.keys(this.state.letters).map(letter =>
               <Letter
                 key={letter}
                 letter={letter}
                 onClick={() => this.handleLetterClick(letter)}
                 className={`${this.state.word.indexOf(
-                  letter) === -1 ? "" : "letter-in-use"} letter-pos-${i}`}
+                  letter) === -1 ? "" : "letter-in-use"} letter-pos-${this.state.letters[letter].index}`}
               />
             )}
           </div>
         </div>
+        <div className="flex-bubble-wrap"></div>
         <div className="btns">
           <Button
             onClick={this.handleSendShuffle}
