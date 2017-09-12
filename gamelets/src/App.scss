@@ -69,7 +69,7 @@ body, html {
       text-transform: uppercase;
       font-weight: bolder;
       font-size: 30px;
-      border-radius: 20px;
+      border-radius: 7px;
       border: 4px white solid;
       margin: 2px;
       transition: .4s ease;
@@ -719,6 +719,54 @@ $grid-size: 100px;
       width: 80%;
     }
 
+    .scrabble-marathon {
+      $grid-size: 40px;
+
+      .grid {
+        height: $grid-size;
+
+        .grid-wrapper {
+          width: 500px;
+          height: $grid-size;
+          display: flex;
+          justify-content: center;
+          transition: .4s ease;
+
+          @for $i from 0 through 3 {
+            &.level-#{$i} {
+              width: $grid-size * ($i + 4);
+            }
+          }
+        }
+
+        .letter-grid {
+          height: $grid-size;
+          width: $grid-size;
+
+          &.letter-in-use {
+            opacity: .2;
+            pointer-events: none;
+          }
+
+          .letter-inner {
+            font-size: 30px;
+
+            &:before {
+              width: $grid-size - 5px;
+              height: $grid-size - 5px;
+            }
+          }
+
+          @for $i from 0 through 7 {
+            &.letter-pos-#{$i} {
+              top: 0;
+              left: $i * $grid-size;
+            }
+          }
+        }
+      }
+    }
+
     .grid {
       $grid-size: 60px;
 
@@ -830,7 +878,7 @@ $grid-size: 100px;
     position: relative;
 
     .progress-bubble {
-      height: 100%;
+      height: 5px;
       background-color: $bg-grey;
       box-sizing: border-box;
       border-right: 1px solid white;
@@ -852,6 +900,60 @@ $grid-size: 100px;
 
   &.wrong .letter-selected {
     animation: wrong .3s ease;
+  }
+
+  @media screen and (max-width: $screen-break) {
+    $grid-size: 40px;
+
+    .progress {
+      width: 80vw;
+    }
+
+    .grid {
+      height: $grid-size;
+
+      .grid-wrapper {
+        width: 500px;
+        height: $grid-size;
+        display: flex;
+        justify-content: center;
+        transition: .4s ease;
+
+        @for $i from 0 through 3 {
+          &.level-#{$i} {
+            width: $grid-size * ($i + 4);
+          }
+        }
+      }
+
+      .letter-grid {
+        height: $grid-size;
+        width: $grid-size;
+
+        &.letter-in-use {
+          opacity: .2;
+          pointer-events: none;
+        }
+
+        .letter-inner {
+          font-size: 20px;
+
+          &:before {
+            width: $grid-size - 2px;
+            height: $grid-size - 2px;
+            left: 1px;
+            top: 1px;
+          }
+        }
+
+        @for $i from 0 through 7 {
+          &.letter-pos-#{$i} {
+            top: 0;
+            left: $i * $grid-size;
+          }
+        }
+      }
+    }
   }
 }
 

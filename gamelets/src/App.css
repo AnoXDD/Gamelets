@@ -380,7 +380,7 @@ body, html {
       text-transform: uppercase;
       font-weight: bolder;
       font-size: 30px;
-      border-radius: 20px;
+      border-radius: 7px;
       border: 4px white solid;
       margin: 2px;
       transition: .4s ease; }
@@ -833,6 +833,57 @@ body, html {
     height: 70px;
     font-size: 25px;
     width: 80%; }
+  .letter-prompt .scrabble-marathon .grid, .scrabble-marathon .scrabble-marathon .grid {
+    height: 40px; }
+    .letter-prompt .scrabble-marathon .grid .grid-wrapper, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper {
+      width: 500px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      transition: .4s ease; }
+      .letter-prompt .scrabble-marathon .grid .grid-wrapper.level-0, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper.level-0 {
+        width: 160px; }
+      .letter-prompt .scrabble-marathon .grid .grid-wrapper.level-1, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper.level-1 {
+        width: 200px; }
+      .letter-prompt .scrabble-marathon .grid .grid-wrapper.level-2, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper.level-2 {
+        width: 240px; }
+      .letter-prompt .scrabble-marathon .grid .grid-wrapper.level-3, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper.level-3 {
+        width: 280px; }
+    .letter-prompt .scrabble-marathon .grid .letter-grid, .scrabble-marathon .scrabble-marathon .grid .letter-grid {
+      height: 40px;
+      width: 40px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-in-use, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-in-use {
+        opacity: .2;
+        pointer-events: none; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid .letter-inner, .scrabble-marathon .scrabble-marathon .grid .letter-grid .letter-inner {
+        font-size: 30px; }
+        .letter-prompt .scrabble-marathon .grid .letter-grid .letter-inner:before, .scrabble-marathon .scrabble-marathon .grid .letter-grid .letter-inner:before {
+          width: 35px;
+          height: 35px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-0, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-0 {
+        top: 0;
+        left: 0px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-1, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-1 {
+        top: 0;
+        left: 40px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-2, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-2 {
+        top: 0;
+        left: 80px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-3, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-3 {
+        top: 0;
+        left: 120px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-4, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-4 {
+        top: 0;
+        left: 160px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-5, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-5 {
+        top: 0;
+        left: 200px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-6, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-6 {
+        top: 0;
+        left: 240px; }
+      .letter-prompt .scrabble-marathon .grid .letter-grid.letter-pos-7, .scrabble-marathon .scrabble-marathon .grid .letter-grid.letter-pos-7 {
+        top: 0;
+        left: 280px; }
   .letter-prompt .grid, .scrabble-marathon .grid {
     height: 180px; }
     .letter-prompt .grid .grid-wrapper, .scrabble-marathon .grid .grid-wrapper {
@@ -945,7 +996,7 @@ body, html {
   padding: 10px 0;
   position: relative; }
   .scrabble-marathon .progress .progress-bubble {
-    height: 100%;
+    height: 5px;
     background-color: #eeeced;
     box-sizing: border-box;
     border-right: 1px solid white; }
@@ -960,5 +1011,61 @@ body, html {
   margin-top: 10px; }
 .scrabble-marathon.wrong .letter-selected {
   animation: wrong .3s ease; }
+@media screen and (max-width: 510px) {
+  .scrabble-marathon .progress {
+    width: 80vw; }
+  .scrabble-marathon .grid {
+    height: 40px; }
+    .scrabble-marathon .grid .grid-wrapper {
+      width: 500px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      transition: .4s ease; }
+      .scrabble-marathon .grid .grid-wrapper.level-0 {
+        width: 160px; }
+      .scrabble-marathon .grid .grid-wrapper.level-1 {
+        width: 200px; }
+      .scrabble-marathon .grid .grid-wrapper.level-2 {
+        width: 240px; }
+      .scrabble-marathon .grid .grid-wrapper.level-3 {
+        width: 280px; }
+    .scrabble-marathon .grid .letter-grid {
+      height: 40px;
+      width: 40px; }
+      .scrabble-marathon .grid .letter-grid.letter-in-use {
+        opacity: .2;
+        pointer-events: none; }
+      .scrabble-marathon .grid .letter-grid .letter-inner {
+        font-size: 20px; }
+        .scrabble-marathon .grid .letter-grid .letter-inner:before {
+          width: 38px;
+          height: 38px;
+          left: 1px;
+          top: 1px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-0 {
+        top: 0;
+        left: 0px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-1 {
+        top: 0;
+        left: 40px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-2 {
+        top: 0;
+        left: 80px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-3 {
+        top: 0;
+        left: 120px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-4 {
+        top: 0;
+        left: 160px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-5 {
+        top: 0;
+        left: 200px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-6 {
+        top: 0;
+        left: 240px; }
+      .scrabble-marathon .grid .letter-grid.letter-pos-7 {
+        top: 0;
+        left: 280px; } }
 
 /*# sourceMappingURL=App.css.map */
