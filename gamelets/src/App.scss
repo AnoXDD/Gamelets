@@ -871,10 +871,10 @@ $grid-size: 100px;
     width: 100%;
 
     .word-list {
-      height: 100%;
+      max-height: 100%;
       box-sizing: border-box;
       padding: 20px 0;
-      overflow: scroll;
+      overflow: auto;
     }
   }
 

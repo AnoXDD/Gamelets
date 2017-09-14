@@ -79,7 +79,6 @@ export default class Grid extends Component {
     this.findLetterById = this.findLetterById.bind(this);
     this.findPositionById = this.findPositionById.bind(this);
     this.isAdjacent = this.isAdjacent.bind(this);
-    this.isSelectedWordValid = this.isSelectedWordValid.bind(this);
     this.removeSelectedWord = this.removeSelectedWord.bind(this);
     this.getSelectedWord = this.getSelectedWord.bind(this);
     this.calculateSelectedWordScore = this.calculateSelectedWordScore.bind(

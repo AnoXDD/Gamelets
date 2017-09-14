@@ -13,7 +13,7 @@ import Button from "./Button";
 import * as R from "../R";
 
 const MINI_THRESHOLD = 510,
-    COUNTDOWN = 3000;
+  COUNTDOWN = 3000;
 
 export default class Game extends Component {
   newGame = true;
@@ -94,39 +94,41 @@ export default class Game extends Component {
 
   render() {
     return (
-        <div
-            className={`game ${this.props.name} ${this.props.className} ${this.state.gameState === R.GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === R.GAME_STATE.READY ? "ready" : ""}`}>
-          <header className="flex-center">
-            {typeof(this.props.roundTime) === "undefined" ? null :
-                <Timer
-                    version={this.state.timeVersion}
-                    start={this.counter}
-                    timeInterval={this.state.gameState !== R.GAME_STATE.START ? 1000 : this.props.timeInterval}
-                    countDown={this.state.gameState !== R.GAME_STATE.START ? true : this.props.timeCountDown}
-                    onFinish={this.handleTimeFinish}/>}
-            {this.newGame || typeof(this.props.score) === "undefined" ? null :
-                <Scoreboard score={this.props.score}/>}
-            {this.props.prompt ? (<div
-                className="prompt">{this.props.prompt}</div>) : null}
-            {(!this.newGame && (this.state.gameState === R.GAME_STATE.IDLE)) ?
-                (this.props.gameSummary || null) : null}
-            <div
-                className={`btns ${this.state.gameState === R.GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
-              <Button
-                  onClick={this.props.roundTime ? this.readyGame : this.startGame}
-                  text={this.newGame ? "start" : this.props.restartText}
-              >
-                {this.newGame ? "play_arrow" : this.props.restartIcon}
-              </Button>
-            </div>
-          </header>
-          <div className="game-area">
-            <div
-                className="flex-inner-extend flex-center game-area-inner">
-              {this.props.children}
-            </div>
+      <div
+        className={`game ${this.props.name} ${this.props.className} ${this.state.gameState === R.GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === R.GAME_STATE.READY ? "ready" : ""}`}>
+        <header className="flex-center">
+          {typeof(this.props.roundTime) === "undefined" ? null :
+            <Timer
+              version={this.state.timeVersion}
+              start={this.counter}
+              timeInterval={this.state.gameState !== R.GAME_STATE.START ? 1000 : this.props.timeInterval}
+              countDown={this.state.gameState !== R.GAME_STATE.START ? true : this.props.timeCountDown}
+              onFinish={this.handleTimeFinish}
+              onChange={this.props.onTimeChange}
+            />}
+          {this.newGame || typeof(this.props.score) === "undefined" ? null :
+            <Scoreboard score={this.props.score}/>}
+          {this.props.prompt ? (<div
+            className="prompt">{this.props.prompt}</div>) : null}
+          {(!this.newGame && (this.state.gameState === R.GAME_STATE.IDLE)) ?
+            (this.props.gameSummary || null) : null}
+          <div
+            className={`btns ${this.state.gameState === R.GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
+            <Button
+              onClick={this.props.roundTime ? this.readyGame : this.startGame}
+              text={this.newGame ? "start" : this.props.restartText}
+            >
+              {this.newGame ? "play_arrow" : this.props.restartIcon}
+            </Button>
+          </div>
+        </header>
+        <div className="game-area">
+          <div
+            className="flex-inner-extend flex-center game-area-inner">
+            {this.props.children}
           </div>
         </div>
+      </div>
     );
   }
 }
@@ -168,6 +170,8 @@ Game.propTypes = {
   onStateChange: PropTypes.func,
   // The callback when the game is started
   onStart      : PropTypes.func.isRequired,
+  // The callback when the timer is changed
+  onTimeChange : PropTypes.func,
 };
 
 
@@ -176,6 +180,8 @@ Game.defaultProps = {
 
   restartText: "restart",
   restartIcon: "refresh",
+
+  timeInterval: 1000,
 
   onResize     : e => void(e),
   onStateChange: e => void(e),

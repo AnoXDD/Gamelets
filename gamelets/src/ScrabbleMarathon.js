@@ -17,11 +17,13 @@ const CANDIDATES = [
     " "),
 ];
 const LEVEL_REQ = [6, 18, 40, 70];
-const UNUSED_TIME_MULTIPLIER = 500;
+const UNUSED_TIME_MULTIPLIER = .5;
+const ROUND_TIME = 60000;
 
 export default class ScrabbleMarathon extends Component {
 
   newGame = true;
+  time = 0;
 
   constructor(props) {
     super(props);
@@ -50,6 +52,7 @@ export default class ScrabbleMarathon extends Component {
     this.handleBackspace = this.handleBackspace.bind(this);
     this.handleSend = this.handleSend.bind(this);
     this.handleStateChange = this.handleStateChange.bind(this);
+    this.handleTimeChange = this.handleTimeChange.bind(this);
     this.onFinishGame = this.onFinishGame.bind(this);
 
     this.isWordLongEnough = this.isWordLongEnough.bind(this);
@@ -61,10 +64,6 @@ export default class ScrabbleMarathon extends Component {
   componentWillUpdate(nextProps, nextState) {
     if (this.state.classClassName === "wrong") {
       nextState.classClassName = "";
-    }
-
-    if (nextState.gameState && this.state.gameState) {
-      nextState.gameState = undefined;
     }
   }
 
@@ -182,6 +181,7 @@ export default class ScrabbleMarathon extends Component {
       level        : 0,
       levelReq     : LEVEL_REQ[0],
       levelProgress: 0,
+      time         : 0,
     });
   }
 
@@ -266,6 +266,11 @@ export default class ScrabbleMarathon extends Component {
         score        : this.state.score + this.getCurrentScore(),
       }, () => {
         this.maybeLevelUp();
+
+        // Scroll to the bottom
+        if (this.wordListEnd) {
+          this.wordListEnd.scrollIntoView({behavior: "smooth"});
+        }
       });
     } else {
       // Not a match
@@ -301,12 +306,16 @@ export default class ScrabbleMarathon extends Component {
     }
   }
 
-  onFinishGame() {
-    alert("apply timeLeft here");
+  handleTimeChange(time) {
+    this.time = time;
+  }
 
+  onFinishGame() {
     this.setState({
-      gameState: R.GAME_STATE.IDLE,
+      score    : this.state.score + (this.time  - 1000) * UNUSED_TIME_MULTIPLIER,
     });
+
+    this.time = 0;
   }
 
   render() {
@@ -320,15 +329,17 @@ export default class ScrabbleMarathon extends Component {
       <Game name="scrabble-marathon"
             className={this.state.classClassName}
             gameSummary={[
-              <div className="word">Nice!</div>,
-              <div className="word-list">{this.state.wordList.join(" | ")}</div>
+              <div key="1" className="word">Nice!</div>,
+              <div key="2"
+                   className="word-list">{this.state.wordList.join(" | ")}</div>
             ]}
-            gameState={this.state.gameState}
             onStart={this.startNewGame}
             onStateChange={this.handleStateChange}
             restartText="next"
             restartIcon="skip_next"
             score={this.state.score}
+            roundTime={ROUND_TIME}
+            onTimeChange={this.handleTimeChange}
       >
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
@@ -338,6 +349,10 @@ export default class ScrabbleMarathon extends Component {
               {this.state.wordList.map((word, i) =>
                 <span key={word} className={"word"}>{word}</span>,
               )}
+              <div style={{float: "left", clear: "both"}}
+                   ref={(el) => {
+                     this.wordListEnd = el;
+                   }}/>
             </div>
           </div>
         </div>

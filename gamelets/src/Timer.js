@@ -34,6 +34,10 @@ export default class Timer extends Component {
       if (this.props.onFinish) {
         this.props.onFinish();
       }
+    } else {
+      if (this.props.onChange) {
+        this.props.onChange(this.state.time);
+      }
     }
   }
 
@@ -86,6 +90,7 @@ Timer.propTypes = {
   start       : PropTypes.number, // in milliseconds
 
   onFinish: PropTypes.func.isRequired,
+  onChange: PropTypes.func, // the callback when time is changed
 };
 
 
