@@ -869,6 +869,13 @@ $grid-size: 100px;
     height: 50vh;
     position: relative;
     width: 100%;
+
+    .word-list {
+      height: 100%;
+      box-sizing: border-box;
+      padding: 20px 0;
+      overflow: scroll;
+    }
   }
 
   .progress {

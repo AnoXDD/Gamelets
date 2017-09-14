@@ -990,6 +990,11 @@ body, html {
   height: 50vh;
   position: relative;
   width: 100%; }
+  .scrabble-marathon .word-list-wrapper .word-list {
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px 0;
+    overflow: scroll; }
 .scrabble-marathon .progress {
   width: 400px;
   height: 5px;
