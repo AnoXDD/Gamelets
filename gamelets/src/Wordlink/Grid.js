@@ -252,7 +252,7 @@ export default class Grid extends Component {
       return;
     }
 
-    if (this.isSelectedWordValid(word)) {
+    if (R.isSelectedWordValid(word)) {
       this.props.onWordValidChange("valid");
 
       let score = this.calculateSelectedWordScore(word);
