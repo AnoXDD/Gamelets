@@ -636,6 +636,28 @@ $grid-size: 100px;
     }
   }
 
+  @keyframes amber-bg {
+    20%, 80% {
+      background: $amber;
+    }
+  }
+
+  @keyframes shaking {
+    10%, 40%, 70% {
+      transform: translateX(5px);
+      opacity: 1;
+    }
+
+    25%, 55%, 85% {
+      transform: translateX(-5px);
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
   .game-area-inner {
     flex-direction: column;
   }
@@ -705,6 +727,14 @@ $grid-size: 100px;
 
   &.wrong .letter-selected {
     animation: wrong .3s ease;
+  }
+
+  &.shaking .letter-selected {
+    animation: amber-bg 2s ease;
+
+    .letter {
+      animation: shaking 2s ease;
+    }
   }
 
   @media screen and (max-width: $screen-break) {

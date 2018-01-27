@@ -177,6 +177,8 @@ export default class LetterPrompt extends Component {
     this.handleProblemSolved = this.handleProblemSolved.bind(this);
 
     this.isAnswerForEasterEgg = this.isAnswerForEasterEgg.bind(this);
+
+    this.returnAllLetters = this.returnAllLetters.bind(this);
   }
 
 
@@ -307,6 +309,18 @@ export default class LetterPrompt extends Component {
     }
   }
 
+  returnAllLetters(classClassName) {
+    // Return all the letters
+    for (let letter of this.state.word) {
+      ++this.state.letters[letter].count;
+    }
+
+    this.setState({
+      word          : "",
+      classClassName: classClassName === undefined ? this.state.classClassName : classClassName,
+    });
+  }
+
   handleSend() {
     // Quick win, or an easter egg
     if (this.isAnswerForEasterEgg()) {
@@ -327,16 +341,28 @@ export default class LetterPrompt extends Component {
         });
       }
     } else {
-      // Not a match
-      // Return all the letters
-      for (let letter of this.state.word) {
-        ++this.state.letters[letter].count;
+      // Not a match, try to see if it's part of the word
+      if (this.state.word.length >= 3) {
+        for (let i = 0; i < this.wordList.length; ++i) {
+          if (this.state.correctWordIndex.indexOf(i) === -1) {
+            // This word has not been filled in yet
+            let word = this.wordList[i];
+
+            if (this.state.word.indexOf(word) !== -1 || word.indexOf(this.state.word) !== -1) {
+              // It's part of it. Let the user know.
+              this.setState({
+                classClassName: "shaking",
+              });
+
+              setTimeout(() => this.returnAllLetters(""), 2000);
+              return;
+            }
+          }
+        }
       }
 
-      this.setState({
-        word          : "",
-        classClassName: "wrong",
-      });
+      this.returnAllLetters("wrong");
+
     }
   }
 

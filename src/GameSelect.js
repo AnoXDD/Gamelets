@@ -22,7 +22,11 @@ const GAME_LIST = [
   {
     name: "Scrabble Marathon",
     game: <ScrabbleMarathon/>,
-  },
+  }
+  // {
+  //   name: "Word Train",
+  //   game: <WordTrain/>,
+  // }
 ];
 
 export default class GameSelect extends Component {

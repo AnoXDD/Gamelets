@@ -786,6 +786,18 @@ body, html {
 @keyframes wrong {
   50% {
     background: #F44336; } }
+@keyframes amber-bg {
+  20%, 85% {
+    background: #FFC107; } }
+@keyframes shaking {
+  10%, 40%, 70% {
+    transform: translateX(5px);
+    opacity: 1; }
+  25%, 55%, 85% {
+    transform: translateX(-5px);
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
 .letter-prompt .game-area-inner, .scrabble-marathon .game-area-inner {
   flex-direction: column; }
 .letter-prompt header .prompt, .scrabble-marathon header .prompt {
@@ -828,6 +840,10 @@ body, html {
       animation: none; }
 .letter-prompt.wrong .letter-selected, .scrabble-marathon.wrong .letter-selected {
   animation: wrong .3s ease; }
+.letter-prompt.shaking .letter-selected, .scrabble-marathon.shaking .letter-selected {
+  animation: amber-bg 2s ease; }
+  .letter-prompt.shaking .letter-selected .letter, .scrabble-marathon.shaking .letter-selected .letter {
+    animation: shaking 2s ease; }
 @media screen and (max-width: 510px) {
   .letter-prompt .word-list, .scrabble-marathon .word-list {
     font-size: 25px; }
