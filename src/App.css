@@ -867,6 +867,8 @@ body, html {
         width: 240px; }
       .letter-prompt .scrabble-marathon .grid .grid-wrapper.level-3, .letter-prompt .word-chain .grid .grid-wrapper.level-3, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper.level-3, .scrabble-marathon .word-chain .grid .grid-wrapper.level-3, .word-chain .scrabble-marathon .grid .grid-wrapper.level-3, .word-chain .word-chain .grid .grid-wrapper.level-3 {
         width: 280px; }
+      .letter-prompt .scrabble-marathon .grid .grid-wrapper.level-4, .letter-prompt .word-chain .grid .grid-wrapper.level-4, .scrabble-marathon .scrabble-marathon .grid .grid-wrapper.level-4, .scrabble-marathon .word-chain .grid .grid-wrapper.level-4, .word-chain .scrabble-marathon .grid .grid-wrapper.level-4, .word-chain .word-chain .grid .grid-wrapper.level-4 {
+        width: 320px; }
     .letter-prompt .scrabble-marathon .grid .letter-grid, .letter-prompt .word-chain .grid .letter-grid, .scrabble-marathon .scrabble-marathon .grid .letter-grid, .scrabble-marathon .word-chain .grid .letter-grid, .word-chain .scrabble-marathon .grid .letter-grid, .word-chain .word-chain .grid .letter-grid {
       height: 40px;
       width: 40px; }
@@ -1055,6 +1057,8 @@ body, html {
         width: 240px; }
       .scrabble-marathon .grid .grid-wrapper.level-3, .word-chain .grid .grid-wrapper.level-3 {
         width: 280px; }
+      .scrabble-marathon .grid .grid-wrapper.level-4, .word-chain .grid .grid-wrapper.level-4 {
+        width: 320px; }
     .scrabble-marathon .grid .letter-grid, .word-chain .grid .letter-grid {
       height: 40px;
       width: 40px; }

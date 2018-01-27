@@ -21,13 +21,15 @@ export default class WordChain extends Component {
 
   newGame = true;
   timeouts = [];
-  //todo clear it at game ends
+  id = 0;
 
   constructor(props) {
     super(props);
 
     this.state = {
+      // With each element {letter:string, key:int}
       word    : [],
+      // With each element {letter:string, key:int}
       letters : [],
       wordList: [],
       score   : 0,
@@ -45,7 +47,6 @@ export default class WordChain extends Component {
     this.onFinishGame = this.onFinishGame.bind(this);
 
     this.isWordLongEnough = this.isWordLongEnough.bind(this);
-    this.maybeLevelUp = this.maybeLevelUp.bind(this);
     this.getCurrentScore = this.getCurrentScore.bind(this);
   }
 
@@ -92,9 +93,16 @@ export default class WordChain extends Component {
   handleKeydown(e) {
     let key = e.key;
 
-    let keyIndex = this.state.letters.indexOf(key);
+    let keyIndex = this.state.letters.findIndex(o => o.letter === key);
     if (keyIndex !== -1) {
       this.handleLetterClick(keyIndex);
+    }
+  }
+
+  generateNewLetter(index = LETTER_NUM - 1) {
+    return {
+      letter: R.randomWeightedLetter(),
+      key   : ++this.id,
     }
   }
 
@@ -102,7 +110,8 @@ export default class WordChain extends Component {
    * Generate initial letters
    */
   generateInitialLetters() {
-    return new Array(LETTER_NUM).fill().map(i => R.randomWeightedLetter());
+    return new Array(LETTER_NUM).fill("")
+      .map(index => this.generateNewLetter(index));
   }
 
   startNewGame() {
@@ -121,14 +130,6 @@ export default class WordChain extends Component {
     return this.state.word.length >= 3;
   }
 
-  maybeLevelUp() {
-    if (this.state.levelProgress < this.state.levelReq) {
-      return;
-    }
-
-    return;
-  }
-
   /**
    * Returns the current score calculated by level and length
    */
@@ -144,10 +145,14 @@ export default class WordChain extends Component {
     }
 
     let {letters} = this.state;
-    letters[index] = R.randomWeightedLetter();
+    // Remove current letter
+    letters.splice(index, 1);
+
+    // Add a new letter
+    letters.push(this.generateNewLetter());
 
     this.setState({
-      word: [...this.state.word, {letter, key: Date.now(),}],
+      word: [...this.state.word, letter],
       letters,
     });
 
@@ -177,6 +182,12 @@ export default class WordChain extends Component {
   }
 
   onFinishGame() {
+    for (let timeout of this.timeouts) {
+      clearTimeout(timeout);
+    }
+
+    this.timeouts = [];
+
     this.setState({
       score: this.state.score,
     });
@@ -231,10 +242,10 @@ export default class WordChain extends Component {
         <div
           className="grid flex-center">
           <div className={`grid-wrapper level-${LETTER_NUM - 4}`}>
-            {this.state.letters.map((letter, index) =>
+            {this.state.letters.map((o, index) =>
               <Letter
-                key={`${letter}-${index}`}
-                letter={letter}
+                key={o.key}
+                letter={o.letter}
                 onClick={() => this.handleLetterClick(index)}
                 className={`letter-pos-${index}`}
               />
