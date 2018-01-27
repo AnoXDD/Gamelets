@@ -103,7 +103,9 @@ input, textarea {
 .flex-extend-inner-wrapper, .flex-inner-extend {
   position: absolute;
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  top: 0;
+  left: 0; }
 
 img.center {
   max-width: 100%;
