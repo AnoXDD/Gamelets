@@ -31,7 +31,7 @@ module.exports = {
    */
   isSelectedWordValid(word) {
     let length = word.length;
-    if (length < 2 || length > 10) {
+    if (length <= 2 || length > 10) {
       return false;
     }
     length = `${length}`;
