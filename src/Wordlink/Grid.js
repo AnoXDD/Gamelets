@@ -327,6 +327,7 @@ export default class Grid extends Component {
                 onStart={this.handleMouseDown}
                 onMove={this.handleMouseOver}
                 onEnd={this.handleMouseUp}
+                rounded={true}
             >
               {this.state.letters.map((letters, col) =>
                   letters.map((letter, row) =>

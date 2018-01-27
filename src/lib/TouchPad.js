@@ -49,9 +49,10 @@ export default class TouchPad extends Component {
     let x = event.targetTouches[0].clientX - this.left;
     let y = event.targetTouches[0].clientY - this.top;
 
-    // this.log(`pageX: ${Math.floor(event.targetTouches[0].pageX)}\tpageY: ${Math.floor(
-    //     event.targetTouches[0].pageY)}\t left: ${Math.floor(this.left)}\t top: ${Math.floor(
-    //     this.top)}\t x: ${Math.floor(x)}\t y: ${Math.floor(y)} `)
+    // this.log(`pageX: ${Math.floor(event.targetTouches[0].pageX)}\tpageY:
+    // ${Math.floor( event.targetTouches[0].pageY)}\t left:
+    // ${Math.floor(this.left)}\t top: ${Math.floor( this.top)}\t x:
+    // ${Math.floor(x)}\t y: ${Math.floor(y)} `)
 
     return {
       x: x,
@@ -69,16 +70,31 @@ export default class TouchPad extends Component {
 
     // First, determine the box it's in, including the margin
     let outerWidth = gridWidth + 2 * marginWidth,
-        outerHeight = gridHeight + 2 * marginHeight;
+      outerHeight = gridHeight + 2 * marginHeight;
 
     let x = Math.floor(position.x / outerWidth),
-        y = Math.floor(position.y / outerHeight);
+      y = Math.floor(position.y / outerHeight);
 
     // Then determine if the position is not on the margin
     let innerX = position.x - outerWidth * x - marginWidth,
-        innerY = position.y - outerHeight * y - marginHeight;
+      innerY = position.y - outerHeight * y - marginHeight;
 
     if (innerX > 0 && innerX < gridWidth && innerY > 0 && innerY < gridHeight) {
+      if (this.props.rounded) {
+        // Check if a point is within an ellipse
+        let rx = gridWidth / 2;
+        let ry = gridHeight / 2;
+        let x = innerX - rx;
+        let y = innerY - ry;
+
+        if (x * x / (rx * rx) + y * y / (ry * ry) > 1) {
+          // Outside of it
+          return null;
+        }
+
+        // Otherwise just fall thru the logic here
+      }
+
       return {
         x: x, y: y
       };
@@ -141,26 +157,26 @@ export default class TouchPad extends Component {
 
   render() {
     return (
-        <div style={{height: "100%", width: "100%"}}
-             onMouseDown={this.handleStart}
-             onMouseUp={this.handleEnd}
-             onMouseMove={this.handleMove}
-             onTouchStart={this.handleStart}
-             onTouchEnd={this.handleEnd}
-             onTouchCancel={this.handleEnd}
-             onTouchMove={this.handleMove}
-        >
-          <div style={{
-            position     : "fixed",
-            top          : 0,
-            left         : 0,
-            height       : "300px",
-            width        : "100%",
-            color        : "red",
-            pointerEvents: "none",
-          }}>{this.state.debug.map(d => <p>{d}</p>)}</div>
-          {this.props.children}
-        </div>
+      <div style={{height: "100%", width: "100%"}}
+           onMouseDown={this.handleStart}
+           onMouseUp={this.handleEnd}
+           onMouseMove={this.handleMove}
+           onTouchStart={this.handleStart}
+           onTouchEnd={this.handleEnd}
+           onTouchCancel={this.handleEnd}
+           onTouchMove={this.handleMove}
+      >
+        <div style={{
+          position     : "fixed",
+          top          : 0,
+          left         : 0,
+          height       : "300px",
+          width        : "100%",
+          color        : "red",
+          pointerEvents: "none",
+        }}>{this.state.debug.map(d => <p>{d}</p>)}</div>
+        {this.props.children}
+      </div>
     );
   };
 }

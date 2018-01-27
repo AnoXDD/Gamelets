@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
     "react-ink": "^6.2.0"
   },
   "devDependencies": {
@@ -16,7 +16,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "deploy": "react-scripts build && aws s3 cp build s3://gamelets.anoxic.me --recursive",
-    "deploy-only" : "aws s3 cp build s3://gamelets.anoxic.me --recursive"
+    "deploy-only": "aws s3 cp build s3://gamelets.anoxic.me --recursive"
   },
   "description": "A website for small games by Anoxic",
   "main": "index.js",
