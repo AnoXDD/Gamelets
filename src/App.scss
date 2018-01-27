@@ -1001,7 +1001,6 @@ $grid-size: 100px;
   }
 
   .word-list-wrapper {
-
     .word-list {
       padding: 0;
       overflow: hidden;
@@ -1010,6 +1009,10 @@ $grid-size: 100px;
         display: block;
       }
     }
+  }
+
+  .grid .letter-grid {
+    animation: fade-in .4s ease;
   }
 }
 

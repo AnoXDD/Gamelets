@@ -1104,5 +1104,7 @@ body, html {
   overflow: hidden; }
   .word-chain .word-list-wrapper .word-list .word {
     display: block; }
+.word-chain .grid .letter-grid {
+  animation: fade-in .4s ease; }
 
 /*# sourceMappingURL=App.css.map */

@@ -66,7 +66,7 @@ export default class WordChain extends Component {
 
         if (!nextState.wordList.includes(word)
           && R.isSelectedWordValid(word)) {
-        nextState.wordList.push(word);
+          nextState.wordList.push(word);
         }
       }
     }
@@ -142,11 +142,8 @@ export default class WordChain extends Component {
     }
 
     let {letters} = this.state;
-    // Remove current letter
-    letters.splice(index, 1);
-
     // Add a new letter
-    letters.push(this.generateNewLetter());
+    letters[index] = this.generateNewLetter(index);
 
     this.setState({
       word: [...this.state.word, letter],
