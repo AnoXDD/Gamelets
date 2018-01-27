@@ -12,17 +12,22 @@ import * as R from "./R";
 
 const ROUND_TIME = 900000;
 // How many letters in the pool
-const LETTER_NUM = 7;
+const LETTER_NUM = 8;
+const LETTER_LIFESPAN = 10000;
+// todo enforce this
+const WORD_LIMIT = 10;
 
 export default class WordChain extends Component {
 
   newGame = true;
+  timeouts = [];
+  //todo clear it at game ends
 
   constructor(props) {
     super(props);
 
     this.state = {
-      word    : "",
+      word    : [],
       letters : [],
       wordList: [],
       score   : 0,
@@ -36,6 +41,7 @@ export default class WordChain extends Component {
     this.handleLetterClick = this.handleLetterClick.bind(this);
     this.handleStateChange = this.handleStateChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handleLetterPerish = this.handleLetterPerish.bind(this);
     this.onFinishGame = this.onFinishGame.bind(this);
 
     this.isWordLongEnough = this.isWordLongEnough.bind(this);
@@ -103,7 +109,7 @@ export default class WordChain extends Component {
     this.newGame = false;
 
     this.setState({
-      word    : "",
+      word    : [],
       letters : this.generateInitialLetters(),
       wordList: [],
       score   : 0,
@@ -127,22 +133,37 @@ export default class WordChain extends Component {
    * Returns the current score calculated by level and length
    */
   getCurrentScore() {
-    return (this.state.level + 1) * this.state.word.length * this.state.word.length * 5;
+    return /*(this.state.level + 1) **/ this.state.word.length * this.state.word.length * 5;
   }
 
   handleLetterClick(index) {
     let letter = this.state.letters[index];
 
-    if (letter) {
-      let {letters} = this.state;
-
-      letters[index] = R.randomWeightedLetter();
-
-      this.setState({
-        word: this.state.word + letter,
-        letters,
-      });
+    if (!letter) {
+      return;
     }
+
+    let {letters} = this.state;
+    letters[index] = R.randomWeightedLetter();
+
+    this.setState({
+      word: [...this.state.word, {letter, key: Date.now(),}],
+      letters,
+    });
+
+    // Set timer to remove this letter
+    this.timeouts.push(setTimeout(this.handleLetterPerish, LETTER_LIFESPAN));
+  }
+
+  /**
+   * Called when a letter is about to be disappeared
+   */
+  handleLetterPerish() {
+    let {word} = this.state;
+
+    this.setState({
+      word: word.slice(1),
+    });
   }
 
   handleStateChange(state) {
@@ -203,8 +224,8 @@ export default class WordChain extends Component {
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
         <div className="letter-selected flex-center">
-          {this.state.word.split("").map((letter, i) =>
-            <span key={letter + i} className="letter">{letter}</span>,
+          {this.state.word.map(o =>
+            <span key={o.key} className="letter perishing">{o.letter}</span>,
           )}
         </div>
         <div

@@ -1093,4 +1093,7 @@ body, html {
         top: 0;
         left: 280px; } }
 
+.word-chain .letter.perishing {
+  animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28), fade-out 10.5s linear; }
+
 /*# sourceMappingURL=App.css.map */

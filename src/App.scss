@@ -994,6 +994,12 @@ $grid-size: 100px;
   }
 }
 
+.word-chain {
+  .letter.perishing {
+    animation: word-appear .2s $rollback, fade-out 10.5s linear;
+  }
+}
+
 //-----------------------------
 //
 //html, body {
