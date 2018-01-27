@@ -999,6 +999,18 @@ $grid-size: 100px;
   .letter.perishing {
     animation: word-appear .2s $rollback, fade-out 10.5s linear;
   }
+
+  .word-list-wrapper {
+
+    .word-list {
+      padding: 0;
+      overflow: hidden;
+
+      .word {
+        display: block;
+      }
+    }
+  }
 }
 
 //-----------------------------

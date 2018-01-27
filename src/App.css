@@ -1099,5 +1099,10 @@ body, html {
 
 .word-chain .letter.perishing {
   animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28), fade-out 10.5s linear; }
+.word-chain .word-list-wrapper .word-list {
+  padding: 0;
+  overflow: hidden; }
+  .word-chain .word-list-wrapper .word-list .word {
+    display: block; }
 
 /*# sourceMappingURL=App.css.map */

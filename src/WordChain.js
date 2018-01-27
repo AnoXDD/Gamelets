@@ -3,6 +3,7 @@
  */
 
 import React, {Component} from "react";
+import {Scrollbars} from 'react-custom-scrollbars';
 
 import Button from "./lib/Button";
 import Game from "./lib/Game";
@@ -50,10 +51,31 @@ export default class WordChain extends Component {
     this.getCurrentScore = this.getCurrentScore.bind(this);
   }
 
-
   componentWillUpdate(nextProps, nextState) {
     if (this.state.classClassName === "wrong") {
       nextState.classClassName = "";
+    }
+
+    // Check if new word has arrived
+    let nextStateWord = nextState.word.map(o => o.letter).join("");
+    if (nextStateWord.length >= 3
+      && nextStateWord !== this.state.word.map(o => o.letter).join("")) {
+      // Word is changed, check if each header is a valid word
+      for (let i = 3; i <= nextStateWord.length; ++i) {
+        let word = nextStateWord.substr(0, i);
+
+        if (!nextState.wordList.includes(word)
+          && R.isSelectedWordValid(word)) {
+        nextState.wordList.push(word);
+        }
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.word.length !== this.state.word.length) {
+      let {scrollbars} = this.refs;
+      scrollbars.scrollToBottom();
     }
   }
 
@@ -63,31 +85,6 @@ export default class WordChain extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.handleKeydown);
-  }
-
-  /**
-   * Returns if `long` can be used as continuing problem set of `set`. For
-   * example, "abcd" is a good pair with "abc", but not "afg". `long` should
-   * only have letter different from `short`
-   * @param short
-   * @param long
-   */
-  static isGoodCandidatePair(short, long) {
-    let s = 0, l = 0;
-    let flag = false;
-    while (s < short.length) {
-      if (short[s++] !== long[l++]) {
-        if (flag) {
-          return false;
-        }
-
-        // Compare this again
-        --s;
-        flag = true;
-      }
-    }
-
-    return flag;
   }
 
   handleKeydown(e) {
@@ -221,15 +218,14 @@ export default class WordChain extends Component {
         <div className="flex-bubble-wrap"></div>
         <div className="word-list-wrapper flex-center">
           <div className="flex-inner-extend flex-center">
-            <div className="word-list">
+            <Scrollbars
+              className="word-list"
+              ref="scrollbars"
+            >
               {this.state.wordList.map((word, i) =>
                 <span key={word} className={"word"}>{word}</span>,
               )}
-              <div style={{float: "left", clear: "both"}}
-                   ref={(el) => {
-                     this.wordListEnd = el;
-                   }}/>
-            </div>
+            </Scrollbars>
           </div>
         </div>
         <div className="flex-bubble-wrap"></div>
