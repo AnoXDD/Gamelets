@@ -9,6 +9,7 @@ import Button from "./lib/Button";
 import Wordlink from "./Wordlink";
 import LetterPrompt from "./LetterPrompt";
 import ScrabbleMarathon from "./ScrabbleMarathon";
+import WordChain from "./WordChain";
 
 const GAME_LIST = [
   {
@@ -22,11 +23,11 @@ const GAME_LIST = [
   {
     name: "Scrabble Marathon",
     game: <ScrabbleMarathon/>,
+  },
+  {
+    name: "Word Chain",
+    game: <WordChain/>,
   }
-  // {
-  //   name: "Word Train",
-  //   game: <WordTrain/>,
-  // }
 ];
 
 export default class GameSelect extends Component {

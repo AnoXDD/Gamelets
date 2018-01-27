@@ -314,7 +314,7 @@ $grid-size: 100px;
     }
   }
 
-  .letter-prompt &, .scrabble-marathon & {
+  .letter-prompt &, .scrabble-marathon &, .word-chain & {
     height: 3 * $grid-size;
     overflow: visible;
 
@@ -628,7 +628,7 @@ $grid-size: 100px;
   }
 }
 
-.letter-prompt, .scrabble-marathon {
+.letter-prompt, .scrabble-marathon, .word-chain {
 
   @keyframes wrong {
     50% {
@@ -749,7 +749,7 @@ $grid-size: 100px;
       width: 80%;
     }
 
-    .scrabble-marathon {
+    .scrabble-marathon, .word-chain {
       $grid-size: 40px;
 
       .grid {
@@ -848,7 +848,7 @@ $grid-size: 100px;
   flex: 1 1 auto;
 }
 
-.scrabble-marathon {
+.scrabble-marathon, .word-chain {
   $grid-size: 70px;
 
   .grid {
@@ -861,7 +861,7 @@ $grid-size: 100px;
       justify-content: center;
       transition: .4s ease;
 
-      @for $i from 0 through 3 {
+      @for $i from 0 through 4 {
         &.level-#{$i} {
           width: $grid-size * ($i + 4);
         }
