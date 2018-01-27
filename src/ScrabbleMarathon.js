@@ -18,7 +18,7 @@ const CANDIDATES = [
 ];
 const LEVEL_REQ = [6, 18, 40, 70];
 const UNUSED_TIME_MULTIPLIER = .5;
-const ROUND_TIME = 60000;
+const ROUND_TIME = 90000;
 
 export default class ScrabbleMarathon extends Component {
 
