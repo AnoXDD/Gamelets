@@ -406,7 +406,17 @@ body, html {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 5000; }
+  z-index: 5000;
+  background: #212121; }
+
+.screen-size-warning {
+  box-sizing: border-box;
+  color: #e8e8e8;
+  padding: 20px; }
+  .screen-size-warning .title {
+    font-size: 25px; }
+  .screen-size-warning .diagnosis .failed {
+    color: #F44336; }
 
 .game-select {
   background: #448AFF; }

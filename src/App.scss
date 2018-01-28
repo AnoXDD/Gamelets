@@ -113,10 +113,27 @@ body, html {
   width: 100vw;
   height: 100vh;
   z-index: 5000;
+
+  background: $darkgrey;
 }
 
 .screen-size-warning {
+  box-sizing: border-box;
+  color: $lightgrey;
+  padding: 20px;
 
+  .title {
+    font-size: 25px;
+  }
+
+  .diagnosis {
+    //.passed {
+    //  color: $green;
+    //}
+    .failed {
+      color: $red;
+    }
+  }
 }
 
 .game-select {

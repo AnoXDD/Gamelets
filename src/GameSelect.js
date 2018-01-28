@@ -104,7 +104,9 @@ export default class GameSelect extends Component {
             width={window.innerWidth}
             minWidth={MIN_WIDTH}
             height={window.innerHeight}
-            minHeight={MIN_HEIGHT}/> : null}
+            minHeight={MIN_HEIGHT}
+            handleDismiss={() => this.setState({isShowingScreenWarning: false})}
+          /> : null}
         <div className="game-list flex-center">
           <div className="title">Gamelets!</div>
           {GAME_LIST.map((game, i) =>
