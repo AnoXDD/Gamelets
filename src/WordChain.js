@@ -58,7 +58,7 @@ export default class WordChain extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (this.state.classClassName === "wrong") {
+    if (this.state.classClassName.length) {
       nextState.classClassName = "";
     }
 

@@ -180,6 +180,46 @@ body, html {
 }
 
 .game {
+  @keyframes wrong {
+    50% {
+      background: $red;
+    }
+  }
+
+  @keyframes correct {
+    50% {
+      background: $green;
+    }
+  }
+
+  @keyframes repeated {
+    50% {
+      background: $amber;
+    }
+  }
+
+  @keyframes amber-bg {
+    20%, 80% {
+      background: $amber;
+    }
+  }
+
+  @keyframes shaking {
+    10%, 40%, 70% {
+      transform: translateX(5px);
+      opacity: 1;
+    }
+
+    25%, 55%, 85% {
+      transform: translateX(-5px);
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
   width: 100%;
   height: 100%;
   display: flex;
@@ -284,7 +324,7 @@ body, html {
     }
   }
 
-  .letter-selected {
+  @at-root .letter-selected {
     width: 500px;
     height: 100px;
     background: $css;
@@ -295,6 +335,26 @@ body, html {
     margin-bottom: 10px;
     transition: .2s ease;
     position: relative;
+
+    .wrong & {
+      animation: wrong .3s ease;
+    }
+
+    .repeated & {
+      animation: repeated .3s ease;
+    }
+
+    .shaking & {
+      animation: amber-bg 2s ease;
+
+      .letter {
+        animation: shaking 2s ease;
+      }
+    }
+
+    .correct & {
+      animation: correct .3s ease;
+    }
 
     .letter {
       display: inline-block;
@@ -701,35 +761,6 @@ $grid-size: 100px;
 }
 
 .letter-prompt, .scrabble-marathon, .word-chain {
-
-  @keyframes wrong {
-    50% {
-      background: $red;
-    }
-  }
-
-  @keyframes amber-bg {
-    20%, 80% {
-      background: $amber;
-    }
-  }
-
-  @keyframes shaking {
-    10%, 40%, 70% {
-      transform: translateX(5px);
-      opacity: 1;
-    }
-
-    25%, 55%, 85% {
-      transform: translateX(-5px);
-      opacity: 1;
-    }
-
-    100% {
-      opacity: 0;
-    }
-  }
-
   .game-area-inner {
     flex-direction: column;
   }
@@ -794,18 +825,6 @@ $grid-size: 100px;
         letter-spacing: 5px;
         animation: none;
       }
-    }
-  }
-
-  &.wrong .letter-selected {
-    animation: wrong .3s ease;
-  }
-
-  &.shaking .letter-selected {
-    animation: amber-bg 2s ease;
-
-    .letter {
-      animation: shaking 2s ease;
     }
   }
 
@@ -967,16 +986,32 @@ $grid-size: 100px;
     }
   }
 
+  //.word-list-wrapper {
+  //  height: 40vh;
+  //  position: relative;
+  //  width: 100%;
+  //
+  //  .word-list {
+  //    max-height: 100%;
+  //    box-sizing: border-box;
+  //    padding: 20px 0;
+  //    overflow: auto;
+  //  }
+  //}
+  //
+
   .word-list-wrapper {
+    display: flex;
     height: 40vh;
-    position: relative;
-    width: 100%;
 
     .word-list {
-      max-height: 100%;
-      box-sizing: border-box;
-      padding: 20px 0;
-      overflow: auto;
+      padding: 0;
+      overflow: hidden;
+      margin-top: auto;
+
+      .word {
+        display: block;
+      }
     }
   }
 
@@ -1005,10 +1040,6 @@ $grid-size: 100px;
 
   .btns {
     margin-top: 10px;
-  }
-
-  &.wrong .letter-selected {
-    animation: wrong .3s ease;
   }
 
   @media screen and (max-width: $screen-break) {
@@ -1069,21 +1100,6 @@ $grid-size: 100px;
 .word-chain {
   .letter.perishing {
     animation: fade-out 10.5s linear;
-  }
-
-  .word-list-wrapper {
-    display: flex;
-    height: 40vh;
-
-    .word-list {
-      padding: 0;
-      overflow: hidden;
-      margin-top: auto;
-
-      .word {
-        display: block;
-      }
-    }
   }
 
   .grid .letter-grid {

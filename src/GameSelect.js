@@ -31,17 +31,38 @@ const GAME_LIST = [
   }
 ];
 
+const MIN_WIDTH= 350;
+// const MIN_HEIGHT:
+
 export default class GameSelect extends Component {
 
   state = {
-    currentGameIndex: -1,
-    isFullScreen    : false,
+    currentGameIndex      : -1,
+    isShowingScreenWarning: false,
   };
 
   constructor(props) {
     super(props);
 
     this.handleBack = this.handleBack.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentDidMount() {
+    this.handleResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize() {
+
+
   }
 
   handleBack() {

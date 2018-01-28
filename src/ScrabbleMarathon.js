@@ -64,8 +64,15 @@ export default class ScrabbleMarathon extends Component {
 
 
   componentWillUpdate(nextProps, nextState) {
-    if (this.state.classClassName === "wrong") {
+    if (this.state.classClassName.length) {
       nextState.classClassName = "";
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.word.length !== this.state.word.length) {
+      let {scrollbars} = this.refs;
+      scrollbars.scrollToBottom();
     }
   }
 
@@ -105,7 +112,7 @@ export default class ScrabbleMarathon extends Component {
   handleKeydown(e) {
     let key = e.key;
 
-    if (key === "Enter") {
+    if (key === "Enter" || key === " ") {
       this.handleSendShuffle();
       return;
     }
@@ -257,15 +264,20 @@ export default class ScrabbleMarathon extends Component {
       ++this.state.letters[letter].count;
     }
 
-    let index = this.state.wordList.indexOf(this.state.word);
-
-    if (index === -1 && R.isSelectedWordValid(this.state.word)) {
+    if (this.state.wordList.includes(this.state.word)) {
+      // Repeated occurance
+      this.setState({
+        word          : "",
+        classClassName: "repeated",
+      });
+    } else if (R.isSelectedWordValid(this.state.word)) {
       // This word is correct and not being added to the list
       this.setState({
-        word         : "",
-        wordList     : [...this.state.wordList, this.state.word],
-        levelProgress: this.state.levelProgress + this.state.word.length,
-        score        : this.state.score + this.getCurrentScore(),
+        word          : "",
+        wordList      : [...this.state.wordList, this.state.word],
+        levelProgress : this.state.levelProgress + this.state.word.length,
+        score         : this.state.score + this.getCurrentScore(),
+        classClassName: "correct",
       }, () => {
         this.maybeLevelUp();
 
@@ -338,8 +350,8 @@ export default class ScrabbleMarathon extends Component {
             gameIntro={["Find as many English words from the letters as you can"]}
             onStart={this.startNewGame}
             onStateChange={this.handleStateChange}
-            restartText="next"
-            restartIcon="skip_next"
+            restartText="play again"
+            restartIcon="refresh"
             score={this.state.score}
             roundTime={ROUND_TIME}
             onTimeChange={this.handleTimeChange}

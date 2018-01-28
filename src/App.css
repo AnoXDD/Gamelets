@@ -453,6 +453,27 @@ body, html {
   flex-direction: column;
   justify-content: flex-start;
   user-select: none; }
+@keyframes wrong {
+  50% {
+    background: #F44336; } }
+@keyframes correct {
+  50% {
+    background: #4CAF50; } }
+@keyframes repeated {
+  50% {
+    background: #FFC107; } }
+@keyframes amber-bg {
+  20%, 80% {
+    background: #FFC107; } }
+@keyframes shaking {
+  10%, 40%, 70% {
+    transform: translateX(5px);
+    opacity: 1; }
+  25%, 55%, 85% {
+    transform: translateX(-5px);
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
   .game header {
     width: 100%;
     text-align: right;
@@ -514,7 +535,7 @@ body, html {
     transition: 1s ease; }
     .game .btns.replay {
       margin-top: 50px; }
-  .game .letter-selected {
+  .letter-selected {
     width: 500px;
     height: 100px;
     background: #00BCD4;
@@ -525,7 +546,17 @@ body, html {
     margin-bottom: 10px;
     transition: .2s ease;
     position: relative; }
-    .game .letter-selected .letter {
+    .wrong .letter-selected {
+      animation: wrong .3s ease; }
+    .repeated .letter-selected {
+      animation: repeated .3s ease; }
+    .shaking .letter-selected {
+      animation: amber-bg 2s ease; }
+      .shaking .letter-selected .letter {
+        animation: shaking 2s ease; }
+    .correct .letter-selected {
+      animation: correct .3s ease; }
+    .letter-selected .letter {
       display: inline-block;
       overflow: hidden; }
 
@@ -829,21 +860,6 @@ body, html {
   .timer:before {
     content: 'TIME:\00a0'; }
 
-@keyframes wrong {
-  50% {
-    background: #F44336; } }
-@keyframes amber-bg {
-  20%, 80% {
-    background: #FFC107; } }
-@keyframes shaking {
-  10%, 40%, 70% {
-    transform: translateX(5px);
-    opacity: 1; }
-  25%, 55%, 85% {
-    transform: translateX(-5px);
-    opacity: 1; }
-  100% {
-    opacity: 0; } }
 .letter-prompt .game-area-inner, .scrabble-marathon .game-area-inner, .word-chain .game-area-inner {
   flex-direction: column; }
 .letter-prompt header .prompt, .scrabble-marathon header .prompt, .word-chain header .prompt {
@@ -884,12 +900,6 @@ body, html {
     .letter-prompt .word-list .word.empty, .scrabble-marathon .word-list .word.empty, .word-chain .word-list .word.empty {
       letter-spacing: 5px;
       animation: none; }
-.letter-prompt.wrong .letter-selected, .scrabble-marathon.wrong .letter-selected, .word-chain.wrong .letter-selected {
-  animation: wrong .3s ease; }
-.letter-prompt.shaking .letter-selected, .scrabble-marathon.shaking .letter-selected, .word-chain.shaking .letter-selected {
-  animation: amber-bg 2s ease; }
-  .letter-prompt.shaking .letter-selected .letter, .scrabble-marathon.shaking .letter-selected .letter, .word-chain.shaking .letter-selected .letter {
-    animation: shaking 2s ease; }
 @media screen and (max-width: 510px) {
   .letter-prompt .word-list, .scrabble-marathon .word-list, .word-chain .word-list {
     font-size: 25px; }
@@ -1055,14 +1065,14 @@ body, html {
       top: 0;
       left: 490px; }
 .scrabble-marathon .word-list-wrapper, .word-chain .word-list-wrapper {
-  height: 40vh;
-  position: relative;
-  width: 100%; }
+  display: flex;
+  height: 40vh; }
   .scrabble-marathon .word-list-wrapper .word-list, .word-chain .word-list-wrapper .word-list {
-    max-height: 100%;
-    box-sizing: border-box;
-    padding: 20px 0;
-    overflow: auto; }
+    padding: 0;
+    overflow: hidden;
+    margin-top: auto; }
+    .scrabble-marathon .word-list-wrapper .word-list .word, .word-chain .word-list-wrapper .word-list .word {
+      display: block; }
 .scrabble-marathon .progress, .word-chain .progress {
   width: 400px;
   height: 5px;
@@ -1082,8 +1092,6 @@ body, html {
     transition: .4s ease; }
 .scrabble-marathon .btns, .word-chain .btns {
   margin-top: 10px; }
-.scrabble-marathon.wrong .letter-selected, .word-chain.wrong .letter-selected {
-  animation: wrong .3s ease; }
 @media screen and (max-width: 510px) {
   .scrabble-marathon .progress, .word-chain .progress {
     width: 80vw; }
@@ -1145,15 +1153,6 @@ body, html {
 
 .word-chain .letter.perishing {
   animation: fade-out 10.5s linear; }
-.word-chain .word-list-wrapper {
-  display: flex;
-  height: 40vh; }
-  .word-chain .word-list-wrapper .word-list {
-    padding: 0;
-    overflow: hidden;
-    margin-top: auto; }
-    .word-chain .word-list-wrapper .word-list .word {
-      display: block; }
 .word-chain .grid .letter-grid {
   animation: fade-in .4s ease; }
 .word-chain .flash-word {
