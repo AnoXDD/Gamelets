@@ -30,6 +30,18 @@ body, html {
   height: 100%;
 }
 
+@keyframes fade-in-up {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}
+
 .letter-enter {
   transform: scale(.3);
   opacity: 0;
@@ -595,8 +607,7 @@ $grid-size: 100px;
 }
 
 .score {
-
-  @keyframes score-fade-in-1 {
+  @keyframes fade-in-up-1 {
     from {
       bottom: -30px;
       opacity: 1;
@@ -607,7 +618,8 @@ $grid-size: 100px;
       opacity: 0;
     }
   }
-  @keyframes score-fade-in-2 {
+
+  @keyframes fade-in-up-2 {
     from {
       bottom: -30px;
       opacity: 1;
@@ -626,10 +638,10 @@ $grid-size: 100px;
   }
 
   .difference-1 {
-    animation: score-fade-in-1 2s ease;
+    animation: fade-in-up-1 2s ease;
   }
   .difference-2 {
-    animation: score-fade-in-2 2s ease;
+    animation: fade-in-up-2 2s ease;
   }
 
   .difference {
@@ -1044,24 +1056,12 @@ $grid-size: 100px;
   .grid .letter-grid {
     animation: fade-in .4s ease;
   }
-}
 
-//-----------------------------
-//
-//html, body {
-//  overflow: scroll;
-//}
-//
-//a {
-//  display: inline-block;
-//}
-//
-//h2 {
-//  font-family: monospace;
-//}
-//
-//input, textarea {
-//  padding: 0;
-//  font-size: 30px;
-//  background: lightgrey;
-//}
+  .flash-word {
+    opacity: 0;
+    top: -50px;
+    position: absolute;
+    animation: fade-in-up 3s ease;
+    color: $amber;
+  }
+}

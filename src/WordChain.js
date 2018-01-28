@@ -12,7 +12,7 @@ import Letter from "./lib/Letter";
 
 import * as R from "./R";
 
-const ROUND_TIME = 900000;
+const ROUND_TIME = 90000;
 // How many letters in the pool
 const LETTER_NUM = 8;
 const LETTER_LIFESPAN = 10000;
@@ -29,11 +29,16 @@ export default class WordChain extends Component {
 
     this.state = {
       // With each element {letter:string, key:int}
-      word    : [],
+      word      : [],
       // With each element {letter:string, key:int}
-      letters : [],
-      wordList: [],
-      score   : 0,
+      letters   : [],
+      wordList  : [],
+      score     : 0,
+      /**
+       * To show a flash of them near the letters
+       * With each element {word:string, length:int}
+       */
+      flashWords: [],
 
       classClassName: "",
     };
@@ -68,6 +73,10 @@ export default class WordChain extends Component {
         if (!nextState.wordList.includes(word)
           && R.isSelectedWordValid(word)) {
           nextState.wordList.push(word);
+          nextState.flashWords.push({
+            word  : nextStateWord,
+            length: i,
+          });
           nextState.score += this.getScore(word);
         }
       }
@@ -86,6 +95,8 @@ export default class WordChain extends Component {
   }
 
   componentWillUnmount() {
+    this.clearTimeouts();
+
     window.removeEventListener("keydown", this.handleKeydown);
   }
 
@@ -121,11 +132,12 @@ export default class WordChain extends Component {
     this.newGame = false;
 
     this.setState({
-      word    : [],
-      letters : this.generateInitialLetters(),
-      wordList: [],
-      score   : 0,
-      time    : 0,
+      word      : [],
+      letters   : this.generateInitialLetters(),
+      wordList  : [],
+      flashWords: [],
+      score     : 0,
+      time      : 0,
     });
   }
 
@@ -203,11 +215,7 @@ export default class WordChain extends Component {
   }
 
   onFinishGame() {
-    for (let timeout of this.timeouts) {
-      clearTimeout(timeout);
-    }
-
-    this.timeouts = [];
+    this.clearTimeouts();
 
     this.setState({
       score: this.state.score,
@@ -216,12 +224,15 @@ export default class WordChain extends Component {
     this.time = 0;
   }
 
-  render() {
-    let bubbles = [];
-    for (let i = 0; i < this.state.levelReq; ++i) {
-      bubbles.push(0);
+  clearTimeouts() {
+    for (let timeout of this.timeouts) {
+      clearTimeout(timeout);
     }
 
+    this.timeouts = [];
+  }
+
+  render() {
     return (
       <Game name="word-chain"
             className={this.state.classClassName}
@@ -255,18 +266,33 @@ export default class WordChain extends Component {
         </div>
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
-        <TransitionGroup className="letter-selected flex-center">
-          {this.state.word.map(o =>
-            <CSSTransition
-              key={o.key}
-              classNames="letter"
-              className="letter perishing"
-              timeout={{enter: 200, exit: 200}}
+        <div className="letter-selected flex-center">
+          <TransitionGroup className="flex-inner-extend flex-center">
+            {this.state.word.map(o =>
+              <CSSTransition
+                key={o.key}
+                classNames="letter"
+                className="letter perishing"
+                timeout={200}
+              >
+                <span>{o.letter}</span>
+              </CSSTransition>
+            )}
+          </TransitionGroup>
+
+          {this.state.flashWords.map(o =>
+            <div
+              key={`${o.word}-${o.length}`}
+              className={`flex-inner-extend flex-center flash-word flash-word-${o.length}`}
             >
-              <span>{o.letter}</span>
-            </CSSTransition>
+              {o.word.split("").map((l, i) =>
+                <span
+                  className={`flash-word-letter ${i >= o.length ? "transparent" : ""}`}
+                  key={i}>{l}</span>
+              )}
+            </div>
           )}
-        </TransitionGroup>
+        </div>
         <div
           className="grid flex-center">
           <div className={`grid-wrapper level-${LETTER_NUM - 4}`}>
