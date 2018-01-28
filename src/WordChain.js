@@ -3,6 +3,7 @@
  */
 
 import React, {Component} from "react";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {Scrollbars} from 'react-custom-scrollbars';
 
 import Button from "./lib/Button";
@@ -255,11 +256,18 @@ export default class WordChain extends Component {
         </div>
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
-        <div className="letter-selected flex-center">
+        <TransitionGroup className="letter-selected flex-center">
           {this.state.word.map(o =>
-            <span key={o.key} className="letter perishing">{o.letter}</span>,
+            <CSSTransition
+              key={o.key}
+              classNames="letter"
+              className="letter perishing"
+              timeout={{enter: 200, exit: 1000}}
+            >
+              <span>{o.letter}</span>
+            </CSSTransition>
           )}
-        </div>
+        </TransitionGroup>
         <div
           className="grid flex-center">
           <div className={`grid-wrapper level-${LETTER_NUM - 4}`}>

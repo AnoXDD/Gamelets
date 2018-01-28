@@ -350,6 +350,26 @@ body, html {
   width: 100%;
   height: 100%; }
 
+.letter-enter {
+  transform: scale(0.3);
+  opacity: 0;
+  max-width: 0; }
+  .letter-enter.letter-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    max-width: 30px;
+    transition: .2s ease; }
+
+.letter-exit {
+  transform: scale(1);
+  opacity: 1;
+  max-width: 30px; }
+  .letter-exit.letter-exit-active {
+    transform: scale(0.5);
+    opacity: 0;
+    max-width: 0;
+    transition: 1s ease; }
+
 .game-select {
   background: #448AFF; }
   .game-select .back {
@@ -481,7 +501,9 @@ body, html {
     transition: .2s ease;
     position: relative; }
     .game .letter-selected .letter {
-      animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28); }
+      animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28);
+      display: inline-block;
+      overflow: hidden; }
 
 .wordlink.not-valid .letter-selected {
   background-color: #F44336; }
@@ -1098,7 +1120,7 @@ body, html {
         left: 280px; } }
 
 .word-chain .letter.perishing {
-  animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28), fade-out 10.5s linear; }
+  animation: fade-out 10.5s linear; }
 .word-chain .word-list-wrapper {
   display: flex; }
   .word-chain .word-list-wrapper .word-list {

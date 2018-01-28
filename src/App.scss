@@ -30,6 +30,32 @@ body, html {
   height: 100%;
 }
 
+.letter-enter {
+  transform: scale(.3);
+  opacity: 0;
+  max-width: 0;
+
+  &.letter-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    max-width: 30px;
+    transition: .2s ease;
+  }
+}
+
+.letter-exit {
+  transform: scale(1);
+  opacity: 1;
+  max-width: 30px;
+
+  &.letter-exit-active {
+    transform: scale(.5);
+    opacity: 0;
+    max-width: 0;
+    transition: 1s ease;
+  }
+}
+
 .game-select {
   background: $cp;
 
@@ -228,6 +254,8 @@ body, html {
 
     .letter {
       animation: word-appear .2s $rollback;
+      display: inline-block;
+      overflow: hidden;
     }
   }
 }
@@ -997,7 +1025,7 @@ $grid-size: 100px;
 
 .word-chain {
   .letter.perishing {
-    animation: word-appear .2s $rollback, fade-out 10.5s linear;
+    animation: fade-out 10.5s linear;
   }
 
   .word-list-wrapper {
