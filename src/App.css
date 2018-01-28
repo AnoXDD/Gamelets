@@ -400,6 +400,14 @@ body, html {
     color: white;
     background: rgba(0, 0, 0, 0.1); }
 
+.full-screen-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5000; }
+
 .game-select {
   background: #448AFF; }
   .game-select .game-list, .game-select .game-real {

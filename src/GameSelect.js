@@ -11,6 +11,7 @@ import Wordlink from "./Wordlink";
 import LetterPrompt from "./LetterPrompt";
 import ScrabbleMarathon from "./ScrabbleMarathon";
 import WordChain from "./WordChain";
+import ScreenSizeWarning from "./components/ScreenSizeWarning";
 
 const GAME_LIST = [
   {
@@ -31,8 +32,8 @@ const GAME_LIST = [
   }
 ];
 
-const MIN_WIDTH= 350;
-// const MIN_HEIGHT:
+const MIN_WIDTH = 350;
+const MIN_HEIGHT = 650;
 
 export default class GameSelect extends Component {
 
@@ -61,8 +62,17 @@ export default class GameSelect extends Component {
   }
 
   handleResize() {
+    let width = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
+    let height = window.innerHeight
+      || document.documentElement.clientHeight
+      || document.body.clientHeight;
 
-
+    let isShowingScreenWarning = width < MIN_WIDTH || height < MIN_HEIGHT;
+    this.setState({
+      isShowingScreenWarning,
+    });
   }
 
   handleBack() {
@@ -89,6 +99,12 @@ export default class GameSelect extends Component {
           className="full-screen top-right top"
           onClick={this.handleFullScreen}
         >zoom_out_map</Button>
+        {this.state.isShowingScreenWarning ?
+          <ScreenSizeWarning
+            width={window.innerWidth}
+            minWidth={MIN_WIDTH}
+            height={window.innerHeight}
+            minHeight={MIN_HEIGHT}/> : null}
         <div className="game-list flex-center">
           <div className="title">Gamelets!</div>
           {GAME_LIST.map((game, i) =>
