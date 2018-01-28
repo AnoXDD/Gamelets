@@ -8,6 +8,7 @@ import Game from "./lib/Game";
 import Letter from "./lib/Letter";
 
 import * as R from "./R";
+import WordDashboard from "./components/WordDashboard";
 
 const HIDDEN_CHAR = "·";
 
@@ -412,25 +413,14 @@ export default class LetterPrompt extends Component {
         <div className="word-list flex-center">
           {this.wordList.map((word, i) =>
             <span key={word}
-                  className={`word ${this.state.correctWordIndex.indexOf(
-                    i) === -1 ? "empty" : ""}`}>
-                                    {
-                                      this.state.correctWordIndex.indexOf(i) === -1 ?
-                                        word.replace(/./g, HIDDEN_CHAR) :
-                                        word
-                                    }
-                                </span>,
+                  className={`word ${!this.state.correctWordIndex.includes(i) ? "empty" : ""}`}>
+               {!this.state.correctWordIndex.includes(i) ?
+                 word.replace(/./g, HIDDEN_CHAR) : word}
+            </span>,
           )}
         </div>
         <div className="flex-bubble-wrap"></div>
-        <div className="letter-selected flex-center">
-          {this.state.word.split("").map((letter, i) =>
-            <span key={letter + i}
-                  className="letter">
-                                    {letter}
-                                </span>,
-          )}
-        </div>
+        <WordDashboard word={this.state.word}/>
         <div
           className="grid flex-center">
           <div className="grid-wrapper">

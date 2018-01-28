@@ -7,6 +7,7 @@ import React, {Component} from "react";
 
 import Game from "./lib/Game";
 import Grid from "./Wordlink/Grid";
+import WordDashboard from "./components/WordDashboard";
 
 const DEFAULT_TIME = 60000;
 
@@ -61,7 +62,7 @@ export default class Wordlink extends Component {
 
   readyGame() {
     this.setState({
-      score: 0,
+      score      : 0,
       timeVersion: new Date().getTime(),
     });
   }
@@ -74,33 +75,25 @@ export default class Wordlink extends Component {
 
   render() {
     return (
-        <Game name="wordlink"
-              className={this.state.isSelectedWordValid}
-              gameIntro={["Find English words from the matrix"]}
-              roundTime={DEFAULT_TIME}
-              score={this.state.score}
-              onResize={this.handleWindowResize}
-              onStart={this.readyGame}
-              onStateChange={this.handleNewState}
-        >
-          <div
-              className="letter-selected flex-center">
-            {this.state.word.split("").map((letter, i) =>
-                <span key={letter + i}
-                      className="letter">
-                                    {letter}
-                                </span>,
-            )}
-          </div>
-          <Grid key={this.state.timeVersion}
-                onWordChange={this.handleNewWord}
-                onScoreChange={this.handleNewScore}
-                onWordValidChange={
-                  v => this.setState({isSelectedWordValid: v})}
-                active={this.state.gameState === GAME_STATE.START}
-                mini={this.state.mini}
-          />
-        </Game>
+      <Game name="wordlink"
+            className={this.state.isSelectedWordValid}
+            gameIntro={["Find English words from the matrix"]}
+            roundTime={DEFAULT_TIME}
+            score={this.state.score}
+            onResize={this.handleWindowResize}
+            onStart={this.readyGame}
+            onStateChange={this.handleNewState}
+      >
+        <WordDashboard word={this.state.word}/>
+        <Grid key={this.state.timeVersion}
+              onWordChange={this.handleNewWord}
+              onScoreChange={this.handleNewScore}
+              onWordValidChange={
+                v => this.setState({isSelectedWordValid: v})}
+              active={this.state.gameState === GAME_STATE.START}
+              mini={this.state.mini}
+        />
+      </Game>
     );
   }
 }

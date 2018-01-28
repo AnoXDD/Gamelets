@@ -1,7 +1,7 @@
 /**
  * Created by Anoxic on 6/24/2017.
  */
-import {Scrollbars} from 'react-custom-scrollbars';
+import {Scrollbars} from "react-custom-scrollbars";
 import React, {Component} from "react";
 
 import Button from "./lib/Button";
@@ -9,7 +9,7 @@ import Game from "./lib/Game";
 import Letter from "./lib/Letter";
 
 import * as R from "./R";
-import {CSSTransition, TransitionGroup} from "react-transition-group";
+import WordDashboard from "./components/WordDashboard";
 
 const CANDIDATES = [
   "aers aeps aehs aest aert ehst aeht elst aelt aist airt aels apst aept esty aety aesy aery elsy aent aort".split(
@@ -382,18 +382,7 @@ export default class ScrabbleMarathon extends Component {
                   className="progress-bubble"/>
           )}
         </div>
-        <TransitionGroup className="letter-selected flex-center">
-          {this.state.word.split("").map((letter, i) =>
-            <CSSTransition
-              key={letter + i}
-              className="letter"
-              classNames="letter"
-              timeout={200}
-            >
-              <span key={letter + i} className="letter">{letter}</span>
-            </CSSTransition>
-          )}
-        </TransitionGroup>
+        <WordDashboard word={this.state.word}/>
         <div
           className="grid flex-center">
           <div className={`grid-wrapper level-${this.state.level}`}>
