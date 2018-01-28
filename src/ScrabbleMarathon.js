@@ -8,6 +8,7 @@ import Game from "./lib/Game";
 import Letter from "./lib/Letter";
 
 import * as R from "./R";
+import {CSSTransition, TransitionGroup} from "react-transition-group";
 
 const CANDIDATES = [
   "aers aeps aehs aest aert ehst aeht elst aelt aist airt aels apst aept esty aety aesy aery elsy aent aort".split(
@@ -312,7 +313,7 @@ export default class ScrabbleMarathon extends Component {
 
   onFinishGame() {
     this.setState({
-      score    : this.state.score + (this.time  - 1000) * UNUSED_TIME_MULTIPLIER,
+      score: this.state.score + (this.time - 1000) * UNUSED_TIME_MULTIPLIER,
     });
 
     this.time = 0;
@@ -367,11 +368,18 @@ export default class ScrabbleMarathon extends Component {
                   className="progress-bubble"/>
           )}
         </div>
-        <div className="letter-selected flex-center">
+        <TransitionGroup className="letter-selected flex-center">
           {this.state.word.split("").map((letter, i) =>
-            <span key={letter + i} className="letter">{letter}</span>,
+            <CSSTransition
+              key={letter + i}
+              className="letter"
+              classNames="letter"
+              timeout={200}
+            >
+              <span key={letter + i} className="letter">{letter}</span>
+            </CSSTransition>
           )}
-        </div>
+        </TransitionGroup>
         <div
           className="grid flex-center">
           <div className={`grid-wrapper level-${this.state.level}`}>

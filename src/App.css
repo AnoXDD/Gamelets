@@ -368,7 +368,7 @@ body, html {
     transform: scale(0.5);
     opacity: 0;
     max-width: 0;
-    transition: 1s ease; }
+    transition: .2s ease; }
 
 .game-select {
   background: #448AFF; }
@@ -501,7 +501,6 @@ body, html {
     transition: .2s ease;
     position: relative; }
     .game .letter-selected .letter {
-      animation: word-appear 0.2s cubic-bezier(0.18, 0.88, 0.32, 1.28);
       display: inline-block;
       overflow: hidden; }
 

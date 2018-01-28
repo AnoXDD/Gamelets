@@ -52,7 +52,7 @@ body, html {
     transform: scale(.5);
     opacity: 0;
     max-width: 0;
-    transition: 1s ease;
+    transition: .2s ease;
   }
 }
 
@@ -253,7 +253,6 @@ body, html {
     position: relative;
 
     .letter {
-      animation: word-appear .2s $rollback;
       display: inline-block;
       overflow: hidden;
     }

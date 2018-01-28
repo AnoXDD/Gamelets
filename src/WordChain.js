@@ -16,7 +16,6 @@ const ROUND_TIME = 900000;
 // How many letters in the pool
 const LETTER_NUM = 8;
 const LETTER_LIFESPAN = 10000;
-// todo enforce this
 const WORD_LENGTH_LIMIT = 10;
 
 export default class WordChain extends Component {
@@ -262,7 +261,7 @@ export default class WordChain extends Component {
               key={o.key}
               classNames="letter"
               className="letter perishing"
-              timeout={{enter: 200, exit: 1000}}
+              timeout={{enter: 200, exit: 200}}
             >
               <span>{o.letter}</span>
             </CSSTransition>
