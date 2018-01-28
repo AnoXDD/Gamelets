@@ -46,11 +46,13 @@ export default class GameSelect extends Component {
     super(props);
 
     this.handleBack = this.handleBack.bind(this);
+    this.handleBackButton = this.handleBackButton.bind(this);
     this.handleResize = this.handleResize.bind(this);
   }
 
   componentWillMount() {
     window.addEventListener("resize", this.handleResize);
+    document.addEventListener("backbutton", this.handleBackButton);
   }
 
   componentDidMount() {
@@ -59,6 +61,7 @@ export default class GameSelect extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize);
+    document.removeEventListener("backbutton", this.handleBackButton);
   }
 
   handleResize() {
@@ -79,6 +82,11 @@ export default class GameSelect extends Component {
     this.setState({
       currentGameIndex: -1,
     });
+  }
+
+  handleBackButton() {
+    this.handleBack();
+    return false;
   }
 
   handleFullScreen() {
