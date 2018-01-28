@@ -1001,9 +1001,12 @@ $grid-size: 100px;
   }
 
   .word-list-wrapper {
+    display: flex;
+
     .word-list {
       padding: 0;
       overflow: hidden;
+      margin-top: auto;
 
       .word {
         display: block;

@@ -16,7 +16,7 @@ const ROUND_TIME = 900000;
 const LETTER_NUM = 8;
 const LETTER_LIFESPAN = 10000;
 // todo enforce this
-const WORD_LIMIT = 10;
+const WORD_LENGTH_LIMIT = 10;
 
 export default class WordChain extends Component {
 
@@ -45,6 +45,7 @@ export default class WordChain extends Component {
     this.handleStateChange = this.handleStateChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleLetterPerish = this.handleLetterPerish.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
     this.onFinishGame = this.onFinishGame.bind(this);
 
     this.isWordLongEnough = this.isWordLongEnough.bind(this);
@@ -91,6 +92,10 @@ export default class WordChain extends Component {
   handleKeydown(e) {
     let key = e.key;
 
+    if (key === " ") {
+      this.handleShuffle();
+    }
+
     let keyIndex = this.state.letters.findIndex(o => o.letter === key);
     if (keyIndex !== -1) {
       this.handleLetterClick(keyIndex);
@@ -132,10 +137,31 @@ export default class WordChain extends Component {
    * Returns the current score calculated by level and length
    */
   getScore(word) {
-    return /*(this.state.level + 1) **/ word.length * word.length * 5;
+    return word.length * word.length * 5;
+  }
+
+  handleShuffle() {
+    let {letters} = this.state;
+
+    for (let i = 0; i < letters.length; ++i) {
+      let shuffleTarget = Math.floor(Math.random() * letters.length);
+      [letters[i], letters[shuffleTarget]] = [letters[shuffleTarget], letters[i]];
+    }
+
+    this.setState({
+      letters,
+    });
   }
 
   handleLetterClick(index) {
+    // Do not add more if it reaches the limit
+    if (this.state.word.length >= WORD_LENGTH_LIMIT) {
+      this.setState({
+        classClassName: "wrong",
+      });
+      return;
+    }
+
     let letter = this.state.letters[index];
 
     if (!letter) {
@@ -217,6 +243,8 @@ export default class WordChain extends Component {
         <div className="word-list-wrapper flex-bottom">
           <Scrollbars
             autoHide
+            autoHeight
+            autoHeightMax={"50vh"}
             className="word-list"
             ref="scrollbars"
           >
@@ -244,6 +272,14 @@ export default class WordChain extends Component {
               />
             )}
           </div>
+        </div>
+        <div className="flex-bubble-wrap"></div>
+        <div className="btns">
+          <Button
+            onClick={this.handleShuffle}
+            text="shuffle">
+            shuffle
+          </Button>
         </div>
       </Game>
     );
