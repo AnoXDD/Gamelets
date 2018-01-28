@@ -110,6 +110,10 @@ export default class Game extends Component {
             <Scoreboard score={this.props.score}/>}
           {this.props.prompt ? (<div
             className="prompt">{this.props.prompt}</div>) : null}
+          {(this.newGame && (this.state.gameState === R.GAME_STATE.IDLE)) ?
+            (<ul className="game-intro">
+              {this.props.gameIntro.map((li, i) => <li key={i}>{li}</li>)}
+            </ul> || null) : null}
           {(!this.newGame && (this.state.gameState === R.GAME_STATE.IDLE)) ?
             (this.props.gameSummary || null) : null}
           <div
@@ -155,6 +159,8 @@ Game.propTypes = {
     PropTypes.string,
     PropTypes.element,
   ])),
+  // The introduction (or tutorial) of the game
+  gameIntro    : PropTypes.array,
 
   // One of R.GAME_STATE
   gameState: PropTypes.number,
@@ -177,6 +183,8 @@ Game.propTypes = {
 
 Game.defaultProps = {
   className: "",
+
+  gameIntro: [],
 
   restartText: "restart",
   restartIcon: "refresh",

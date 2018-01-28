@@ -76,6 +76,7 @@ export default class Wordlink extends Component {
     return (
         <Game name="wordlink"
               className={this.state.isSelectedWordValid}
+              gameIntro={["Find English words from the matrix"]}
               roundTime={DEFAULT_TIME}
               score={this.state.score}
               onResize={this.handleWindowResize}

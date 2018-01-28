@@ -401,6 +401,7 @@ export default class LetterPrompt extends Component {
               <div className="word">WORD!</div>,
               <div className="word-list">{this.wordList.join(" | ")}</div>
             ]}
+            gameIntro={["One hint, several words"]}
             gameState={this.state.gameState}
             prompt={this.state.prompt}
             onStart={this.startNewProblem}

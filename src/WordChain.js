@@ -241,6 +241,11 @@ export default class WordChain extends Component {
               <div key="2"
                    className="word-list">{this.state.wordList.join(" | ")}</div>
             ]}
+            gameIntro={[
+              "Send letters to the box and score when the letters in the box start with an (or several) English word",
+              `Each letter disappears after ${Number.parseInt(ROUND_TIME / 1000)} seconds`,
+              `Max ${WORD_LENGTH_LIMIT} letters in the box`
+            ]}
             onStart={this.startNewGame}
             onStateChange={this.handleStateChange}
             restartText="play again"

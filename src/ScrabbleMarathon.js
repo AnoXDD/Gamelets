@@ -334,6 +334,7 @@ export default class ScrabbleMarathon extends Component {
               <div key="2"
                    className="word-list">{this.state.wordList.join(" | ")}</div>
             ]}
+            gameIntro={["Find as many English words from the letters as you can"]}
             onStart={this.startNewGame}
             onStateChange={this.handleStateChange}
             restartText="next"
