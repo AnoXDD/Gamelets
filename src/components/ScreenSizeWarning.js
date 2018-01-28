@@ -38,7 +38,7 @@ export default class ScreenSizeWarning extends Component {
             </div>
             <div
               className={`diagnosis-test ${this.props.height >= this.props.minHeight ? "passed" : "failed"}`}>
-              <span>Screen width: <span>{this.props.height}</span> </span>
+              <span>Screen height: <span>{this.props.height}</span> </span>
               <span>(Required: <span>{this.props.minHeight}</span>)</span>
             </div>
           </div>

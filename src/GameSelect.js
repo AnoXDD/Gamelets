@@ -33,7 +33,7 @@ const GAME_LIST = [
 ];
 
 const MIN_WIDTH = 350;
-const MIN_HEIGHT = 650;
+const MIN_HEIGHT = 600;
 
 export default class GameSelect extends Component {
 
