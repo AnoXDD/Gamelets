@@ -4,6 +4,7 @@
 
 import React, {Component} from "react";
 import Ink from "react-ink";
+import screenfull from "screenfull";
 
 import Button from "./lib/Button";
 import Wordlink from "./Wordlink";
@@ -34,6 +35,7 @@ export default class GameSelect extends Component {
 
   state = {
     currentGameIndex: -1,
+    isFullScreen    : false,
   };
 
   constructor(props) {
@@ -48,14 +50,24 @@ export default class GameSelect extends Component {
     });
   }
 
+  handleFullScreen() {
+    if (screenfull.enabled) {
+      screenfull.request();
+    }
+  }
+
   render() {
     return (
       <div
         className={`game-select ${this.state.currentGameIndex === -1 ? "" : "in-game"}`}>
         <Button
-          className="back"
+          className="back top-left top"
           onClick={this.handleBack}
         >arrow_back</Button>
+        <Button
+          className="full-screen top-right top"
+          onClick={this.handleFullScreen}
+        >zoom_out_map</Button>
         <div className="game-list flex-center">
           <div className="title">Gamelets!</div>
           {GAME_LIST.map((game, i) =>

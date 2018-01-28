@@ -68,20 +68,46 @@ body, html {
   }
 }
 
+.btn.top {
+  position: absolute;
+  top: 0;
+  color: white;
+  background: transparent;
+  z-index: 5;
+  height: 80px;
+
+  &.top-left {
+    opacity: 0;
+  }
+
+  &.top-right {
+    right: 0;
+  }
+
+  &.back {
+    pointer-events: none;
+
+    .in-game & {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &.full-screen {
+    .in-game & {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  &:hover {
+    color: white;
+    background: rgba(0, 0, 0, .1);
+  }
+}
+
 .game-select {
   background: $cp;
-
-  .back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    background: transparent;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 5;
-    height: 80px;
-  }
 
   .game-list, .game-real {
     position: absolute;
@@ -143,11 +169,6 @@ body, html {
   }
 
   &.in-game {
-    .back {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
     .game-real {
       left: 0;
     }

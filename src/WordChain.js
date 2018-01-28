@@ -12,7 +12,7 @@ import Letter from "./lib/Letter";
 
 import * as R from "./R";
 
-const ROUND_TIME = 90000;
+const ROUND_TIME = 60000;
 // How many letters in the pool
 const LETTER_NUM = 8;
 const LETTER_LIFESPAN = 10000;
@@ -243,7 +243,7 @@ export default class WordChain extends Component {
             ]}
             gameIntro={[
               "Send letters to the box and score when the letters in the box start with an (or several) English word",
-              `Each letter disappears after ${Number.parseInt(ROUND_TIME / 1000)} seconds`,
+              `Each letter disappears after ${Math.floor(ROUND_TIME / 1000)} seconds`,
               `Max ${WORD_LENGTH_LIMIT} letters in the box`
             ]}
             onStart={this.startNewGame}
@@ -256,7 +256,7 @@ export default class WordChain extends Component {
       >
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
-        <div className="word-list-wrapper flex-bottom">
+        <div className="word-list-wrapper">
           <Scrollbars
             autoHide
             autoHeight

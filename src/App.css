@@ -377,18 +377,31 @@ body, html {
     max-width: 0;
     transition: .2s ease; }
 
+.btn.top {
+  position: absolute;
+  top: 0;
+  color: white;
+  background: transparent;
+  z-index: 5;
+  height: 80px; }
+  .btn.top.top-left {
+    opacity: 0; }
+  .btn.top.top-right {
+    right: 0; }
+  .btn.top.back {
+    pointer-events: none; }
+    .in-game .btn.top.back {
+      opacity: 1;
+      pointer-events: auto; }
+  .in-game .btn.top.full-screen {
+    opacity: 0;
+    pointer-events: none; }
+  .btn.top:hover {
+    color: white;
+    background: rgba(0, 0, 0, 0.1); }
+
 .game-select {
   background: #448AFF; }
-  .game-select .back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    color: white;
-    background: transparent;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 5;
-    height: 80px; }
   .game-select .game-list, .game-select .game-real {
     position: absolute;
     top: 0;
@@ -428,9 +441,6 @@ body, html {
         font-size: 22px; }
       .game-select .game-list .title {
         font-size: 35px; } }
-  .game-select.in-game .back {
-    opacity: 1;
-    pointer-events: auto; }
   .game-select.in-game .game-real {
     left: 0; }
   .game-select.in-game .game-list {

@@ -1,6 +1,7 @@
 /**
  * Created by Anoxic on 6/24/2017.
  */
+import {Scrollbars} from 'react-custom-scrollbars';
 import React, {Component} from "react";
 
 import Button from "./lib/Button";
@@ -345,18 +346,18 @@ export default class ScrabbleMarathon extends Component {
       >
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
-        <div className="word-list-wrapper flex-center">
-          <div className="flex-inner-extend flex-center">
-            <div className="word-list">
-              {this.state.wordList.map((word, i) =>
-                <span key={word} className={"word"}>{word}</span>,
-              )}
-              <div style={{float: "left", clear: "both"}}
-                   ref={(el) => {
-                     this.wordListEnd = el;
-                   }}/>
-            </div>
-          </div>
+        <div className="word-list-wrapper">
+          <Scrollbars
+            autoHide
+            autoHeight
+            autoHeightMax={"40vh"}
+            className="word-list"
+            ref="scrollbars"
+          >
+            {this.state.wordList.map((word, i) =>
+              <span key={word} className={"word"}>{word}</span>,
+            )}
+          </Scrollbars>
         </div>
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
