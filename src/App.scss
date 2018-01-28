@@ -947,7 +947,7 @@ $grid-size: 100px;
   }
 
   .word-list-wrapper {
-    height: 50vh;
+    height: 40vh;
     position: relative;
     width: 100%;
 
@@ -1052,6 +1052,7 @@ $grid-size: 100px;
 
   .word-list-wrapper {
     display: flex;
+    height: 40vh;
 
     .word-list {
       padding: 0;

@@ -260,7 +260,7 @@ export default class WordChain extends Component {
           <Scrollbars
             autoHide
             autoHeight
-            autoHeightMax={"50vh"}
+            autoHeightMax={"40vh"}
             className="word-list"
             ref="scrollbars"
           >

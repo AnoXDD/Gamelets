@@ -1045,7 +1045,7 @@ body, html {
       top: 0;
       left: 490px; }
 .scrabble-marathon .word-list-wrapper, .word-chain .word-list-wrapper {
-  height: 50vh;
+  height: 40vh;
   position: relative;
   width: 100%; }
   .scrabble-marathon .word-list-wrapper .word-list, .word-chain .word-list-wrapper .word-list {
@@ -1136,7 +1136,8 @@ body, html {
 .word-chain .letter.perishing {
   animation: fade-out 10.5s linear; }
 .word-chain .word-list-wrapper {
-  display: flex; }
+  display: flex;
+  height: 40vh; }
   .word-chain .word-list-wrapper .word-list {
     padding: 0;
     overflow: hidden;
