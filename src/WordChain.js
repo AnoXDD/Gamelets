@@ -48,7 +48,7 @@ export default class WordChain extends Component {
     this.onFinishGame = this.onFinishGame.bind(this);
 
     this.isWordLongEnough = this.isWordLongEnough.bind(this);
-    this.getCurrentScore = this.getCurrentScore.bind(this);
+    this.getScore = this.getScore.bind(this);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -67,6 +67,7 @@ export default class WordChain extends Component {
         if (!nextState.wordList.includes(word)
           && R.isSelectedWordValid(word)) {
           nextState.wordList.push(word);
+          nextState.score += this.getScore(word);
         }
       }
     }
@@ -130,8 +131,8 @@ export default class WordChain extends Component {
   /**
    * Returns the current score calculated by level and length
    */
-  getCurrentScore() {
-    return /*(this.state.level + 1) **/ this.state.word.length * this.state.word.length * 5;
+  getScore(word) {
+    return /*(this.state.level + 1) **/ word.length * word.length * 5;
   }
 
   handleLetterClick(index) {
@@ -213,17 +214,16 @@ export default class WordChain extends Component {
       >
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
-        <div className="word-list-wrapper flex-center">
-          <div className="flex-inner-extend flex-center">
-            <Scrollbars
-              className="word-list"
-              ref="scrollbars"
-            >
-              {this.state.wordList.map((word, i) =>
-                <span key={word} className={"word"}>{word}</span>,
-              )}
-            </Scrollbars>
-          </div>
+        <div className="word-list-wrapper flex-bottom">
+          <Scrollbars
+            autoHide
+            className="word-list"
+            ref="scrollbars"
+          >
+            {this.state.wordList.map((word, i) =>
+              <span key={word} className={"word"}>{word}</span>,
+            )}
+          </Scrollbars>
         </div>
         <div className="flex-bubble-wrap"></div>
         <div className="flex-bubble-wrap"></div>
