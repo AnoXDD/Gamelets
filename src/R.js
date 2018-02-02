@@ -25,7 +25,7 @@ module.exports = {
   },
 
   /**
-   * Only accepts word between 2-10 characters
+   * Only accepts word between 3-10 characters
    * @param word
    * @returns {boolean}
    */
