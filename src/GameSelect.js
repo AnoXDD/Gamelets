@@ -116,7 +116,9 @@ export default class GameSelect extends Component {
             handleDismiss={() => this.setState({isShowingScreenWarning: false})}
           /> : null}
         <div className="game-list flex-center">
-          <div className="title">Gamelets!</div>
+          <div className="title">Gamelets!
+            <a className="author" href="https://anoxic.me">by Anoxic</a>
+          </div>
           {GAME_LIST.map((game, i) =>
             <div className="game"
                  key={game.name}

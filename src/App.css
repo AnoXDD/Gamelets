@@ -447,6 +447,14 @@ body, html {
     .game-select .game-list .title {
       border: none;
       font-size: 35px; }
+      .game-select .game-list .title .author {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        padding: 5px;
+        font-size: 10px; }
+        .game-select .game-list .title .author:visited {
+          color: white; }
     .game-select .game-list .game {
       cursor: pointer; }
       .game-select .game-list .game:hover {

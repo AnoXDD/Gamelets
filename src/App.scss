@@ -173,6 +173,18 @@ body, html {
     .title {
       border: none;
       font-size: 35px;
+
+      .author {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        padding: 5px;
+        font-size: 10px;
+
+        &:visited {
+          color: white;
+        }
+      }
     }
 
     .game {
