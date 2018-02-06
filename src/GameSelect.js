@@ -12,6 +12,7 @@ import LetterPrompt from "./LetterPrompt";
 import ScrabbleMarathon from "./ScrabbleMarathon";
 import WordChain from "./WordChain";
 import ScreenSizeWarning from "./components/ScreenSizeWarning";
+import {Scrollbars} from "react-custom-scrollbars";
 
 const GAME_LIST = [
   {
@@ -119,17 +120,24 @@ export default class GameSelect extends Component {
           <div className="title">Gamelets!
             <a className="author" href="https://anoxic.me">by Anoxic</a>
           </div>
-          {GAME_LIST.map((game, i) =>
-            <div className="game"
-                 key={game.name}
-                 onClick={() => this.setState({currentGameIndex: i})}
-            >
-              <div className="flex-inner-extend flex-center">
-                <Ink/>
-                <span>{game.name}</span>
+          <Scrollbars
+            autoHeight
+            autoHeightMax={"60vh"}
+            className="games"
+            ref="scrollbars"
+          >
+            {GAME_LIST.map((game, i) =>
+              <div className="game"
+                   key={game.name}
+                   onClick={() => this.setState({currentGameIndex: i})}
+              >
+                <div className="flex-inner-extend flex-center">
+                  <Ink/>
+                  <span>{game.name}</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </Scrollbars>
         </div>
         <div className="game-real">
           {this.state.currentGameIndex === -1 ? null : GAME_LIST[this.state.currentGameIndex].game}
