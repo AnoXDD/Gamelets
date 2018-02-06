@@ -7,16 +7,37 @@
 import PropTypes from "prop-types";
 import React, {Component} from "react";
 
-import Timer from "../Timer";
-import Scoreboard from "../Scoreboard";
+import Timer from "../components/Timer";
+import Scoreboard from "../components/Scoreboard";
 import Button from "./Button";
 import * as R from "../R";
 
 const MINI_THRESHOLD = 510,
   COUNTDOWN = 3000;
 
+/**
+ * Required min distance traveled to be considered swipe
+ * @type {number}
+ */
+const SWIPE_MIN_DIST = 10;
+/**
+ * Maximum distance allowed in the other directions, e.g. when dragging
+ * vertically, the max distance allowed for horizontal move
+ * @type {number}
+ */
+const SWIPE_TOLERANCE = 100;
+/**
+ * Maximum time allowed to travel that distance
+ * @type {number}
+ */
+const SWIPE_MAX_TIME = 300;
+
 export default class Game extends Component {
   newGame = true;
+  ref = null;
+  swipeStartX = 0;
+  swipeStartY = 0;
+  swipeStartTime = 0;
 
   state = {
     gameState  : R.GAME_STATE.IDLE,
@@ -28,6 +49,8 @@ export default class Game extends Component {
 
     this.handleWindowResize = this.handleWindowResize.bind(this);
     this.handleTimeFinish = this.handleTimeFinish.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
 
     this.readyGame = this.readyGame.bind(this);
     this.startGame = this.startGame.bind(this);
@@ -37,15 +60,49 @@ export default class Game extends Component {
     this.handleWindowResize();
 
     window.addEventListener("resize", this.handleWindowResize);
+
+    if (this.props.swipable && this.ref) {
+      this.ref.addEventListener('touchstart', this.handleTouchStart, false);
+      this.ref.addEventListener('touchend', this.handleTouchEnd, false);
+    }
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleWindowResize)
+    window.removeEventListener("resize", this.handleWindowResize);
   }
 
   componentWillUpdate(nextProps, nextState) {
     if (nextProps.gameState) {
       nextState.gameState = nextProps.gameState;
+    }
+  }
+
+  handleTouchStart(e) {
+    let touch = e.changedTouches[0];
+    this.swipeStartX = touch.pageX;
+    this.swipeStartY = touch.pageY;
+    this.swipeStartTime = Date.now();
+  }
+
+  handleTouchEnd(e) {
+    let touch = e.changedTouches[0];
+    let distX = touch.pageX - this.swipeStartX;
+    let distY = touch.pageY - this.swipeStartY;
+
+    if (Date.now() - this.swipeStartTime <= SWIPE_MAX_TIME) {
+      if (Math.abs(distX) >= SWIPE_MIN_DIST && Math.abs(distY) <= SWIPE_TOLERANCE) { // 2nd condition for horizontal swipe met
+        if (distX < 0) {
+          this.props.onSwipeLeft(e);
+        } else {
+          this.props.onSwipeRight(e);
+        }
+      } else if (Math.abs(distY) >= SWIPE_MIN_DIST && Math.abs(distX) <= SWIPE_TOLERANCE) { // 2nd condition for vertical swipe met
+        if (distY < 0) {
+          this.props.onSwipeUp(e);
+        } else {
+          this.props.onSwipeDown(e);
+        }
+      }
     }
   }
 
@@ -95,7 +152,11 @@ export default class Game extends Component {
   render() {
     return (
       <div
-        className={`game ${this.props.name} ${this.props.className} ${this.state.gameState === R.GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === R.GAME_STATE.READY ? "ready" : ""}`}>
+        className={`game ${this.props.name} ${this.props.className} ${this.state.gameState === R.GAME_STATE.IDLE ? "idle" : ""} ${this.state.gameState === R.GAME_STATE.READY ? "ready" : ""}`}
+        ref={ref => {
+          this.ref = ref;
+        }}
+      >
         <header className="flex-center">
           {typeof(this.props.roundTime) === "undefined" ? null :
             <Timer
@@ -178,6 +239,13 @@ Game.propTypes = {
   onStart      : PropTypes.func.isRequired,
   // The callback when the timer is changed
   onTimeChange : PropTypes.func,
+
+  // If the game should detect swipe
+  swipable    : PropTypes.bool,
+  onSwipeUp   : PropTypes.func,
+  onSwipeDown : PropTypes.func,
+  onSwipeLeft : PropTypes.func,
+  onSwipeRight: PropTypes.func,
 };
 
 
@@ -193,4 +261,9 @@ Game.defaultProps = {
 
   onResize     : e => void(e),
   onStateChange: e => void(e),
+
+  onSwipeUp   : e => void(e),
+  onSwipeDown : e => void(e),
+  onSwipeLeft : e => void(e),
+  onSwipeRight: e => void(e),
 };

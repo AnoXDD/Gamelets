@@ -5,9 +5,9 @@
 
 import React, {Component} from "react";
 
-import Game from "./lib/Game";
+import Game from "../lib/Game";
 import Grid from "./Wordlink/Grid";
-import WordDashboard from "./components/WordDashboard";
+import WordDashboard from "../components/WordDashboard";
 
 const DEFAULT_TIME = 60000;
 

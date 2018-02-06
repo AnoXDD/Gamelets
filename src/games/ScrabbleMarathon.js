@@ -4,12 +4,12 @@
 import {Scrollbars} from "react-custom-scrollbars";
 import React, {Component} from "react";
 
-import Button from "./lib/Button";
-import Game from "./lib/Game";
-import Letter from "./lib/Letter";
+import Button from "../lib/Button";
+import Game from "../lib/Game";
+import Letter from "../lib/Letter";
 
-import * as R from "./R";
-import WordDashboard from "./components/WordDashboard";
+import * as R from "../R";
+import WordDashboard from "../components/WordDashboard";
 
 const CANDIDATES = [
   "aers aeps aehs aest aert ehst aeht elst aelt aist airt aels apst aept esty aety aesy aery elsy aent aort".split(

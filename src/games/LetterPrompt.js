@@ -3,12 +3,12 @@
  */
 import React, {Component} from "react";
 
-import Button from "./lib/Button";
-import Game from "./lib/Game";
-import Letter from "./lib/Letter";
+import Button from "../lib/Button";
+import Game from "../lib/Game";
+import Letter from "../lib/Letter";
 
-import * as R from "./R";
-import WordDashboard from "./components/WordDashboard";
+import * as R from "../R";
+import WordDashboard from "../components/WordDashboard";
 
 const HIDDEN_CHAR = "·";
 

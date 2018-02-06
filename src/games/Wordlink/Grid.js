@@ -3,8 +3,8 @@
  */
 
 import React, {Component} from "react";
-import TouchPad from "../lib/TouchPad";
-import * as R from "../R";
+import TouchPad from "../../lib/TouchPad";
+import * as R from "../../R";
 
 
 const ROW = 5, COLUMN = 5;

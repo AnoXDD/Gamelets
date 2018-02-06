@@ -6,11 +6,11 @@ import React, {Component} from "react";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
 import {Scrollbars} from 'react-custom-scrollbars';
 
-import Button from "./lib/Button";
-import Game from "./lib/Game";
-import Letter from "./lib/Letter";
+import Button from "../lib/Button";
+import Game from "../lib/Game";
+import Letter from "../lib/Letter";
 
-import * as R from "./R";
+import * as R from "../R";
 
 const ROUND_TIME = 60000;
 // How many letters in the pool

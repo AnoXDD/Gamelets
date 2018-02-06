@@ -61,7 +61,7 @@ function intersect(m, old) {
 }
 
 console.log("Starting");
-let data = require("../lib/WordSortedByLength.json");
+let data = require("../../lib/WordSortedByLength.json");
 let old = [];
 let raw = {};
 

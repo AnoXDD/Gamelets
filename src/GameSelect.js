@@ -7,12 +7,13 @@ import Ink from "react-ink";
 import screenfull from "screenfull";
 
 import Button from "./lib/Button";
-import Wordlink from "./Wordlink";
-import LetterPrompt from "./LetterPrompt";
-import ScrabbleMarathon from "./ScrabbleMarathon";
-import WordChain from "./WordChain";
+import Wordlink from "./games/Wordlink";
+import LetterPrompt from "./games/LetterPrompt";
+import ScrabbleMarathon from "./games/ScrabbleMarathon";
+import WordChain from "./games/WordChain";
 import ScreenSizeWarning from "./components/ScreenSizeWarning";
 import {Scrollbars} from "react-custom-scrollbars";
+import SokobanInfinite from "./games/SokobanInfinite";
 
 const GAME_LIST = [
   {
@@ -30,6 +31,10 @@ const GAME_LIST = [
   {
     name: "Word Chain",
     game: <WordChain/>,
+  },
+  {
+    name: "Sokoban Infinite",
+    game: <SokobanInfinite/>,
   }
 ];
 
