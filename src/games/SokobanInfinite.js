@@ -29,7 +29,7 @@ export default class SokobanInfinite extends Component {
   state = {
     // An 2d grid with only WALL, and GOAL
     grid  : [],
-    // A list of boxes
+    // A list of boxes, with each {x:number, y:number, completed:boolean}
     boxes : [],
     // Player position
     player: {
@@ -108,6 +108,18 @@ export default class SokobanInfinite extends Component {
   }
 
   /**
+   * Returns the boxes with updated (actually we don't need to ...)
+   * @private
+   */
+  _updateBoxStatus(grid = this.state.grid, boxes = this.state.boxes) {
+    for (let box of boxes) {
+      box.completed = grid[box.y][box.x] === GOAL;
+    }
+
+    return boxes;
+  }
+
+  /**
    * Moves the player with a delta of (dx,dy)
    * @param dx
    * @param dy
@@ -132,7 +144,10 @@ export default class SokobanInfinite extends Component {
       return;
     }
 
+    let boxes = this._updateBoxStatus();
+
     this.setState({
+      boxes,
       player: {x, y},
     });
   }
@@ -154,8 +169,6 @@ export default class SokobanInfinite extends Component {
   }
 
   _applyLevel(level) {
-    console.log(level);
-
     let grid = level.split("\n").map(a => a.split(""));
 
     // Find the player and all the boxes
@@ -189,6 +202,8 @@ export default class SokobanInfinite extends Component {
       }
     }
 
+    boxes = this._updateBoxStatus(grid, boxes);
+
     this.setState({
       grid, boxes, player,
     });
@@ -197,13 +212,19 @@ export default class SokobanInfinite extends Component {
   startNewProblem() {
     let level = null;
     let attempt = MAX_ATTEMPTS;
+    let seed;
     while (--attempt > 0 && !level) {
+      seed = Date.now();
+
       level = generateSokobanLevel({
         width          : WIDTH,
         height         : HEIGHT,
         initialPosition: {...this.state.player},
+        seed,
       });
     }
+
+    console.log(seed);
 
     // Apply level
     this._applyLevel(level);
@@ -255,10 +276,12 @@ export default class SokobanInfinite extends Component {
               )
             )}
             {this.state.boxes.map((b, i) =>
-              <span key={i} className="cell box" style={{
-                "top" : b.y * size,
-                "left": b.x * size,
-              }}/>
+              <span key={i}
+                    className={`cell box ${b.completed ? "completed" : ""}`}
+                    style={{
+                      "top" : b.y * size,
+                      "left": b.x * size,
+                    }}/>
             )}
           </div>
         </div>
