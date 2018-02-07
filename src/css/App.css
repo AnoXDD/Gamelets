@@ -1188,22 +1188,67 @@ body, html {
   animation: fade-in-up 3s ease;
   color: #FFC107; }
 
+.sokoban-infinite .grid-wrapper {
+  position: relative;
+  box-shadow: 0 0 100px grey; }
+.sokoban-infinite .grid-gradient-cover {
+  background: linear-gradient(to bottom right, #82B1FF 0%, #448AFF 100%);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0; }
 .sokoban-infinite .cell {
   width: 54px;
   height: 54px;
   position: absolute;
-  transition: top .2s ease-in-out, left .2s ease-in-out; }
+  transition: top .2s ease-in-out, left .2s ease-in-out;
+  box-sizing: border-box;
+  background: #fff; }
   @media screen and (max-width: 510px) {
     .sokoban-infinite .cell {
       width: 30px;
       height: 30px; } }
-  .sokoban-infinite .cell.goal {
-    background: #FFC107; }
-  .sokoban-infinite .cell.wall {
-    background: black; }
-  .sokoban-infinite .cell.player {
-    background: blue; }
   .sokoban-infinite .cell.box {
-    background: brown; }
+    background: linear-gradient(to bottom right, grey, #424242);
+    border: 3px solid white; }
+    .sokoban-infinite .cell.box:before, .sokoban-infinite .cell.box:after {
+      position: absolute;
+      top: 25%;
+      left: calc(50% - 1px);
+      content: ' ';
+      height: 50%;
+      width: 2px;
+      background-color: white; }
+    .sokoban-infinite .cell.box:before {
+      transform: rotate(45deg); }
+    .sokoban-infinite .cell.box:after {
+      transform: rotate(-45deg); }
+  .sokoban-infinite .cell.wall {
+    background: transparent;
+    border: 2px solid white; }
+  .sokoban-infinite .cell.player {
+    background: white; }
+    .sokoban-infinite .cell.player:after {
+      position: absolute;
+      top: 30%;
+      left: 30%;
+      content: ' ';
+      height: 40%;
+      width: 40%;
+      background-color: black;
+      z-index: 1;
+      transform: rotate(45deg); }
+  .sokoban-infinite .cell.goal {
+    background: white; }
+    .sokoban-infinite .cell.goal:after {
+      position: absolute;
+      top: 35%;
+      left: 35%;
+      content: ' ';
+      height: 30%;
+      width: 30%;
+      border-radius: 50%;
+      background-color: lightgrey; }
 
 /*# sourceMappingURL=App.css.map */

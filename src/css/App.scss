@@ -1158,31 +1158,90 @@ $grid-size: 100px;
 }
 
 .sokoban-infinite {
+  .grid-wrapper {
+    position: relative;
+    box-shadow: 0 0 100px grey;
+  }
+
+  .grid-gradient-cover {
+    background: linear-gradient(to bottom right, $blue-light 0%, $blue 100%);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
   .cell {
     width: 54px;
     height: 54px;
     position: absolute;
     transition: top .2s ease-in-out, left .2s ease-in-out;
+    box-sizing: border-box;
+    background: #fff;
 
     @media screen and (max-width: $screen-break) {
       width: 30px;
       height: 30px;
     }
 
-    &.goal {
-      background: $amber;
+    &.box {
+      background: linear-gradient(to bottom right, grey, $darkgrey-l);
+      border: 3px solid white;
+
+      &:before, &:after {
+        position: absolute;
+        top: 25%;
+        left: calc(50% - 1px);
+        content: ' ';
+        height: 50%;
+        width: 2px;
+        background-color: white;
+      }
+
+      &:before {
+        transform: rotate(45deg);
+      }
+
+      &:after {
+        transform: rotate(-45deg);
+      }
     }
 
     &.wall {
-      background: black;
+      background: transparent;
+      border: 2px solid white;
     }
 
     &.player {
-      background: blue;
+      background: white;
+
+      &:after {
+        position: absolute;
+        top: 30%;
+        left: 30%;
+        content: ' ';
+        height: 40%;
+        width: 40%;
+        background-color: black;
+        z-index: 1;
+        transform: rotate(45deg);
+      }
     }
 
-    &.box {
-      background: brown;
+    &.goal {
+      background: white;
+
+      &:after {
+        position: absolute;
+        top: 35%;
+        left: 35%;
+        content: ' ';
+        height: 30%;
+        width: 30%;
+        border-radius: 50%;
+        background-color: lightgrey;
+      }
     }
   }
 }

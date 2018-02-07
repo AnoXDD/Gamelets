@@ -226,31 +226,42 @@ export default class SokobanInfinite extends Component {
             restartText="next"
             restartIcon="skip_next"
       >
-        {this.state.grid.map((row, y) =>
-          row.map((cell, x) =>
+        <div className="grid-area flex-center">
+          <div
+            style={{
+              width : WIDTH * this.state.size,
+              height: HEIGHT * this.state.size,
+            }}
+            className="grid-wrapper"
+          >
+            <span className="grid-gradient-cover"/>
             <span
-              key={`${x}-${y}`}
-              className={`cell ${cssMap[cell]}`}
+              className="cell player"
               style={{
-                "top" : y * size,
-                "left": x * size,
+                "top" : size * this.state.player.y,
+                "left": size * this.state.player.x,
               }}
             />
-          )
-        )}
-        {this.state.boxes.map((b, i) =>
-          <span key={i} className="cell box" style={{
-            "top" : b.y * size,
-            "left": b.x * size,
-          }}/>
-        )}
-        <span
-          className="cell player"
-          style={{
-            "top" : size * this.state.player.y,
-            "left": size * this.state.player.x,
-          }}
-        />
+            {this.state.grid.map((row, y) =>
+              row.map((cell, x) =>
+                <span
+                  key={`${x}-${y}`}
+                  className={`cell ${cssMap[cell]}`}
+                  style={{
+                    "top" : y * size,
+                    "left": x * size,
+                  }}
+                />
+              )
+            )}
+            {this.state.boxes.map((b, i) =>
+              <span key={i} className="cell box" style={{
+                "top" : b.y * size,
+                "left": b.x * size,
+              }}/>
+            )}
+          </div>
+        </div>
       </Game>
     );
   }
