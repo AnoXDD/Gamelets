@@ -1156,3 +1156,33 @@ $grid-size: 100px;
     color: $amber;
   }
 }
+
+.sokoban-infinite {
+  .cell {
+    width: 54px;
+    height: 54px;
+    position: absolute;
+    transition: top .2s ease-in-out, left .2s ease-in-out;
+
+    @media screen and (max-width: $screen-break) {
+      width: 30px;
+      height: 30px;
+    }
+
+    &.goal {
+      background: $amber;
+    }
+
+    &.wall {
+      background: black;
+    }
+
+    &.player {
+      background: blue;
+    }
+
+    &.box {
+      background: brown;
+    }
+  }
+}

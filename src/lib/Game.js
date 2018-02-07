@@ -19,7 +19,7 @@ const MINI_THRESHOLD = 510,
  * Required min distance traveled to be considered swipe
  * @type {number}
  */
-const SWIPE_MIN_DIST = 10;
+const SWIPE_MIN_DIST = 30;
 /**
  * Maximum distance allowed in the other directions, e.g. when dragging
  * vertically, the max distance allowed for horizontal move
@@ -107,7 +107,6 @@ export default class Game extends Component {
   }
 
   handleWindowResize() {
-    // Stupid iOS, why???
     let width = window.innerWidth;
 
     this.props.onResize(width <= MINI_THRESHOLD);
@@ -231,7 +230,8 @@ Game.propTypes = {
   // The text for the restart icon, default is `refresh` (spinner)
   restartIcon: PropTypes.string,
 
-  // The callback when the window is resized
+  // The callback when the window is resized. The param is true if the window
+  // is in mini mode
   onResize     : PropTypes.func,
   // The callback when the state of the game has changed
   onStateChange: PropTypes.func,
