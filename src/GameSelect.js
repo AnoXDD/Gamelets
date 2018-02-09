@@ -17,22 +17,27 @@ import SokobanInfinite from "./games/SokobanInfinite";
 
 const GAME_LIST = [
   {
+    id  : "word-link",
     name: "Word Link",
     game: <Wordlink/>,
   },
   {
+    id  : "letter-prompt",
     name: "Letter Prompt",
     game: <LetterPrompt/>,
   },
   {
+    id  : "scrabble-marathon",
     name: "Scrabble Marathon",
     game: <ScrabbleMarathon/>,
   },
   {
+    id  : "word-chain",
     name: "Word Chain",
     game: <WordChain/>,
   },
   {
+    id  : "sokoban-infinite",
     name: "Sokoban Infinite",
     game: <SokobanInfinite/>,
   }
@@ -40,6 +45,7 @@ const GAME_LIST = [
 
 const MIN_WIDTH = 350;
 const MIN_HEIGHT = 600;
+
 
 export default class GameSelect extends Component {
 
@@ -54,6 +60,8 @@ export default class GameSelect extends Component {
     this.handleBack = this.handleBack.bind(this);
     this.handleBackButton = this.handleBackButton.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.goToGameFromUrl = this.goToGameFromUrl.bind(this);
+    this.setGameIdInUrl = this.setGameIdInUrl.bind(this);
   }
 
   componentWillMount() {
@@ -63,11 +71,42 @@ export default class GameSelect extends Component {
 
   componentDidMount() {
     this.handleResize();
+    this.goToGameFromUrl();
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleResize);
     document.removeEventListener("backbutton", this.handleBackButton);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentGameIndex !== this.state.currentGameIndex) {
+      this.setGameIdInUrl();
+    }
+  }
+
+  /**
+   * From the hash in the url, go to a certain game
+   */
+  goToGameFromUrl() {
+    let id = window.location.hash.substr(1);
+
+    let i = GAME_LIST.findIndex(g => g.id === id);
+
+    if (i !== -1) {
+      this.setState({
+        currentGameIndex: i,
+      });
+    }
+  }
+
+  /**
+   * Set the name in hash
+   */
+  setGameIdInUrl() {
+    let game = GAME_LIST[this.state.currentGameIndex];
+
+    window.location.hash = game ? game.id : "";
   }
 
   handleResize() {
