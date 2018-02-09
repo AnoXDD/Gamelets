@@ -1188,6 +1188,8 @@ body, html {
   animation: fade-in-up 3s ease;
   color: #FFC107; }
 
+.sokoban-infinite .grid-area {
+  padding: 100px; }
 .sokoban-infinite .grid-wrapper {
   position: relative;
   box-shadow: 0 0 100px grey;
@@ -1197,7 +1199,7 @@ body, html {
 .sokoban-infinite.blurred .player-wrapper {
   filter: blur(2px); }
 .sokoban-infinite .non-player-wrapper, .sokoban-infinite .player-wrapper {
-  transition: filter .4s ease; }
+  transition: filter .4s linear; }
 .sokoban-infinite .grid-gradient-cover {
   background: linear-gradient(to bottom right, #82B1FF 0%, #448AFF 100%);
   position: absolute;
@@ -1292,5 +1294,26 @@ body, html {
       height: 30px; }
       .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
         border: 2px solid white; } }
+.sokoban-infinite .control.direction {
+  display: grid;
+  grid-template-areas: "restart . up . skip" "restart left down right skip";
+  justify-items: center;
+  align-items: center; }
+  .sokoban-infinite .control.direction .btn {
+    background: transparent; }
+    .sokoban-infinite .control.direction .btn.left, .sokoban-infinite .control.direction .btn.right, .sokoban-infinite .control.direction .btn.up, .sokoban-infinite .control.direction .btn.down {
+      padding: 5px 0; }
+  .sokoban-infinite .control.direction .up {
+    grid-area: up; }
+  .sokoban-infinite .control.direction .left {
+    grid-area: left; }
+  .sokoban-infinite .control.direction .right {
+    grid-area: right; }
+  .sokoban-infinite .control.direction .down {
+    grid-area: down; }
+  .sokoban-infinite .control.direction .restart {
+    grid-area: restart; }
+  .sokoban-infinite .control.direction .skip {
+    grid-area: skip; }
 
 /*# sourceMappingURL=App.css.map */

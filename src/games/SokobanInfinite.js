@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {generateSokobanLevel} from "sokoban-generator";
 
 import Game from "../lib/Game";
+import Button from "../lib/Button";
 
 const WALL = "#";
 const PLAYER = "@";
@@ -26,6 +27,7 @@ const GRID_SIZE = 54,
 
 export default class SokobanInfinite extends Component {
 
+  initialLevel = "";
   state = {
     // An 2d grid with only WALL, and GOAL
     grid  : [],
@@ -47,6 +49,8 @@ export default class SokobanInfinite extends Component {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.handleSkipNext = this.handleSkipNext.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
     this.moveLeft = this.moveLeft.bind(this);
@@ -185,7 +189,9 @@ export default class SokobanInfinite extends Component {
     this._movePlayer(1, 0);
   }
 
-  _applyLevel(level) {
+  _applyLevel(level = this.initialLevel) {
+    this.initialLevel = level;
+
     let grid = level.split("\n").map(a => a.split(""));
 
     // Find the player and all the boxes
@@ -224,6 +230,14 @@ export default class SokobanInfinite extends Component {
     this.setState({
       grid, boxes, player,
     });
+  }
+
+  handleSkipNext() {
+    this.startNewProblem();
+  }
+
+  handleRestart() {
+    this._applyLevel();
   }
 
   startNewProblem(player = this.state.player) {
@@ -328,6 +342,26 @@ export default class SokobanInfinite extends Component {
               />
             </div>
           </div>
+        </div>
+        <div className="control direction">
+          <Button className="restart"
+                  onClick={this.handleRestart}
+          >refresh</Button>
+          <Button className="skip"
+                  onClick={this.handleSkipNext}
+          >skip_next</Button>
+          <Button className="left"
+                  onClick={this.moveLeft}
+          >keyboard_arrow_left</Button>
+          <Button className="right"
+                  onClick={this.moveRight}
+          >keyboard_arrow_right</Button>
+          <Button className="up"
+                  onClick={this.moveUp}
+          >keyboard_arrow_up</Button>
+          <Button className="down"
+                  onClick={this.moveDown}
+          >keyboard_arrow_down</Button>
         </div>
       </Game>
     );

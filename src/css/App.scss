@@ -1155,6 +1155,10 @@ $grid-size: 100px;
 }
 
 .sokoban-infinite {
+  .grid-area {
+    padding: 100px;
+  }
+
   .grid-wrapper {
     position: relative;
     box-shadow: 0 0 100px grey;
@@ -1172,7 +1176,7 @@ $grid-size: 100px;
   }
 
   .non-player-wrapper, .player-wrapper {
-    transition: filter .4s ease;
+    transition: filter .4s linear;
   }
 
   .grid-gradient-cover {
@@ -1303,6 +1307,42 @@ $grid-size: 100px;
         &:before, &:after {
           border: 2px solid white;
         }
+      }
+    }
+  }
+
+  .control {
+    &.direction {
+      display: grid;
+      grid-template-areas: "restart . up . skip" "restart left down right skip";
+      justify-items: center;
+      align-items: center;
+
+      .btn {
+        background: transparent;
+
+        &.left, &.right, &.up, &.down {
+          padding: 5px 0;
+        }
+      }
+
+      .up {
+        grid-area: up;
+      }
+      .left {
+        grid-area: left;
+      }
+      .right {
+        grid-area: right;
+      }
+      .down {
+        grid-area: down;
+      }
+      .restart {
+        grid-area: restart;
+      }
+      .skip {
+        grid-area: skip;
       }
     }
   }
