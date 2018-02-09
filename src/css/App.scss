@@ -1158,6 +1158,21 @@ $grid-size: 100px;
   .grid-wrapper {
     position: relative;
     box-shadow: 0 0 100px grey;
+    overflow: hidden;
+  }
+
+  &.blurred {
+    .non-player-wrapper {
+      filter: blur(3px);
+    }
+
+    .player-wrapper {
+      filter: blur(2px);
+    }
+  }
+
+  .non-player-wrapper, .player-wrapper {
+    transition: filter .4s ease;
   }
 
   .grid-gradient-cover {
@@ -1169,6 +1184,34 @@ $grid-size: 100px;
     left: 0;
   }
 
+  .border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &:after {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: white;
+      content: " ";
+    }
+
+    &.vertical:after {
+      left: -2px;
+      width: 4px;
+    }
+
+    &.horizontal:after {
+      top: -2px;
+      height: 4px;
+    }
+  }
+
   .cell {
     width: 54px;
     height: 54px;
@@ -1176,11 +1219,6 @@ $grid-size: 100px;
     transition: top .2s ease-in-out, left .2s ease-in-out, filter .8s ease;
     box-sizing: border-box;
     background: #fff;
-
-    @media screen and (max-width: $screen-break) {
-      width: 30px;
-      height: 30px;
-    }
 
     &.box {
       background: linear-gradient(to bottom right, $lightgreen, $green);
@@ -1191,11 +1229,13 @@ $grid-size: 100px;
         filter: none;
 
         &:before, &:after {
-          top: 30%;
-          left: 30%;
+          left: 25%;
+          top: 25%;
           content: ' ';
-          height: 40%;
-          width: 40%;
+          height: 50%;
+          width: 50%;
+          background: transparent;
+          border: 4px solid white;
           border-radius: 50px;
         }
       }
@@ -1209,6 +1249,7 @@ $grid-size: 100px;
         width: 10%;
         transition: .4s ease;
         background-color: white;
+        box-sizing: border-box;
       }
 
       &:before {
@@ -1222,12 +1263,10 @@ $grid-size: 100px;
 
     &.wall {
       background: transparent;
-      border: 2px solid white;
     }
 
     &.player {
-      background: white;
-
+      background: transparent;
       &:after {
         position: absolute;
         top: 30%;
@@ -1253,6 +1292,17 @@ $grid-size: 100px;
         width: 30%;
         border-radius: 50%;
         background-color: lightgrey;
+      }
+    }
+
+    @media screen and (max-width: $screen-break) {
+      width: 30px;
+      height: 30px;
+
+      &.box.completed {
+        &:before, &:after {
+          border: 2px solid white;
+        }
       }
     }
   }

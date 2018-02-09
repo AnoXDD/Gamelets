@@ -1190,7 +1190,14 @@ body, html {
 
 .sokoban-infinite .grid-wrapper {
   position: relative;
-  box-shadow: 0 0 100px grey; }
+  box-shadow: 0 0 100px grey;
+  overflow: hidden; }
+.sokoban-infinite.blurred .non-player-wrapper {
+  filter: blur(3px); }
+.sokoban-infinite.blurred .player-wrapper {
+  filter: blur(2px); }
+.sokoban-infinite .non-player-wrapper, .sokoban-infinite .player-wrapper {
+  transition: filter .4s ease; }
 .sokoban-infinite .grid-gradient-cover {
   background: linear-gradient(to bottom right, #82B1FF 0%, #448AFF 100%);
   position: absolute;
@@ -1198,6 +1205,26 @@ body, html {
   height: 100%;
   top: 0;
   left: 0; }
+.sokoban-infinite .border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; }
+  .sokoban-infinite .border:after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: white;
+    content: " "; }
+  .sokoban-infinite .border.vertical:after {
+    left: -2px;
+    width: 4px; }
+  .sokoban-infinite .border.horizontal:after {
+    top: -2px;
+    height: 4px; }
 .sokoban-infinite .cell {
   width: 54px;
   height: 54px;
@@ -1205,10 +1232,6 @@ body, html {
   transition: top .2s ease-in-out, left .2s ease-in-out, filter .8s ease;
   box-sizing: border-box;
   background: #fff; }
-  @media screen and (max-width: 510px) {
-    .sokoban-infinite .cell {
-      width: 30px;
-      height: 30px; } }
   .sokoban-infinite .cell.box {
     background: linear-gradient(to bottom right, #8BC34A, #4CAF50);
     filter: grayscale(100%);
@@ -1216,11 +1239,13 @@ body, html {
     .sokoban-infinite .cell.box.completed {
       filter: none; }
       .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
-        top: 30%;
-        left: 30%;
+        left: 25%;
+        top: 25%;
         content: ' ';
-        height: 40%;
-        width: 40%;
+        height: 50%;
+        width: 50%;
+        background: transparent;
+        border: 4px solid white;
         border-radius: 50px; }
     .sokoban-infinite .cell.box:before, .sokoban-infinite .cell.box:after {
       position: absolute;
@@ -1230,16 +1255,16 @@ body, html {
       height: 50%;
       width: 10%;
       transition: .4s ease;
-      background-color: white; }
+      background-color: white;
+      box-sizing: border-box; }
     .sokoban-infinite .cell.box:before {
       transform: rotate(45deg); }
     .sokoban-infinite .cell.box:after {
       transform: rotate(-45deg); }
   .sokoban-infinite .cell.wall {
-    background: transparent;
-    border: 2px solid white; }
+    background: transparent; }
   .sokoban-infinite .cell.player {
-    background: white; }
+    background: transparent; }
     .sokoban-infinite .cell.player:after {
       position: absolute;
       top: 30%;
@@ -1261,5 +1286,11 @@ body, html {
       width: 30%;
       border-radius: 50%;
       background-color: lightgrey; }
+  @media screen and (max-width: 510px) {
+    .sokoban-infinite .cell {
+      width: 30px;
+      height: 30px; }
+      .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
+        border: 2px solid white; } }
 
 /*# sourceMappingURL=App.css.map */

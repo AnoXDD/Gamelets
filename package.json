@@ -10,7 +10,7 @@
     "react-ink": "^6.2.0",
     "react-transition-group": "^2.2.1",
     "screenfull": "^3.3.2",
-    "sokoban-generator": "^1.1.2"
+    "sokoban-generator": "^1.1.4"
   },
   "devDependencies": {
     "react-scripts": "1.0.7"

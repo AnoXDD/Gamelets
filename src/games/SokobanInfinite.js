@@ -15,7 +15,7 @@ const cssMap = {
   [WALL] : "wall",
   [GOAL] : "goal",
   [FLOOR]: "floor",
-}
+};
 
 const WIDTH = 9;
 const HEIGHT = 9;
@@ -37,6 +37,7 @@ export default class SokobanInfinite extends Component {
       y: Math.floor(HEIGHT / 2),
     },
     size  : GRID_SIZE,
+    locked: false,
   };
 
   constructor(props) {
@@ -60,6 +61,22 @@ export default class SokobanInfinite extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Check if the player has changed its position
+    if (prevState.player.x !== this.state.player.x
+      || prevState.player.y !== this.state.player.y) {
+      // Check if the box is all solved
+      for (let box of this.state.boxes) {
+        if (this.state.grid[box.y][box.x] !== GOAL) {
+          return;
+        }
+      }
+
+
+      this.startNewProblem({...this.state.player});
+    }
   }
 
   handleResize(isMiniSize) {
@@ -89,7 +106,7 @@ export default class SokobanInfinite extends Component {
    * @private
    */
   _isValidPosition(x, y) {
-    if (x < 0 || x >= WIDTH || y < 0 || y > HEIGHT) {
+    if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) {
       return false;
     }
 
@@ -209,25 +226,42 @@ export default class SokobanInfinite extends Component {
     });
   }
 
-  startNewProblem() {
-    let level = null;
-    let attempt = MAX_ATTEMPTS;
-    let seed;
-    while (--attempt > 0 && !level) {
-      seed = Date.now();
-
-      level = generateSokobanLevel({
-        width          : WIDTH,
-        height         : HEIGHT,
-        initialPosition: {...this.state.player},
-        seed,
+  startNewProblem(player = this.state.player) {
+    // Freeze it
+    new Promise(res => {
+      this.setState({
+        locked: true,
       });
-    }
 
-    console.log(seed);
+      setTimeout(() => res(), 500);
+    }).then(() =>
+      new Promise(res => {
+        let level = null;
+        let attempt = MAX_ATTEMPTS;
+        let seed;
+        while (--attempt > 0 && !level) {
+          seed = Date.now();
 
-    // Apply level
-    this._applyLevel(level);
+          level = generateSokobanLevel({
+            width          : WIDTH,
+            height         : HEIGHT,
+            initialPosition: {...player},
+            seed,
+          });
+        }
+
+        console.log(seed);
+
+        // Apply level
+        this._applyLevel(level);
+
+        setTimeout(() => res(), 500);
+      })
+    ).then(() => {
+      this.setState({
+        locked: false,
+      });
+    })
   }
 
   render() {
@@ -235,7 +269,7 @@ export default class SokobanInfinite extends Component {
 
     return (
       <Game name="sokoban-infinite"
-            className={this.state.classClassName}
+            className={this.state.locked ? "blurred" : ""}
             gameIntro={["Endless levels of Sokoban", "Swipe or use arrow keys to control"]}
             onStart={this.startNewProblem}
             swipable={true}
@@ -255,34 +289,44 @@ export default class SokobanInfinite extends Component {
             }}
             className="grid-wrapper"
           >
-            <span className="grid-gradient-cover"/>
-            <span
-              className="cell player"
-              style={{
-                "top" : size * this.state.player.y,
-                "left": size * this.state.player.x,
-              }}
-            />
-            {this.state.grid.map((row, y) =>
-              row.map((cell, x) =>
-                <span
-                  key={`${x}-${y}`}
-                  className={`cell ${cssMap[cell]}`}
-                  style={{
-                    "top" : y * size,
-                    "left": x * size,
-                  }}
-                />
-              )
-            )}
-            {this.state.boxes.map((b, i) =>
-              <span key={i}
-                    className={`cell box ${b.completed ? "completed" : ""}`}
+            <div className="non-player-wrapper">
+              <span className="grid-gradient-cover"/>
+              {new Array(WIDTH + 1).fill().map((a, i) =>
+                <span key={i} className="border vertical"
+                      style={{left: i * this.state.size}}/>)}
+              {new Array(HEIGHT + 1).fill().map((a, i) =>
+                <span key={i} className="border horizontal"
+                      style={{top: i * this.state.size}}/>)}
+              {this.state.grid.map((row, y) =>
+                row.map((cell, x) =>
+                  <span
+                    key={`${x}-${y}`}
+                    className={`cell ${cssMap[cell]}`}
                     style={{
-                      "top" : b.y * size,
-                      "left": b.x * size,
-                    }}/>
-            )}
+                      "top" : y * size,
+                      "left": x * size,
+                    }}
+                  />
+                )
+              )}
+              {this.state.boxes.map((b, i) =>
+                <span key={i}
+                      className={`cell box ${b.completed ? "completed" : ""}`}
+                      style={{
+                        "top" : b.y * size,
+                        "left": b.x * size,
+                      }}/>
+              )}
+            </div>
+            <div className="player-wrapper">
+              <span
+                className="cell player"
+                style={{
+                  "top" : size * this.state.player.y,
+                  "left": size * this.state.player.x,
+                }}
+              />
+            </div>
           </div>
         </div>
       </Game>
