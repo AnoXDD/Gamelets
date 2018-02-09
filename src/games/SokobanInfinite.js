@@ -30,7 +30,7 @@ export default class SokobanInfinite extends Component {
   initialLevel = "";
   state = {
     // An 2d grid with only WALL, and GOAL
-    grid  : [],
+    grid  : new Array(HEIGHT).fill(new Array(WIDTH).fill(FLOOR)),
     // A list of boxes, with each {x:number, y:number, completed:boolean}
     boxes : [],
     // Player position
@@ -115,7 +115,12 @@ export default class SokobanInfinite extends Component {
     }
 
     let tile = this.state.grid[y][x];
-    return !(tile === BOX || tile === BOX_GOAL || tile === WALL);
+    if (tile === WALL) {
+      return false;
+    }
+
+    // Search for box
+    return !this._findBox(x, y);
   }
 
   _findBox(x, y) {
