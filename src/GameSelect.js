@@ -17,6 +17,9 @@ import SokobanInfinite from "./games/SokobanInfinite";
 
 const GAME_LIST = [
   {
+    category: "language",
+  },
+  {
     id  : "word-link",
     name: "Word Link",
     game: <Wordlink/>,
@@ -35,6 +38,9 @@ const GAME_LIST = [
     id  : "word-chain",
     name: "Word Chain",
     game: <WordChain/>,
+  },
+  {
+    category: "puzzle"
   },
   {
     id  : "sokoban-infinite",
@@ -164,24 +170,32 @@ export default class GameSelect extends Component {
           <div className="title">Gamelets!
             <a className="author" href="https://anoxic.me">by Anoxic</a>
           </div>
-          <Scrollbars
-            autoHeight
-            autoHeightMax={"60vh"}
-            className="games"
-            ref="scrollbars"
-          >
-            {GAME_LIST.map((game, i) =>
-              <div className="game"
-                   key={game.name}
-                   onClick={() => this.setState({currentGameIndex: i})}
-              >
-                <div className="flex-inner-extend flex-center">
-                  <Ink/>
-                  <span>{game.name}</span>
-                </div>
-              </div>
-            )}
-          </Scrollbars>
+          <div className="games-wrapper">
+            <Scrollbars
+              autoHeight
+              autoHeightMax={"60vh"}
+              className="games"
+              ref="scrollbars"
+            >
+              {GAME_LIST.map((game, i) =>
+                game.category ?
+                  <div className="category"
+                       key={game.category}
+                  >
+                    <span className="category-inner">{game.category}</span>
+                  </div> :
+                  <div className="game"
+                       key={game.name}
+                       onClick={() => this.setState({currentGameIndex: i})}
+                  >
+                    <div className="flex-inner-extend flex-center">
+                      <Ink/>
+                      <span>{game.name}</span>
+                    </div>
+                  </div>
+              )}
+            </Scrollbars>
+          </div>
         </div>
         <div className="game-real">
           {this.state.currentGameIndex === -1 ? null : GAME_LIST[this.state.currentGameIndex].game}
