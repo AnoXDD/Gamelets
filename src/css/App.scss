@@ -1210,8 +1210,13 @@ $grid-size: 100px;
 }
 
 .sokoban-infinite {
+  .game-area .game-area-inner {
+    padding-bottom: 0;
+  }
+
   .grid-area {
     padding: 100px;
+    position: relative;
   }
 
   .grid-wrapper {
@@ -1271,11 +1276,51 @@ $grid-size: 100px;
     }
   }
 
+  .virtual-control {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    background: white;
+    opacity: .5;
+    transition: opacity 4s ease;
+
+    &.transparent {
+      opacity: 0;
+      pointer-events: auto !important;
+    }
+
+    .control {
+      width: 100%;
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      &.left-right {
+        flex-grow: 0;
+        flex-shrink: 0;
+
+        .btn {
+          width: 50%;
+          height: 100%;
+        }
+      }
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0;
+    }
+  }
+
   .cell {
     width: 54px;
     height: 54px;
     position: absolute;
-    transition: top .2s ease-in-out, left .2s ease-in-out, filter .8s ease;
+    transition: top .1s ease, left .1s ease, filter .8s ease;
     box-sizing: border-box;
     background: #fff;
 
@@ -1362,42 +1407,6 @@ $grid-size: 100px;
         &:before, &:after {
           border: 2px solid white;
         }
-      }
-    }
-  }
-
-  .control {
-    &.direction {
-      display: grid;
-      grid-template-areas: "restart . up . skip" "restart left down right skip";
-      justify-items: center;
-      align-items: center;
-
-      .btn {
-        background: transparent;
-
-        &.left, &.right, &.up, &.down {
-          padding: 5px 0;
-        }
-      }
-
-      .up {
-        grid-area: up;
-      }
-      .left {
-        grid-area: left;
-      }
-      .right {
-        grid-area: right;
-      }
-      .down {
-        grid-area: down;
-      }
-      .restart {
-        grid-area: restart;
-      }
-      .skip {
-        grid-area: skip;
       }
     }
   }

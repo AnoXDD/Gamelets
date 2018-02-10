@@ -30,16 +30,17 @@ export default class SokobanInfinite extends Component {
   initialLevel = "";
   state = {
     // An 2d grid with only WALL, and GOAL
-    grid  : new Array(HEIGHT).fill(new Array(WIDTH).fill(FLOOR)),
+    grid               : new Array(HEIGHT).fill(new Array(WIDTH).fill(FLOOR)),
     // A list of boxes, with each {x:number, y:number, completed:boolean}
-    boxes : [],
+    boxes              : [],
     // Player position
-    player: {
+    player             : {
       x: Math.floor(WIDTH / 2),
       y: Math.floor(HEIGHT / 2),
     },
-    size  : GRID_SIZE,
-    locked: false,
+    size               : GRID_SIZE,
+    locked             : false,
+    isVirtualKeyVisible: true,
   };
 
   constructor(props) {
@@ -77,7 +78,6 @@ export default class SokobanInfinite extends Component {
           return;
         }
       }
-
 
       this.startNewProblem({...this.state.player});
     }
@@ -278,7 +278,8 @@ export default class SokobanInfinite extends Component {
       })
     ).then(() => {
       this.setState({
-        locked: false,
+        locked             : false,
+        isVirtualKeyVisible: false,
       });
     })
   }
@@ -300,7 +301,39 @@ export default class SokobanInfinite extends Component {
             restartText="next"
             restartIcon="skip_next"
       >
+        <div className="control">
+          <div className="btns">
+            <Button className="restart"
+                    onClick={this.handleRestart}
+                    text="restart"
+            >refresh</Button>
+            <Button className="skip"
+                    onClick={this.handleSkipNext}
+                    text="skip"
+            >skip_next</Button>
+          </div>
+        </div>
         <div className="grid-area flex-center">
+          <div
+            className={`virtual-control ${this.state.isVirtualKeyVisible ? "" : "transparent"}`}>
+            <Button className="control up"
+                    onClick={this.moveUp}
+            >keyboard_arrow_up</Button>
+            <div className="control left-right"
+                 style={{
+                   height: HEIGHT * this.state.size,
+                 }}>
+              <Button className="left"
+                      onClick={this.moveLeft}
+              >keyboard_arrow_left</Button>
+              <Button className="right"
+                      onClick={this.moveRight}
+              >keyboard_arrow_right</Button>
+            </div>
+            <Button className="control down"
+                    onClick={this.moveDown}
+            >keyboard_arrow_down</Button>
+          </div>
           <div
             style={{
               width : WIDTH * this.state.size,
@@ -347,26 +380,6 @@ export default class SokobanInfinite extends Component {
               />
             </div>
           </div>
-        </div>
-        <div className="control direction">
-          <Button className="restart"
-                  onClick={this.handleRestart}
-          >refresh</Button>
-          <Button className="skip"
-                  onClick={this.handleSkipNext}
-          >skip_next</Button>
-          <Button className="left"
-                  onClick={this.moveLeft}
-          >keyboard_arrow_left</Button>
-          <Button className="right"
-                  onClick={this.moveRight}
-          >keyboard_arrow_right</Button>
-          <Button className="up"
-                  onClick={this.moveUp}
-          >keyboard_arrow_up</Button>
-          <Button className="down"
-                  onClick={this.moveDown}
-          >keyboard_arrow_down</Button>
         </div>
       </Game>
     );

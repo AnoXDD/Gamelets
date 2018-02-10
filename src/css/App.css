@@ -1224,8 +1224,11 @@ body, html {
   animation: fade-in-up 3s ease;
   color: #FFC107; }
 
+.sokoban-infinite .game-area .game-area-inner {
+  padding-bottom: 0; }
 .sokoban-infinite .grid-area {
-  padding: 100px; }
+  padding: 100px;
+  position: relative; }
 .sokoban-infinite .grid-wrapper {
   position: relative;
   box-shadow: 0 0 100px grey;
@@ -1263,11 +1266,39 @@ body, html {
   .sokoban-infinite .border.horizontal:after {
     top: -2px;
     height: 4px; }
+.sokoban-infinite .virtual-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  background: white;
+  opacity: .5;
+  transition: opacity 4s ease; }
+  .sokoban-infinite .virtual-control.transparent {
+    opacity: 0;
+    pointer-events: auto !important; }
+  .sokoban-infinite .virtual-control .control {
+    width: 100%;
+    flex-grow: 1;
+    flex-shrink: 1; }
+    .sokoban-infinite .virtual-control .control.left-right {
+      flex-grow: 0;
+      flex-shrink: 0; }
+      .sokoban-infinite .virtual-control .control.left-right .btn {
+        width: 50%;
+        height: 100%; }
+  .sokoban-infinite .virtual-control .btn {
+    width: 100%;
+    padding: 0; }
 .sokoban-infinite .cell {
   width: 54px;
   height: 54px;
   position: absolute;
-  transition: top .2s ease-in-out, left .2s ease-in-out, filter .8s ease;
+  transition: top .1s ease, left .1s ease, filter .8s ease;
   box-sizing: border-box;
   background: #fff; }
   .sokoban-infinite .cell.box {
@@ -1330,26 +1361,5 @@ body, html {
       height: 30px; }
       .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
         border: 2px solid white; } }
-.sokoban-infinite .control.direction {
-  display: grid;
-  grid-template-areas: "restart . up . skip" "restart left down right skip";
-  justify-items: center;
-  align-items: center; }
-  .sokoban-infinite .control.direction .btn {
-    background: transparent; }
-    .sokoban-infinite .control.direction .btn.left, .sokoban-infinite .control.direction .btn.right, .sokoban-infinite .control.direction .btn.up, .sokoban-infinite .control.direction .btn.down {
-      padding: 5px 0; }
-  .sokoban-infinite .control.direction .up {
-    grid-area: up; }
-  .sokoban-infinite .control.direction .left {
-    grid-area: left; }
-  .sokoban-infinite .control.direction .right {
-    grid-area: right; }
-  .sokoban-infinite .control.direction .down {
-    grid-area: down; }
-  .sokoban-infinite .control.direction .restart {
-    grid-area: restart; }
-  .sokoban-infinite .control.direction .skip {
-    grid-area: skip; }
 
 /*# sourceMappingURL=App.css.map */
