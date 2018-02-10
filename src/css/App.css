@@ -1233,6 +1233,8 @@ body, html {
   position: relative;
   box-shadow: 0 0 100px grey;
   overflow: hidden; }
+.sokoban-infinite.game-over:not(.blurred) .prompt {
+  color: #F44336; }
 .sokoban-infinite.blurred .non-player-wrapper {
   filter: blur(3px); }
 .sokoban-infinite.blurred .player-wrapper {

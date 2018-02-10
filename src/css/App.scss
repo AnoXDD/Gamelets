@@ -1225,6 +1225,12 @@ $grid-size: 100px;
     overflow: hidden;
   }
 
+  &.game-over:not(.blurred) {
+    .prompt {
+      color: $red;
+    }
+  }
+
   &.blurred {
     .non-player-wrapper {
       filter: blur(3px);

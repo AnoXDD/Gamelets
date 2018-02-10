@@ -19,7 +19,7 @@ const cssMap = {
 };
 
 const WIDTH = 9;
-const HEIGHT = 9;
+const HEIGHT = 12;
 const MAX_ATTEMPTS = 10;
 
 const GRID_SIZE = 54,
@@ -41,6 +41,7 @@ export default class SokobanInfinite extends Component {
     size               : GRID_SIZE,
     locked             : false,
     isVirtualKeyVisible: true,
+    step               : -1,
   };
 
   constructor(props) {
@@ -152,6 +153,12 @@ export default class SokobanInfinite extends Component {
    * @private
    */
   _movePlayer(dx, dy) {
+    let step = this.state.step;
+
+    if (step === 0) {
+      return;
+    }
+
     let {x, y} = this.state.player;
 
     x += dx;
@@ -166,6 +173,8 @@ export default class SokobanInfinite extends Component {
       // Move together, which already changes the box object
       box.x = x + dx;
       box.y = y + dy;
+      // Box moved
+      --step;
     } else if (!this._isValidPosition(x, y)) {
       return;
     }
@@ -174,6 +183,7 @@ export default class SokobanInfinite extends Component {
 
     this.setState({
       boxes,
+      step,
       player: {x, y},
     });
   }
@@ -197,7 +207,7 @@ export default class SokobanInfinite extends Component {
   _applyLevel(level = this.initialLevel) {
     this.initialLevel = level;
 
-    let grid = level.split("\n").map(a => a.split(""));
+    let grid = level.toReadableString().split("\n").map(a => a.split(""));
 
     // Find the player and all the boxes
     let boxes = [];
@@ -232,8 +242,11 @@ export default class SokobanInfinite extends Component {
 
     boxes = this._updateBoxStatus(grid, boxes);
 
+    // Set step
+    let step = level.getSolutionStep();
+
     this.setState({
-      grid, boxes, player,
+      grid, boxes, player, step,
     });
   }
 
@@ -265,6 +278,7 @@ export default class SokobanInfinite extends Component {
             width          : WIDTH,
             height         : HEIGHT,
             initialPosition: {...player},
+            type           : "class",
             seed,
           });
         }
@@ -272,7 +286,7 @@ export default class SokobanInfinite extends Component {
         console.log(seed);
 
         // Apply level
-        this._applyLevel(level);
+        this._applyLevel(level.clone());
 
         setTimeout(() => res(), 500);
       })
@@ -289,7 +303,7 @@ export default class SokobanInfinite extends Component {
 
     return (
       <Game name="sokoban-infinite"
-            className={this.state.locked ? "blurred" : ""}
+            className={`${this.state.locked ? "blurred" : ""} ${this.state.step === 0 ? "game-over" : ""}`}
             gameIntro={["Endless levels of Sokoban", "Swipe or use arrow keys to control"]}
             onStart={this.startNewProblem}
             swipable={true}
@@ -300,6 +314,7 @@ export default class SokobanInfinite extends Component {
             onResize={this.handleResize}
             restartText="next"
             restartIcon="skip_next"
+            prompt={this.state.step !== -1 ? `Box Move Left: ${this.state.step}` : ""}
       >
         <div className="control">
           <div className="btns">
