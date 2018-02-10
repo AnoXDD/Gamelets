@@ -1424,3 +1424,21 @@ $grid-size: 100px;
     }
   }
 }
+
+.bubble-burst {
+  .game-area .game-area-inner {
+    padding-bottom: 0;
+  }
+
+  .bubble-canvas {
+    position: relative;
+    box-shadow: 0 0 100px grey;
+    overflow: hidden;
+  }
+
+  .bubble {
+    border-radius: 50px;
+    position: absolute;
+    transition: none;
+  }
+}

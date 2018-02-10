@@ -14,6 +14,7 @@ import WordChain from "./games/WordChain";
 import ScreenSizeWarning from "./components/ScreenSizeWarning";
 import {Scrollbars} from "react-custom-scrollbars";
 import SokobanInfinite from "./games/SokobanInfinite";
+import BubbleBurst from "./games/BubbleBurst";
 
 const GAME_LIST = [
   {
@@ -48,6 +49,15 @@ const GAME_LIST = [
     id  : "sokoban-infinite",
     name: "Sokoban Infinite",
     game: <SokobanInfinite/>,
+  },
+  {
+    category: "strategy",
+    icon    : "map",
+  },
+  {
+    id  : "bubble-burst",
+    name: "Bubble Burst",
+    game: <BubbleBurst/>,
   }
 ];
 

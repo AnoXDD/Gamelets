@@ -1369,4 +1369,14 @@ body, html {
         .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
           border: 2px solid white; } }
 
+.bubble-burst .game-area .game-area-inner {
+  padding-bottom: 0; }
+.bubble-burst .bubble-canvas {
+  position: relative;
+  box-shadow: 0 0 100px grey;
+  overflow: hidden; }
+.bubble-burst .bubble {
+  border-radius: 50px;
+  position: absolute; }
+
 /*# sourceMappingURL=App.css.map */
