@@ -1304,7 +1304,9 @@ body, html {
   .sokoban-infinite .cell.box {
     background: linear-gradient(to bottom right, #8BC34A, #4CAF50);
     filter: grayscale(100%);
-    border: 3px solid white; }
+    margin: 3px;
+    width: 49px;
+    height: 49px; }
     .sokoban-infinite .cell.box.completed {
       filter: none; }
       .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
@@ -1359,7 +1361,10 @@ body, html {
     .sokoban-infinite .cell {
       width: 30px;
       height: 30px; }
-      .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
-        border: 2px solid white; } }
+      .sokoban-infinite .cell.box {
+        width: 24px;
+        height: 24px; }
+        .sokoban-infinite .cell.box.completed:before, .sokoban-infinite .cell.box.completed:after {
+          border: 2px solid white; } }
 
 /*# sourceMappingURL=App.css.map */
