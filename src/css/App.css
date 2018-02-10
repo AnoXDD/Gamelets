@@ -454,8 +454,12 @@ body, html {
       height: 60px;
       display: flex;
       padding: 10px 0; }
-      .game-select .game-list .category .category-inner {
-        align-self: flex-end; }
+      .game-select .game-list .category .category-inner, .game-select .game-list .category .icon-wrapper {
+        align-self: center; }
+      .game-select .game-list .category .icon-wrapper {
+        margin: 0 15px 0 10px; }
+      .game-select .game-list .category .material-icons {
+        display: block; }
     .game-select .game-list .title {
       border: none;
       font-size: 35px; }
@@ -493,7 +497,9 @@ body, html {
         font-size: 35px; }
       .game-select .game-list .game {
         height: 60px;
-        box-shadow: 1px 1px 5px lightgrey; } }
+        box-shadow: 1px 1px 5px lightgrey; }
+      .game-select .game-list .material-icons {
+        font-size: 20px; } }
   .game-select.in-game .game-real {
     left: 0; }
   .game-select.in-game .game-list {

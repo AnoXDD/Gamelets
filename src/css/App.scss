@@ -183,8 +183,16 @@ body, html {
       display: flex;
       padding: 10px 0;
 
-      .category-inner {
-        align-self: flex-end;
+      .category-inner, .icon-wrapper {
+        align-self: center;
+      }
+
+      .icon-wrapper {
+        margin: 0 15px 0 10px;
+      }
+
+      .material-icons {
+        display: block;
       }
     }
 
@@ -243,6 +251,10 @@ body, html {
       .game {
         height: 60px;
         box-shadow: 1px 1px 5px lightgrey;
+      }
+
+      .material-icons {
+        font-size: 20px;
       }
     }
   }

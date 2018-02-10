@@ -18,6 +18,7 @@ import SokobanInfinite from "./games/SokobanInfinite";
 const GAME_LIST = [
   {
     category: "language",
+    icon    : "translate",
   },
   {
     id  : "word-link",
@@ -40,7 +41,8 @@ const GAME_LIST = [
     game: <WordChain/>,
   },
   {
-    category: "puzzle"
+    category: "puzzle",
+    icon    : "extension",
   },
   {
     id  : "sokoban-infinite",
@@ -173,7 +175,7 @@ export default class GameSelect extends Component {
           <div className="games-wrapper">
             <Scrollbars
               autoHeight
-              autoHeightMax={"60vh"}
+              autoHeightMax="60vh"
               className="games"
               ref="scrollbars"
             >
@@ -182,6 +184,9 @@ export default class GameSelect extends Component {
                   <div className="category"
                        key={game.category}
                   >
+                    <span className="icon-wrapper">
+                      <i className="material-icons">{game.icon}</i>
+                    </span>
                     <span className="category-inner">{game.category}</span>
                   </div> :
                   <div className="game"
