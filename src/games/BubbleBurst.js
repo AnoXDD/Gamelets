@@ -6,7 +6,7 @@ import * as R from "../R";
 
 const WIDTH = 300;
 const HEIGHT = 400;
-const MAX_BUBBLE_NUMBER = 25;
+const MAX_BUBBLE_NUMBER = 35;
 const TICK = 25; // milliseconds
 const MAX_MOVING_SPEED = 150 / TICK; // px/tick
 const MIN_MOVING_SPEED = 35 / TICK;
@@ -15,22 +15,19 @@ const FINAL_RADIUS = 50;
 const GROWING_SPEED = 200 / TICK; // px/tick
 const LIFE_SPAN = 2500.0 / TICK; // ticks
 const ATTEMPTS = 1;
-const AWARD_THRESHOLD = 4000;
-const MAX_AWARDED_BUBBLES = 3;
-const MAX_SINGLE_BUBBLE_SCORE = 100000;
+const AWARD_INTERVAL = 3;
+const AWARD_BUBBLES = 4;
 
 const COLORS = ["#FF8A80", "#FF5252", "#FF1744", "#D50000", "#FF80AB", "#FF4081", "#F50057", "#C51162", "#EA80FC", "#E040FB", "#D500F9", "#AA00FF", "#B388FF", "#7C4DFF", "#651FFF", "#6200EA", "#8C9EFF", "#536DFE", "#3D5AFE", "#304FFE", "#82B1FF", "#448AFF", "#2979FF", "#2962FF", "#80D8FF", "#40C4FF", "#00B0FF", "#0091EA", "#84FFFF", "#18FFFF", "#00E5FF", "#00B8D4", "#A7FFEB", "#64FFDA", "#1DE9B6", "#00BFA5", "#B9F6CA", "#69F0AE", "#00E676", "#00C853", "#CCFF90", "#B2FF59", "#76FF03", "#64DD17", "#F4FF81", "#EEFF41", "#C6FF00", "#AEEA00", "#FFFF8D", "#FFFF00", "#FFEA00", "#FFD600", "#FFE57F", "#FFD740", "#FFC400", "#FFAB00", "#FFD180", "#FFAB40", "#FF9100", "#FF6D00", "#FF9E80", "#FF6E40", "#FF3D00", "#DD2C00"];
 
 export default class BubbleBurst extends Component {
 
   rand = null;
-  blownBubbles = 0;
   bubbleId = 0;
   state = {
     score     : 0,
     bubbles   : [],
     newBubbles: [],
-    baseScore : this.getBaseBubbleScore(),
     attempts  : ATTEMPTS,
   };
   intervalId = -1;
@@ -41,7 +38,6 @@ export default class BubbleBurst extends Component {
 
     this.startNewProblem = this.startNewProblem.bind(this);
     this.handleProblemSolved = this.handleProblemSolved.bind(this);
-    this.getBaseBubbleScore = this.getBaseBubbleScore.bind(this);
     this.endGameIfNecessary = this.endGameIfNecessary.bind(this);
 
     this.handleResize = this.handleResize.bind(this);
@@ -51,13 +47,12 @@ export default class BubbleBurst extends Component {
   componentWillUpdate(nextProps, nextState) {
     // Award bubbles based on score change
     if (nextState.score > this.state.score && this.state.score) {
-      let nextThreshold = Math.floor(nextState.score / AWARD_THRESHOLD);
-      let thisThreshold = Math.floor(this.state.score / AWARD_THRESHOLD);
+      let nextThreshold = Math.floor(nextState.score / AWARD_INTERVAL);
+      let thisThreshold = Math.floor(this.state.score / AWARD_INTERVAL);
 
-      let newBubbleNum = nextThreshold - thisThreshold;
+      let newBubbleNum = (nextThreshold - thisThreshold) * AWARD_BUBBLES;
 
-      newBubbleNum = Math.min(newBubbleNum, MAX_BUBBLE_NUMBER - nextState.bubbles.length,
-        MAX_AWARDED_BUBBLES);
+      newBubbleNum = Math.min(newBubbleNum, MAX_BUBBLE_NUMBER - nextState.bubbles.length);
 
       if (newBubbleNum <= 0) {
         return;
@@ -86,26 +81,6 @@ export default class BubbleBurst extends Component {
   componentWillUnmount() {
     clearInterval(this.intervalId);
     clearInterval(this.timeoutId);
-  }
-
-  getBaseBubbleScore() {
-    if (!this.state) {
-      return 5;
-    }
-
-    return 5 * Math.ceil((MAX_BUBBLE_NUMBER - this.state.bubbles.length + 1) / 2);
-  }
-
-  /**
-   * Returns the current bubble score
-   * @param baseScore
-   * @return {number}
-   */
-  getCurrentBubbleScore(baseScore) {
-    ++this.blownBubbles;
-
-    return Math.min(this.blownBubbles * this.blownBubbles * baseScore,
-      MAX_SINGLE_BUBBLE_SCORE);
   }
 
   handleResize() {
@@ -152,12 +127,11 @@ export default class BubbleBurst extends Component {
       gameState: R.GAME_STATE.START,
       attempts : ATTEMPTS,
       score    : 0,
-      baseScore: this.getBaseBubbleScore(),
     }, () => {
       let zIndex = 1;
 
       this.intervalId = setInterval(() => {
-        let {baseScore, score} = this.state;
+        let {score} = this.state;
 
         let blowing = this.state.bubbles.filter(b => b.age !== -1);
 
@@ -174,9 +148,8 @@ export default class BubbleBurst extends Component {
                 // Blow this one as well
                 b.age = 0;
                 b.zIndex = zIndex++;
-                b.score = this.getCurrentBubbleScore(baseScore);
 
-                score += b.score;
+                ++score;
 
                 break;
               }
@@ -245,14 +218,11 @@ export default class BubbleBurst extends Component {
       return;
     }
 
-    this.blownBubbles = 1;
-
     let top = e.pageY - e.target.getBoundingClientRect().top;
     let left = e.pageX - e.target.getBoundingClientRect().left;
 
     this.setState({
       attempts  : this.state.attempts - 1,
-      baseScore : this.getBaseBubbleScore(),
       bubbles   : [...this.state.bubbles, {
         top,
         left,
@@ -292,7 +262,7 @@ export default class BubbleBurst extends Component {
             className={`${this.state.locked ? "blurred" : ""} ${this.state.step === 0 ? "game-over" : ""}`}
             gameIntro={[
               "Click to create a ripple that bursts other bubbles",
-              "Get higher score with more bubbles burst at once, fewer attempts and bubbles left",
+              "Four new bubbles for every third burst bubble",
             ]}
             onStart={this.startNewProblem}
             onResize={this.handleResize}
@@ -302,10 +272,10 @@ export default class BubbleBurst extends Component {
             score={this.state.score}
       >
         {/*<div className="attempts">*/}
-          {/*{new Array(ATTEMPTS).fill().map((a, i) =>*/}
-            {/*<span className={`bubble ${i >= this.state.attempts ? "used" : ""}`}*/}
-                  {/*key={i}/>*/}
-          {/*)}*/}
+        {/*{new Array(ATTEMPTS).fill().map((a, i) =>*/}
+        {/*<span className={`bubble ${i >= this.state.attempts ? "used" : ""}`}*/}
+        {/*key={i}/>*/}
+        {/*)}*/}
         {/*</div>*/}
         <div className="bubble-canvas flex-center"
              onClick={this.handleClick}

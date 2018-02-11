@@ -1409,7 +1409,7 @@ body, html {
     border-radius: 50px;
     background: #000;
     opacity: 1;
-    transition: opacity 2s ease; }
+    transition: opacity 2.5s ease; }
     .bubble-burst .attempts .bubble.used {
       opacity: 0; }
 
