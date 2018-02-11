@@ -22,7 +22,7 @@ const WIDTH = 9;
 const HEIGHT = 12;
 const MAX_ATTEMPTS = 10;
 
-const GRID_SIZE = 54,
+const GRID_SIZE = 30,
   GRID_SIZE_MINI = 30;
 
 export default class SokobanInfinite extends Component {
