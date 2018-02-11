@@ -293,6 +293,7 @@ export default class BubbleBurst extends Component {
             onResize={this.handleResize}
             restartText="Play again"
             restartIcon="refresh"
+            restartable={false}
             gameState={this.state.gameState}
             score={this.state.score}
       >

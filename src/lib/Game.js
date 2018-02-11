@@ -162,8 +162,9 @@ export default class Game extends Component {
         }}
       >
         <header className="flex-center">
-          {this.state.gameState === R.GAME_STATE.START ?
-            <Button className="restart top" onClick={this.handleUserStartButtonClick}>refresh</Button> : null}
+          {this.state.gameState === R.GAME_STATE.START && this.props.restartable ?
+            <Button className="restart top"
+                    onClick={this.handleUserStartButtonClick}>refresh</Button> : null}
           {typeof(this.props.roundTime) === "undefined" ? null :
             <Timer
               version={this.state.timeVersion}
@@ -253,6 +254,9 @@ Game.propTypes = {
   onSwipeDown : PropTypes.func,
   onSwipeLeft : PropTypes.func,
   onSwipeRight: PropTypes.func,
+
+  // If the game is restartable
+  restartable: PropTypes.bool,
 };
 
 
@@ -273,4 +277,6 @@ Game.defaultProps = {
   onSwipeDown : e => void(e),
   onSwipeLeft : e => void(e),
   onSwipeRight: e => void(e),
+
+  restartable: true,
 };
