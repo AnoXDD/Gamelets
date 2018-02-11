@@ -7,14 +7,14 @@ import * as R from "../R";
 const WIDTH = 300;
 const HEIGHT = 400;
 const MAX_BUBBLE_NUMBER = 25;
-const TICK = 40; // milliseconds
-const MAX_MOVING_SPEED = 7; // px/tick
-const MIN_MOVING_SPEED = 1.5;
+const TICK = 25; // milliseconds
+const MAX_MOVING_SPEED = 150 / TICK; // px/tick
+const MIN_MOVING_SPEED = 35 / TICK;
 const INITIAL_RADIUS = 5.0;
 const FINAL_RADIUS = 50;
-const GROWING_SPEED = 4; // px/tick
+const GROWING_SPEED = 200 / TICK; // px/tick
 const LIFE_SPAN = 2500.0 / TICK; // ticks
-const ATTEMPTS = 3;
+const ATTEMPTS = 1;
 const AWARD_THRESHOLD = 4000;
 const MAX_AWARDED_BUBBLES = 3;
 const MAX_SINGLE_BUBBLE_SCORE = 100000;
@@ -70,6 +70,11 @@ export default class BubbleBurst extends Component {
         ...nextState.bubbles,
         ...newBubbles
       ];
+
+      // Partial clean up
+      if (nextState.newBubbles.length > 100) {
+        nextState.newBubbles = [];
+      }
 
       nextState.newBubbles = [
         ...nextState.newBubbles,
@@ -275,10 +280,10 @@ export default class BubbleBurst extends Component {
     clearInterval(this.timeoutId);
 
     this.timeoutId = setTimeout(() => {
-      if (this.state.attempts <= 0) {
+      if (!this.state.bubbles.some(b => b.age !== -1)) {
         this.handleProblemSolved();
       }
-    }, 5000);
+    }, 1500);
   }
 
   render() {
@@ -293,16 +298,15 @@ export default class BubbleBurst extends Component {
             onResize={this.handleResize}
             restartText="Play again"
             restartIcon="refresh"
-            restartable={false}
             gameState={this.state.gameState}
             score={this.state.score}
       >
-        <div className="attempts">
-          {new Array(ATTEMPTS).fill().map((a, i) =>
-            <span className={`bubble ${i >= this.state.attempts ? "used" : ""}`}
-                  key={i}/>
-          )}
-        </div>
+        {/*<div className="attempts">*/}
+          {/*{new Array(ATTEMPTS).fill().map((a, i) =>*/}
+            {/*<span className={`bubble ${i >= this.state.attempts ? "used" : ""}`}*/}
+                  {/*key={i}/>*/}
+          {/*)}*/}
+        {/*</div>*/}
         <div className="bubble-canvas flex-center"
              onClick={this.handleClick}
              style={{width: WIDTH, height: HEIGHT}}>

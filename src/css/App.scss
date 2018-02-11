@@ -1430,15 +1430,13 @@ $grid-size: 100px;
   }
 
   .bubble-canvas {
-    @keyframes fade-out-up {
+    @keyframes fade-out {
       from {
         opacity: 1;
-        top: 5px;
       }
 
       to {
         opacity: 0;
-        top: -20px;
       }
     }
 
@@ -1450,10 +1448,10 @@ $grid-size: 100px;
       border-radius: 50px;
       position: absolute;
       transition: none;
+      pointer-events: none;
 
       .score {
-        animation: fade-out-up 2.5s ease;
-        opacity: 0;
+        font-size: 12px;
 
         &:before {
           content: "+";
@@ -1463,10 +1461,12 @@ $grid-size: 100px;
 
     .new-bubble {
       position: absolute;
+      pointer-events: none;
 
       &:before {
         content: "NEW";
-        animation: fade-out-up 1s ease;
+        font-size: 10px;
+        animation: fade-out 1s ease;
         opacity: 0;
       }
     }

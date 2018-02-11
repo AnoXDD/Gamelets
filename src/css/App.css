@@ -1376,27 +1376,27 @@ body, html {
   position: relative;
   box-shadow: 0 0 100px grey;
   overflow: hidden; }
-@keyframes fade-out-up {
+@keyframes fade-out {
   from {
-    opacity: 1;
-    top: 5px; }
+    opacity: 1; }
   to {
-    opacity: 0;
-    top: -20px; } }
+    opacity: 0; } }
   .bubble-burst .bubble-canvas .bubble {
     border-radius: 50px;
     position: absolute;
-    transition: none; }
+    transition: none;
+    pointer-events: none; }
     .bubble-burst .bubble-canvas .bubble .score {
-      animation: fade-out-up 2.5s ease;
-      opacity: 0; }
+      font-size: 12px; }
       .bubble-burst .bubble-canvas .bubble .score:before {
         content: "+"; }
   .bubble-burst .bubble-canvas .new-bubble {
-    position: absolute; }
+    position: absolute;
+    pointer-events: none; }
     .bubble-burst .bubble-canvas .new-bubble:before {
       content: "NEW";
-      animation: fade-out-up 1s ease;
+      font-size: 10px;
+      animation: fade-out 1s ease;
       opacity: 0; }
 .bubble-burst .attempts {
   width: 100%;
