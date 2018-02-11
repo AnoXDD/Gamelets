@@ -1281,7 +1281,7 @@ body, html {
   left: 0;
   width: 100%;
   height: 100%;
-  flex-direction: column;
+  flex-direction: row;
   z-index: 10;
   background: white;
   opacity: .5;
@@ -1291,18 +1291,15 @@ body, html {
     opacity: 0;
     pointer-events: auto !important; }
   .sokoban-infinite .virtual-control .control {
-    width: 100%;
-    flex-grow: 1;
-    flex-shrink: 1; }
-    .sokoban-infinite .virtual-control .control.left-right {
-      flex-grow: 0;
-      flex-shrink: 0; }
-      .sokoban-infinite .virtual-control .control.left-right .btn {
-        width: 50%;
-        height: 100%; }
+    height: 100%;
+    flex-grow: 2; }
+    .sokoban-infinite .virtual-control .control.up-down .btn {
+      height: 50%;
+      width: 100%; }
   .sokoban-infinite .virtual-control .btn {
-    width: 100%;
-    padding: 0; }
+    height: 100%;
+    padding: 0;
+    flex-grow: 1; }
 .sokoban-infinite .cell {
   width: 30px;
   height: 30px;

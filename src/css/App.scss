@@ -1297,7 +1297,7 @@ $grid-size: 100px;
     left: 0;
     width: 100%;
     height: 100%;
-    flex-direction: column;
+    flex-direction: row;
     z-index: 10;
     background: white;
     opacity: .5;
@@ -1310,24 +1310,21 @@ $grid-size: 100px;
     }
 
     .control {
-      width: 100%;
-      flex-grow: 1;
-      flex-shrink: 1;
+      height: 100%;
+      flex-grow: 2;
 
-      &.left-right {
-        flex-grow: 0;
-        flex-shrink: 0;
-
+      &.up-down {
         .btn {
-          width: 50%;
-          height: 100%;
+          height: 50%;
+          width: 100%;
         }
       }
     }
 
     .btn {
-      width: 100%;
+      height: 100%;
       padding: 0;
+      flex-grow: 1;
     }
   }
 

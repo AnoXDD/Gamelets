@@ -314,6 +314,7 @@ export default class SokobanInfinite extends Component {
             onResize={this.handleResize}
             restartText="next"
             restartIcon="skip_next"
+            restartable={false}
             prompt={this.state.step !== -1 ? `Box Move Left: ${this.state.step}` : ""}
       >
         <div className="control">
@@ -331,23 +332,20 @@ export default class SokobanInfinite extends Component {
         <div className="grid-area flex-center">
           <div
             className={`virtual-control ${this.state.isVirtualKeyVisible ? "" : "transparent"}`}>
-            <Button className="control up"
-                    onClick={this.moveUp}
-            >keyboard_arrow_up</Button>
-            <div className="control left-right"
-                 style={{
-                   height: HEIGHT * this.state.size,
-                 }}>
-              <Button className="left"
-                      onClick={this.moveLeft}
-              >keyboard_arrow_left</Button>
-              <Button className="right"
-                      onClick={this.moveRight}
-              >keyboard_arrow_right</Button>
+            <Button className="left"
+                    onClick={this.moveLeft}
+            >keyboard_arrow_left</Button>
+            <div className="control up-down">
+              <Button className="control up"
+                      onClick={this.moveUp}
+              >keyboard_arrow_up</Button>
+              <Button className="control down"
+                      onClick={this.moveDown}
+              >keyboard_arrow_down</Button>
             </div>
-            <Button className="control down"
-                    onClick={this.moveDown}
-            >keyboard_arrow_down</Button>
+            <Button className="right"
+                    onClick={this.moveRight}
+            >keyboard_arrow_right</Button>
           </div>
           <div
             style={{
