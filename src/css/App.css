@@ -543,6 +543,13 @@ body, html {
     transition: .4s ease;
     box-shadow: 0 0 20px grey;
     z-index: 1; }
+    .game header > .restart {
+      position: fixed;
+      right: 0;
+      top: 0;
+      padding: 0;
+      background: transparent;
+      color: white; }
     @media screen and (max-width: 510px) {
       .game header {
         font-size: 20px; } }

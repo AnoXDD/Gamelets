@@ -51,6 +51,7 @@ export default class Game extends Component {
     this.handleTimeFinish = this.handleTimeFinish.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    this.handleUserStartButtonClick = this.handleUserStartButtonClick.bind(this);
 
     this.readyGame = this.readyGame.bind(this);
     this.startGame = this.startGame.bind(this);
@@ -148,6 +149,10 @@ export default class Game extends Component {
     this.props.onStateChange(R.GAME_STATE.START);
   }
 
+  handleUserStartButtonClick() {
+    this.props.roundTime ? this.readyGame() : this.startGame();
+  }
+
   render() {
     return (
       <div
@@ -157,6 +162,8 @@ export default class Game extends Component {
         }}
       >
         <header className="flex-center">
+          {this.state.gameState === R.GAME_STATE.START ?
+            <Button className="restart top" onClick={this.handleUserStartButtonClick}>refresh</Button> : null}
           {typeof(this.props.roundTime) === "undefined" ? null :
             <Timer
               version={this.state.timeVersion}
@@ -179,7 +186,7 @@ export default class Game extends Component {
           <div
             className={`btns ${this.state.gameState === R.GAME_STATE.START ? "hidden" : ""} ${this.newGame ? "" : "replay"}`}>
             <Button
-              onClick={this.props.roundTime ? this.readyGame : this.startGame}
+              onClick={this.handleUserStartButtonClick}
               text={this.newGame ? "start" : this.props.restartText}
             >
               {this.newGame ? "play_arrow" : this.props.restartIcon}
