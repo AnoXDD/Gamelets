@@ -1431,14 +1431,65 @@ $grid-size: 100px;
   }
 
   .bubble-canvas {
+    @keyframes fade-out-up {
+      from {
+        opacity: 1;
+        top: 5px;
+      }
+
+      to {
+        opacity: 0;
+        top: -20px;
+      }
+    }
+
     position: relative;
     box-shadow: 0 0 100px grey;
     overflow: hidden;
+
+    .bubble {
+      border-radius: 50px;
+      position: absolute;
+      transition: none;
+
+      .score {
+        animation: fade-out-up 2.5s ease;
+        opacity: 0;
+
+        &:before {
+          content: "+";
+        }
+      }
+    }
+
+    .new-bubble {
+      position: absolute;
+
+      &:before {
+        content: "NEW";
+        animation: fade-out-up 1s ease;
+        opacity: 0;
+      }
+    }
   }
 
-  .bubble {
-    border-radius: 50px;
-    position: absolute;
-    transition: none;
+  .attempts {
+    width: 100%;
+    text-align: center;
+
+    .bubble {
+      display: inline-block;
+      margin: 20px 10px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50px;
+      background: #000;
+      opacity: 1;
+      transition: opacity 2s ease;
+
+      &.used {
+        opacity: 0;
+      }
+    }
   }
 }

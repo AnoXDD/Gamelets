@@ -1375,8 +1375,41 @@ body, html {
   position: relative;
   box-shadow: 0 0 100px grey;
   overflow: hidden; }
-.bubble-burst .bubble {
-  border-radius: 50px;
-  position: absolute; }
+@keyframes fade-out-up {
+  from {
+    opacity: 1;
+    top: 5px; }
+  to {
+    opacity: 0;
+    top: -20px; } }
+  .bubble-burst .bubble-canvas .bubble {
+    border-radius: 50px;
+    position: absolute;
+    transition: none; }
+    .bubble-burst .bubble-canvas .bubble .score {
+      animation: fade-out-up 2.5s ease;
+      opacity: 0; }
+      .bubble-burst .bubble-canvas .bubble .score:before {
+        content: "+"; }
+  .bubble-burst .bubble-canvas .new-bubble {
+    position: absolute; }
+    .bubble-burst .bubble-canvas .new-bubble:before {
+      content: "NEW";
+      animation: fade-out-up 1s ease;
+      opacity: 0; }
+.bubble-burst .attempts {
+  width: 100%;
+  text-align: center; }
+  .bubble-burst .attempts .bubble {
+    display: inline-block;
+    margin: 20px 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50px;
+    background: #000;
+    opacity: 1;
+    transition: opacity 2s ease; }
+    .bubble-burst .attempts .bubble.used {
+      opacity: 0; }
 
 /*# sourceMappingURL=App.css.map */
