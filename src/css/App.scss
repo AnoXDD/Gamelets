@@ -154,6 +154,8 @@ body, html {
     right: 0;
 
     .games-wrapper {
+      position: relative;
+      flex-grow: 1;
       width: 100%;
       padding: 0 10%;
       box-shadow: inset 0 0 20px grey;
@@ -163,7 +165,7 @@ body, html {
     .games {
     }
 
-    .title, .game, .category {
+    .app-title, .title, .game, .category {
       position: relative;
       width: 450px;
       height: 80px;
@@ -173,6 +175,11 @@ body, html {
       font-size: 30px;
       margin: 10px auto;
       transition: .4s ease;
+    }
+
+    .app-title {
+      line-height: 80px;
+      margin: 0;
     }
 
     .category {
@@ -199,13 +206,16 @@ body, html {
     .title {
       border: none;
       font-size: 35px;
+    }
+
+    .author-wrapper {
+      text-align: right;
+      width: 100%;
 
       .author {
-        position: fixed;
-        right: 0;
-        bottom: 0;
         padding: 5px;
         font-size: 10px;
+        line-height: 20px;
 
         &:visited {
           color: white;
@@ -242,6 +252,10 @@ body, html {
         width: 80vw;
         font-size: 18px;
         margin: 5px auto;
+      }
+
+      .app-title {
+        margin: 0;
       }
 
       .title {

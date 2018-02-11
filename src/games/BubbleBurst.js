@@ -253,7 +253,7 @@ export default class BubbleBurst extends Component {
       if (!this.state.bubbles.some(b => b.age !== -1)) {
         this.handleProblemSolved();
       }
-    }, 1500);
+    }, 500);
   }
 
   render() {

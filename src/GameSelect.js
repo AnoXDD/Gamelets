@@ -5,6 +5,7 @@
 import React, {Component} from "react";
 import Ink from "react-ink";
 import screenfull from "screenfull";
+import {Scrollbars} from "react-custom-scrollbars";
 
 import Button from "./lib/Button";
 import Wordlink from "./games/Wordlink";
@@ -12,7 +13,6 @@ import LetterPrompt from "./games/LetterPrompt";
 import ScrabbleMarathon from "./games/ScrabbleMarathon";
 import WordChain from "./games/WordChain";
 import ScreenSizeWarning from "./components/ScreenSizeWarning";
-import {Scrollbars} from "react-custom-scrollbars";
 import SokobanInfinite from "./games/SokobanInfinite";
 import BubbleBurst from "./games/BubbleBurst";
 
@@ -179,37 +179,38 @@ export default class GameSelect extends Component {
             handleDismiss={() => this.setState({isShowingScreenWarning: false})}
           /> : null}
         <div className="game-list flex-center">
-          <div className="title">Gamelets!
-            <a className="author" href="https://anoxic.me">by Anoxic</a>
-          </div>
+          <div className="title app-title">Gamelets!</div>
           <div className="games-wrapper">
-            <Scrollbars
-              autoHeight
-              autoHeightMax="60vh"
-              className="games"
-              ref="scrollbars"
-            >
-              {GAME_LIST.map((game, i) =>
-                game.category ?
-                  <div className="category"
-                       key={game.category}
-                  >
+            <div className="flex-inner-extend">
+              <Scrollbars
+                className="games"
+                ref="scrollbars"
+              >
+                {GAME_LIST.map((game, i) =>
+                  game.category ?
+                    <div className="category"
+                         key={game.category}
+                    >
                     <span className="icon-wrapper">
                       <i className="material-icons">{game.icon}</i>
                     </span>
-                    <span className="category-inner">{game.category}</span>
-                  </div> :
-                  <div className="game"
-                       key={game.name}
-                       onClick={() => this.setState({currentGameIndex: i})}
-                  >
-                    <div className="flex-inner-extend flex-center">
-                      <Ink/>
-                      <span>{game.name}</span>
+                      <span className="category-inner">{game.category}</span>
+                    </div> :
+                    <div className="game"
+                         key={game.name}
+                         onClick={() => this.setState({currentGameIndex: i})}
+                    >
+                      <div className="flex-inner-extend flex-center">
+                        <Ink/>
+                        <span>{game.name}</span>
+                      </div>
                     </div>
-                  </div>
-              )}
-            </Scrollbars>
+                )}
+              </Scrollbars>
+            </div>
+          </div>
+          <div className="author-wrapper">
+            <a className="author" href="https://anoxic.me">by Anoxic</a>
           </div>
         </div>
         <div className="game-real">
