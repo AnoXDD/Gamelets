@@ -3,6 +3,7 @@
  */
 
 import React, {Component} from "react";
+import AnimatedNumber from "../lib/AnimatedNumber";
 
 export default  class Scoreboard extends Component {
 
@@ -27,7 +28,7 @@ export default  class Scoreboard extends Component {
   render() {
     return (
         <div className="score">
-          {this.props.score}
+          <AnimatedNumber value={this.props.score} className="animated-number"/>
           {this.props.score ?
               <div
                   className={`difference ${this.toggleClass} ${this.props.reset || ""}`}>

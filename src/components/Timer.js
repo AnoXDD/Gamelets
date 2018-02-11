@@ -4,6 +4,7 @@
 
 import PropTypes from "prop-types";
 import React, {Component} from "react";
+import AnimatedNumber from "../lib/AnimatedNumber";
 
 const DEFAULT_TIME = 60;
 
@@ -76,7 +77,7 @@ export default class Timer extends Component {
   render() {
     return (
         <div className="timer flex-center">
-          {this.state.time / 1000}
+          <AnimatedNumber value={this.state.time / 1000} className="animated-number"/>
         </div>
     );
   }

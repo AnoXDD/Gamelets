@@ -377,6 +377,9 @@ body, html {
     max-width: 0;
     transition: .2s ease; }
 
+.animated-number {
+  display: inline-flex; }
+
 .btn.top {
   position: absolute;
   top: 0;
