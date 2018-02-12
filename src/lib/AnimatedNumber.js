@@ -57,12 +57,11 @@ class Digit extends Component {
 
 Digit.propTypes = {
   digit: PropTypes.number.isRequired,
-  size : PropTypes.number.isRequired,
 };
 
 export default class AnimatedNumber extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.value !== this.props.value
+    return nextProps.value !== this.props.value;
   }
 
   render() {

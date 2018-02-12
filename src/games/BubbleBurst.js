@@ -10,6 +10,7 @@ const MAX_BUBBLE_NUMBER = 35;
 const TICK = 25; // milliseconds
 const MAX_MOVING_SPEED = 150 / TICK; // px/tick
 const MIN_MOVING_SPEED = 35 / TICK;
+const SPEED_CHANGE_RATE = 1 / 1000 * TICK; // *100%/tick
 const INITIAL_RADIUS = 5.0;
 const FINAL_RADIUS = 50;
 const GROWING_SPEED = 200 / TICK; // px/tick
@@ -24,12 +25,15 @@ export default class BubbleBurst extends Component {
 
   rand = null;
   bubbleId = 0;
+  speedPercentage = 1;
+
   state = {
     score     : 0,
     bubbles   : [],
     newBubbles: [],
     attempts  : ATTEMPTS,
   };
+
   intervalId = -1;
   timeoutId = -1;
 
@@ -42,6 +46,8 @@ export default class BubbleBurst extends Component {
 
     this.handleResize = this.handleResize.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -124,14 +130,20 @@ export default class BubbleBurst extends Component {
 
     this.setState({
       bubbles,
-      gameState: R.GAME_STATE.START,
-      attempts : ATTEMPTS,
-      score    : 0,
+      gameState      : R.GAME_STATE.START,
+      attempts       : ATTEMPTS,
+      score          : 0,
+      speedPercentage: 1,
+      isAccelerating : true,
     }, () => {
       let zIndex = 1;
 
       this.intervalId = setInterval(() => {
         let {score} = this.state;
+
+        // Change speedPercentage
+        // this.speedPercentage = Math.min(1, this.speedPercentage +
+        // SPEED_CHANGE_RATE);
 
         let blowing = this.state.bubbles.filter(b => b.age !== -1);
 
@@ -143,8 +155,16 @@ export default class BubbleBurst extends Component {
           // Check if current position should trigger a burst
           if (b.age === -1) {
             for (let blow of blowing) {
-              if (Math.pow(b.top - blow.top, 2) + Math.pow(b.left - blow.left, 2)
-                <= Math.pow((b.size + blow.size) / 2, 2)) {
+              let sizeSum = b.size + blow.size / 2;
+              let dTop = b.top - blow.top;
+
+              if (dTop > sizeSum) {
+                continue;
+              }
+
+              let dLeft = b.left - blow.left;
+              if (dLeft <= sizeSum
+                && dTop * dTop + dLeft * dLeft <= sizeSum * sizeSum) {
                 // Blow this one as well
                 b.age = 0;
                 b.zIndex = zIndex++;
@@ -157,8 +177,8 @@ export default class BubbleBurst extends Component {
           }
 
           if (b.age === -1) {
-            let nextTop = top + horizontalSpeed;
-            let nextLeft = left + verticalSpeed;
+            let nextTop = top + this.speedPercentage * horizontalSpeed;
+            let nextLeft = left + this.speedPercentage * verticalSpeed;
 
             // Check if they are out of bound
             if (nextTop < 0 || nextTop > HEIGHT) {
@@ -256,12 +276,21 @@ export default class BubbleBurst extends Component {
     }, 500);
   }
 
+  handleMouseDown() {
+    this.speedPercentage = 0;
+  }
+
+  handleMouseUp() {
+    this.speedPercentage = 1;
+  }
+
   render() {
     return (
       <Game name="bubble-burst"
             className={`${this.state.locked ? "blurred" : ""} ${this.state.step === 0 ? "game-over" : ""}`}
             gameIntro={[
               "Click to create a ripple that bursts other bubbles",
+              "Hold to stop the bubbles moving",
               "Four new bubbles for every third burst bubble",
             ]}
             onStart={this.startNewProblem}
@@ -279,6 +308,10 @@ export default class BubbleBurst extends Component {
         {/*</div>*/}
         <div className="bubble-canvas flex-center"
              onClick={this.handleClick}
+             onMouseDown={this.handleMouseDown}
+             onTouchStart={this.handleMouseDown}
+             onMouseUp={this.handleMouseUp}
+             onTouchEnd={this.handleMouseUp}
              style={{width: WIDTH, height: HEIGHT}}>
           {this.state.bubbles.map(b =>
             <span className="bubble flex-center"
