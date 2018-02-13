@@ -609,6 +609,8 @@ body, html {
     color: #00BCD4;
     font-size: 20px;
     padding: 10px 20px; }
+    .game .btn[disabled], .game .btn.disabled {
+      color: grey; }
   .game .btns {
     position: relative;
     left: 0;
@@ -1418,14 +1420,18 @@ body, html {
     .bubble-burst .attempts .bubble.used {
       opacity: 0; }
 
-.flip-it .bulbs .bulb {
-  position: relative;
-  width: 20px;
-  height: 20px;
-  margin: 20px;
-  display: inline-block;
-  border-radius: 20px;
-  transition: .4s ease; }
+.flip-it .bulbs {
+  display: flex;
+  width: 350px;
+  justify-content: space-around;
+  height: 100px; }
+  .flip-it .bulbs .bulb {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 20px;
+    transition: .4s ease; }
 .flip-it .switches .switch {
   padding: 0; }
 .flip-it .pixels {
@@ -1442,8 +1448,6 @@ body, html {
     transition: opacity .4s ease; }
     .flip-it .pixels .pixel-enter.pixel-enter-active {
       opacity: 1; }
-  .flip-it .pixels .pixel-exit.pixel-exit-active {
-    display: none; }
   .flip-it .pixels .pixel {
     display: inline-block;
     width: 4px;

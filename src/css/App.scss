@@ -433,6 +433,10 @@ body, html {
     color: $css;
     font-size: 20px;
     padding: 10px 20px;
+
+    &[disabled], &.disabled {
+      color:       grey;
+    }
   }
 
   .btns {
@@ -1504,11 +1508,15 @@ $grid-size: 100px;
 
 .flip-it {
   .bulbs {
+    display: flex;
+    width: 350px;
+    justify-content: space-around;
+    height: 100px;
+
     .bulb {
       position: relative;
       width: 20px;
       height: 20px;
-      margin: 20px;
       display: inline-block;
       border-radius: 20px;
       transition: .4s ease;
@@ -1549,7 +1557,7 @@ $grid-size: 100px;
     .pixel {
       display: inline-block;
       width: 4px;
-         height: 4px;
+      height: 4px;
       margin: 1px auto;
       border: 2px white solid;
       transition: .4s ease;

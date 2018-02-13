@@ -5,6 +5,7 @@ import {CSSTransition, TransitionGroup} from "react-transition-group";
 import Game from "../lib/Game";
 import generateFlipIt from "./FlipIt/FlipItGenerator";
 import * as R from "../R";
+import Button from "../lib/Button";
 
 const COLORS = ["#F44336",
   "#9C27B0",
@@ -15,6 +16,7 @@ const COLORS = ["#F44336",
   "#795548",
   "#9E9E9E",
   "#607D8B"];
+const MIN_COLOR = 3;
 
 export default class FlipIt extends Component {
 
@@ -37,6 +39,9 @@ export default class FlipIt extends Component {
 
     this.startNewProblem = this.startNewProblem.bind(this);
     this.generateColors = this.generateColors.bind(this);
+
+    this.handleFewerBulbs = this.handleFewerBulbs.bind(this);
+    this.handleMoreBulbs = this.handleMoreBulbs.bind(this);
   }
 
   handleBulbClick(val) {
@@ -78,25 +83,29 @@ export default class FlipIt extends Component {
     clearTimeout(this.timeoutId);
   }
 
-  generateColors() {
+  generateColors(size = this.state.size) {
     let rng = seedrandom();
-    let colors = new Set();
-
-    while (colors.size < this.state.size) {
-      let color = COLORS[Math.floor(rng() * COLORS.length)];
-      colors.add(color);
-    }
-
-    return [...colors];
+    return [...COLORS].sort(() => rng() - .5).slice(-size);
   }
 
-  startNewProblem() {
+  startNewProblem(size = this.state.size) {
     this.setState({
-      ...generateFlipIt(this.state.size),
-      colors   : this.generateColors(),
+      size,
+      ...generateFlipIt(size),
+      colors   : this.generateColors(size),
       locked   : false,
       gameState: R.GAME_STATE.START,
     });
+  }
+
+  handleMoreBulbs() {
+    let size = Math.min(COLORS.length, this.state.size + 1);
+    this.startNewProblem(size);
+  }
+
+  handleFewerBulbs() {
+    let size = Math.max(MIN_COLOR, this.state.size - 1);
+    this.startNewProblem(size);
   }
 
   render() {
@@ -141,6 +150,12 @@ export default class FlipIt extends Component {
               </TransitionGroup>
             </span>
           )}
+        </div>
+        <div className="controls">
+          <Button disabled={this.state.size === MIN_COLOR}
+                  onClick={this.handleFewerBulbs}>remove</Button>
+          <Button disabled={this.state.size === COLORS.length}
+                  onClick={this.handleMoreBulbs}>add</Button>
         </div>
       </Game>
     );
