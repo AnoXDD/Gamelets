@@ -15,6 +15,7 @@ import WordChain from "./games/WordChain";
 import ScreenSizeWarning from "./components/ScreenSizeWarning";
 import SokobanInfinite from "./games/SokobanInfinite";
 import BubbleBurst from "./games/BubbleBurst";
+import FlipIt from "./games/FlipIt";
 
 const GAME_LIST = [
   {
@@ -49,6 +50,11 @@ const GAME_LIST = [
     id  : "sokoban-infinite",
     name: "Sokoban Infinite",
     game: <SokobanInfinite/>,
+  },
+  {
+    id  : "flip-it",
+    name: "Flip it",
+    game: <FlipIt/>,
   },
   {
     category: "strategy",

@@ -176,7 +176,7 @@ body, html {
       color: white;
       text-transform: uppercase;
       font-weight: bolder;
-      font-size: 30px;
+      font-size: 26px;
       margin: 10px auto;
       transition: .4s ease;
     }
@@ -1320,7 +1320,7 @@ $grid-size: 100px;
     background: white;
     opacity: .5;
     transition: opacity 4s ease;
-    display: none;
+    display: flex;
 
     &.transparent {
       opacity: 0;
@@ -1431,12 +1431,6 @@ $grid-size: 100px;
       }
     }
   }
-
-  @media screen and (max-width: $screen-break) {
-    .virtual-control {
-      display: flex;
-    }
-  }
 }
 
 .bubble-burst {
@@ -1504,6 +1498,61 @@ $grid-size: 100px;
       &.used {
         opacity: 0;
       }
+    }
+  }
+}
+
+.flip-it {
+  .bulbs {
+    .bulb {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      margin: 20px;
+      display: inline-block;
+      border-radius: 20px;
+      transition: .4s ease;
+    }
+  }
+
+  .switches {
+    .switch {
+      padding: 0;
+    }
+  }
+
+  .pixels {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    text-align: center;
+    display: flex;
+    width: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .pixel-enter {
+      opacity: 0;
+      transition: opacity .4s ease;
+
+      &.pixel-enter-active {
+        opacity: 1;
+      }
+    }
+
+    .pixel-exit {
+      &.pixel-exit-active {
+        // placeholder
+      }
+    }
+
+    .pixel {
+      display: inline-block;
+      width: 4px;
+         height: 4px;
+      margin: 1px auto;
+      border: 2px white solid;
+      transition: .4s ease;
     }
   }
 }
